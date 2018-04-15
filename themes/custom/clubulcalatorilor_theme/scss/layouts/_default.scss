@@ -1,0 +1,30 @@
+html {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  #above-content {
+    padding-top: $base-spacing;
+  }
+
+  main {
+    @include outer-container();
+    padding-top: $base-spacing !important;
+    margin-bottom: $base-spacing * 3;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+}
+
+.outer-wrapper {
+  @include outer-container($max-width);
+}
+
+
+.block-page-title-block {
+  h1 {
+  }
+}

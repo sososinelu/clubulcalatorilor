@@ -1,0 +1,24 @@
+clubulcalatorilor_theme.mobile:
+  label: mobile
+  mediaQuery: 'all and (min-width: 0px)'
+  weight: 0
+  multipliers:
+    - 1x
+clubulcalatorilor_theme.tablet:
+  label: tablet
+  mediaQuery: 'all and (min-width: 768px) and (max-width: 959px)'
+  weight: 1
+  multipliers:
+    - 1x
+clubulcalatorilor_theme.standard:
+  label: standard
+  mediaQuery: 'all and (min-width: 960px) and (max-width: 1199px)'
+  weight: 2
+  multipliers:
+    - 1x
+clubulcalatorilor_theme.large:
+  label: large
+  mediaQuery: 'all and (min-width: 1200px)'
+  weight: 3
+  multipliers:
+    - 1x

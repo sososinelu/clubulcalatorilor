@@ -1,0 +1,33 @@
+button, input[type=submit], input[type=reset], .btn--block {
+  font-weight: $normal;
+  border-radius: 0;
+  border: 0;
+  text-decoration: none;
+  height: auto;
+  padding: 1.5rem 0.8rem;
+  background: $fiord;
+  color: $white;
+  transition: all 0.3s ease;
+  font-size: ms(-1);
+  box-sizing: border-box;
+  width: auto;
+  height: 5rem;
+  line-height: 2rem;
+  display: inline-block;
+  text-align: center;
+  &:hover, &:focus {
+    text-decoration: underline;
+    background: $deep-cerulean;
+    color: $white;
+  }
+}
+
+.background--dark {
+  button, input[type=submit], input[type=reset], .btn--block {
+    background: $white;
+    color: $fiord;
+    &:hover, &:focus {
+      background: $tropical-blue;
+    }
+  }
+}

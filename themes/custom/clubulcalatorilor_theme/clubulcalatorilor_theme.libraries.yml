@@ -1,0 +1,31 @@
+global-styling:
+  version: VERSION
+  css:
+    base:
+      css/clubulcalatorilor_theme.css: {}
+  dependencies:
+    - clubulcalatorilor_theme/sumo-select
+fonts:
+  css:
+    theme:
+
+velocity:
+  js:
+    vendor/velocity/velocity.min.js: {}
+sumo-select:
+  css:
+    base:
+      libraries/jquery-sumo-select/sumoselect.min.css: {}
+  js:
+    libraries/jquery-sumo-select/jquery.sumoselect.min.js: {}
+  dependencies:
+    - core/jquery
+global-scripts:
+  version: VERSION
+  js:
+    js/scripts.js: { weight: -1 }
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - clubulcalatorilor_theme/velocity
+    - clubulcalatorilor_theme/sumo-select

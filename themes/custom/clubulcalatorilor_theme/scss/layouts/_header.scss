@@ -1,0 +1,6 @@
+#site-header {
+  height: 70rem;
+  .header-wrapper {
+    @include outer-container($max-width);
+  }
+}

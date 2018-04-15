@@ -1,0 +1,16 @@
+name: Clubul Calatorilor
+type: theme
+description: Custom Clubul Calatorilor theme based on the the Neato base theme.
+base theme: neato
+core: 8.x
+libraries:
+  - clubulcalatorilor_theme/global-styling
+  - clubulcalatorilor_theme/global-scripts
+  - clubulcalatorilor_theme/fonts
+regions:
+  header: 'Header'
+  above_content: 'Above content'
+  content: 'Content'
+  bellow_content: 'Bellow content'
+  footer_top: 'Footer top'
+  footer_bottom: 'Footer bottom'

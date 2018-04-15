@@ -1,0 +1,19 @@
+.form-type-checkbox label {
+  line-height: normal;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.checkmark {
+  display: none;
+}
+
+input[type=checkbox] {
+  width: auto;
+  height: auto;
+  margin-top: 0.5rem;
+}
+
+.select__container::after {
+  content: none;
+}

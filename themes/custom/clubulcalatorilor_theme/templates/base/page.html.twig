@@ -1,0 +1,47 @@
+<div role="document" class="page">
+  {%  if page.header %}
+    <header id="site-header">
+      <div class="header-wrapper">
+        {{ page.header }}
+      </div>
+    </header>
+  {% endif %}
+
+
+  {% if page.above_content %}
+    <section id="above-content">
+      <div class="outer-wrapper">
+        {{ page.above_content }}
+      </div>
+    </section>
+  {% endif %}
+
+  <main role="main">
+    <a id="main-content" tabindex="-1"></a>
+    <section id="content">
+      {{ page.content }}
+    </section>
+  </main>
+
+  {% if page.bellow_content %}
+    <section id="above-content">
+      <div class="outer-wrapper">
+        {{ page.bellow_content }}
+      </div>
+    </section>
+  {% endif %}
+
+  <footer id="site-footer" role="contentinfo">
+    {% if page.footer_top %}
+      <section class="footer_top">
+        {{ page.footer_top }}
+      </section>
+    {% endif %}
+
+    {% if page.footer_bottom %}
+      <section class="footer_bottom">
+        {{ page.footer_bottom }}
+      </section>
+    {% endif %}
+  </footer>
+</div>

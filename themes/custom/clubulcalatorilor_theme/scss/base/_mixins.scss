@@ -1,0 +1,104 @@
+// outer-container
+@mixin outer-container($local-max-width: $max-width) {
+  @include clearfix;
+  max-width: $local-max-width;
+  margin: {
+    left: auto;
+    right: auto;
+  }
+  padding: 0 1.5rem;
+  @media (min-width: $tablet-screen) {
+    width: 73.8rem;
+    padding: 0;
+  }
+  @media (min-width: $standard-screen) {
+    width: 93rem;
+  }
+  @media (min-width: $large-screen) {
+    width: $max-width;
+  }
+}
+
+// icons
+@mixin icon($icon, $icon-size, $icon-color) {
+  content: $icon;
+  font-size: $icon-size;
+  color: $icon-color;
+  font-family: $icomoon;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// reset omega
+@mixin omega-reset($nth) {
+  &:nth-child(#{$nth}) { margin-right: flex-gutter(); }
+  &:nth-child(#{$nth}+1) { clear: none }
+}
+
+// block button - blue
+@mixin button-blue() {
+  font-weight: $normal;
+  border-radius: 0;
+  border: 0;
+  text-decoration: none;
+  height: auto;
+  padding: 1.5rem 0.8rem;
+  background: $blue-brand;
+  color: $white;
+  transition: all 0.3s ease;
+  font-size: ms(-1);
+  box-sizing: border-box;
+  width: auto;
+  &:hover, &:focus {
+    text-decoration: underline;
+    background: $blue-primary;
+  }
+}
+
+// heading pullout background
+@mixin heading-pullout() {
+  position: relative;
+  padding: $small-spacing $base-spacing $small-spacing 0;
+  margin-bottom: $base-spacing;
+  display: inline-block;
+  background: $blue-brand;
+  color: $white;
+  z-index: 0;
+}
+
+// heading pullout tab
+@mixin heading-pullout--tab() {
+  background: $blue-brand;
+  position: absolute;
+  top: 0;
+  left: -50vw;
+  width: 50vw;
+  height: 6.4rem;
+  z-index: -1;
+}
+
+// full width
+@mixin full-width() {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+// full width reset
+@mixin full-width-reset() {
+  width: auto;
+  position: static;
+  left: auto;
+  right: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
