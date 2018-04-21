@@ -1,3 +1,21 @@
+$gputek: 'Gputeks-Regular';
+$gputek-bold: 'Gputeks-Bold';
+
+@font-face {
+  font-family: 'Gputeks-Regular';
+  src:  url('../fonts/Gputeks-Regular.ttf?lqkaoq') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gputeks-Bold';
+  src:  url('../fonts/Gputeks-Bold.ttf?lqkaoq') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 // convert px to em
 $browser-context: 16; // Default
 
@@ -17,7 +35,7 @@ html {
 // Typography
 $base-font: $verdana;
 $heading-font: 'astoria', sans-serif;
-$icomoon: 'icomoon';
+
 
 body {
   font-family: $base-font;
@@ -28,11 +46,12 @@ body {
 
 @for $i from 1 through 6 {
   h#{$i} {
-    font-size: ms(5-$i);
-    font-family: $heading-font;
+    font-size: ms(4-$i);
+    font-family: $gputek-bold;
     line-height: $heading-line-height;
     font-weight: $normal;
     margin-top: 0;
+    color: $prussian_blue;
   }
 }
 

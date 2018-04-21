@@ -1,0 +1,318 @@
+.form-wrapper {
+  .form-item {
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input.form-tel,
+select {
+  background: $white;
+  border-radius: 0;
+  color: $prussian_blue;
+  font-size: ms(-1);
+  max-width: 100%;
+  box-sizing: border-box;
+  width: 100%;
+  border: 0.1rem solid $grey;
+  padding: 0 1rem;
+  height: 4rem;
+  line-height: 4rem;
+  margin-bottom: 1rem;
+  &:focus {
+    outline: none;
+    border-color: $deep-cerulean;
+    border-width: 0.2rem;
+    padding: 0 0.9rem;
+  }
+  &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $grey;
+    opacity: 1; /* Firefox */
+  }
+
+  &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: $grey;
+  }
+
+  &::-ms-input-placeholder { /* Microsoft Edge */
+    color: $grey;
+  }
+  &:disabled {
+    background-color: $porcelain;
+  }
+  @media(min-width: $tablet-screen) {
+    padding: 0 1.5rem;
+    height: 5rem;
+    line-height: 5rem;
+    &:focus {
+      padding: 0 1.4rem;
+    }
+  }
+}
+.form-item.error {
+  label {
+    color: $monza;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  input.form-tel,
+  select {
+    border: 0.2rem solid $monza;
+    padding: 0 0.9rem;
+    @media(min-width: $tablet-screen) {
+      padding: 0 1.4rem;
+    }
+  }
+  .SumoSelect {
+    >.CaptionCont {
+      border: 0.2rem solid $monza;
+      padding: 0.4rem 0.7rem;
+    }
+  }
+  input[type="checkbox"] {
+    width: 3.8rem;
+    height: 3.8rem;
+    border: none;
+    ~ .checkmark {
+      border: 0.2rem solid $monza;
+      &:after {
+        top: 0.8rem;
+        left: -0.1rem;
+      }
+    }
+  }
+}
+
+form > fieldset {
+  background: rgba($light-grey, 0.5);
+  padding: 1rem;
+  margin: 0 0 2rem 0 !important;
+  border: none;
+  > legend {
+    display: block;
+    background: $wild-sand;
+    border-top: 0.2rem solid $breaker-bay;
+    box-sizing: content-box;
+    width: 100%;
+    font-size: ms(2);
+    font-family: $heading-font;
+    padding: 1rem;
+    margin: 0 -1rem;
+    line-height: 2.9rem;
+  }
+  @include media($tablet-screen) {
+    margin: 0 0 $base-spacing 0 !important;
+    padding: $base-spacing $small-spacing 2rem;
+    > legend {
+      padding: 2.4rem $small-spacing;
+      margin-left: -$small-spacing;
+      margin-right: -$small-spacing;
+    }
+  }
+  @include media($standard-screen) {
+    padding-left: $base-spacing;
+    padding-right: $base-spacing;
+    > legend {
+      padding-left: $base-spacing;
+      padding-right: $base-spacing;
+      margin-left: -$base-spacing;
+      margin-right: -$base-spacing;
+    }
+  }
+}
+
+fieldset.form-item.fieldgroup {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  legend {
+    display: block;
+    width: 100%;
+    padding-bottom: 1rem;
+  }
+}
+textarea {
+  display: block;
+  padding: 1.5rem;
+  border: solid 0.1rem $grey;
+  width: 100%;
+  color: $dark-blue;
+  background: $white;
+  font-size: ms(-1);
+  max-width: 100%;
+  @media(min-width: $standard-screen) {
+    padding: 2rem 1.8rem;
+  }
+}
+
+/** Select **/
+
+.select__container {
+  position: relative;
+  &::after {
+    @include icon($arrow-down-circle, 2rem, $dark-blue);
+    position: absolute;
+    top: 1.6rem;
+    right: 1.6rem;
+    pointer-events: none;
+  }
+}
+select {
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 5.5rem;
+  cursor: pointer;
+  &:focus {
+    padding-right: 5.4rem;
+    line-height: 4.8rem;
+  }
+}
+select::-ms-expand {
+  display: none;
+}
+
+/** Radio & checkbox **/
+
+.form-type-radio {
+  &:hover {
+    label {
+      text-decoration: underline;
+    }
+  }
+}
+input[type=radio], input[type=checkbox] {
+  height: auto;
+  line-height: normal;
+  margin: 0 0.5rem 0 0;
+}
+input[type=checkbox] {
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+.form-type-checkbox {
+  display: block;
+  position: relative;
+  z-index: 0;
+  padding-left: 5.5rem;
+  margin-bottom: 1.2rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  input {
+    position: absolute;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    top: 0;
+    left: 0;
+    &:focus {
+      width: 3.8rem;
+      height: 3.8rem;
+      ~ .checkmark {
+        border: 0.2rem solid $deep-cerulean;
+        &:after {
+          top: 0.8rem;
+          left: -0.1rem;
+        }
+      }
+    }
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 3.9rem;
+    width: 3.9rem;
+    border: 0.1rem solid $grey;
+    background: $white;
+    &:after {
+      @include icon($tick, 2.1rem, $dark-blue);
+      position: absolute;
+      display: none;
+      left: 0;
+      top: 0.9rem;
+      width: 3.8rem;
+      text-align: center;
+    }
+  }
+  input:checked ~ .checkmark {
+    &:after {
+      display: block;
+    }
+  }
+  label {
+    line-height: 4rem;
+    font-size: ms(-1);
+    display: block !important;
+    cursor: pointer;
+  }
+}
+label {
+  display: block;
+  margin: 0 0 1rem 0;
+  font-size: ms(0);
+  margin-bottom: 0.5rem;
+}
+input[type="submit"] {
+  font-size: ms(-1);
+  text-align: center;
+  width: 100%;
+  color: $white;
+  margin-left: 0;
+  margin-right: 0;
+  width: auto;
+  height: auto;
+  padding: 2.3rem 3rem;
+  @include media($mobile-screen) {
+    padding: 2.3rem 8rem;
+  }
+}
+::-webkit-input-placeholder {
+  color: $dark-blue;
+}
+:-moz-placeholder {
+  color: $dark-blue;
+}
+::-moz-placeholder {
+  color: $dark-blue;
+}
+:-ms-input-placeholder {
+  color: $dark-blue;
+}
+
+input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 0.1rem solid $grey;
+  border-radius: 50%;
+  outline: none;
+  background: $white;
+  &:checked:before {
+    background: $deep-cerulean;
+  }
+  &::before {
+    content: '';
+    display: block;
+    width: 75%;
+    height: 75%;
+    margin: 14% auto;
+    border-radius: 50%;
+  }
+}

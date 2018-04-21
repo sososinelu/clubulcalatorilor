@@ -49,7 +49,7 @@
   text-decoration: none;
   height: auto;
   padding: 1.5rem 0.8rem;
-  background: $blue-brand;
+  background: $dark-blue;
   color: $white;
   transition: all 0.3s ease;
   font-size: ms(-1);
@@ -67,14 +67,14 @@
   padding: $small-spacing $base-spacing $small-spacing 0;
   margin-bottom: $base-spacing;
   display: inline-block;
-  background: $blue-brand;
+  background: $dark-blue;
   color: $white;
   z-index: 0;
 }
 
 // heading pullout tab
 @mixin heading-pullout--tab() {
-  background: $blue-brand;
+  background: $dark-blue;
   position: absolute;
   top: 0;
   left: -50vw;

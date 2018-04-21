@@ -1,4 +1,28 @@
 /*
+ * form styling
+ */
+(function ($) {
+  $(document).ready(function() {
+
+    // Add placeholder to signup form
+    $('#edit-mergevars-email').attr('placeholder', 'Adresa ta de email');
+
+    $('input.error, select.error').each(function() {
+      $(this).parents('.form-item').first().addClass('error');
+    });
+
+    $('input[type="submit"]').on('click',function() {
+      $(':input[required]:visible').each(function() {
+        if(!$(this).val()){
+          $(this).parents('.form-item').first().addClass('error');
+        }
+      });
+    });
+
+  });
+}(jQuery));
+
+/*
  * Equalise heights
  */
 function equalizeHeights(selector) {
@@ -34,63 +58,3 @@ function equalizeHeights(selector) {
     }
   };
 })(jQuery);
-
-(function($) {
-  // Mobile menu toggle
-  var menuToggle = $('.menu-toggle');
-  var mobileMenu = $('.block-mobile-menu-block');
-
-  menuToggle.click(function() {
-    if ($(this).hasClass('is-active')) {
-      $(this).removeClass('is-active');
-      mobileMenu.hide();
-    } else {
-      $(this).addClass('is-active');
-      mobileMenu.show();
-    }
-  });
-
-  // Hide main menu column labels on the sitemap
-  if ($('.sitemap').length){
-    var span_column_text = $("span:contains('Column')");
-
-    span_column_text.addClass('hide');
-    span_column_text.closest('ul').addClass('hide-bullet-points');
-  }
-
-}(jQuery));
-
-/*
- * form styling
- */
-(function ($) {
-  $(document).ready(function() {
-
-    $('input.error, select.error').each(function() {
-      $(this).parents('.form-item').first().addClass('error');
-    });
-
-    $('input[type="submit"]').on('click',function() {
-      $(':input[required]:visible').each(function() {
-        if(!$(this).val()){
-          $(this).parents('.form-item').first().addClass('error');
-        }
-      });
-    });
-
-  });
-}(jQuery));
-
-(function ($) {
-  $(document).ready(function(){
-
-    var exclude_selects = ['#edit-press-release-category', '#edit-news-category',
-    '#edit-resource-category', '#edit-status', '#edit-faq-category', '#edit-sort-bef-combine'];
-
-    var sumo_exclude = exclude_selects.join(', ');
-
-    // Apply SumoSelect to all select elements apart from those listed.
-    $('select').not(sumo_exclude).SumoSelect();
-
-  });
-}(jQuery));
