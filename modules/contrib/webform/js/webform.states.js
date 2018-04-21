@@ -7,6 +7,13 @@
 
   'use strict';
 
+  Drupal.webform = Drupal.webform || {};
+  Drupal.webform.states = Drupal.webform.states || {};
+  Drupal.webform.states.slideDown = Drupal.webform.states.slideDown || {};
+  Drupal.webform.states.slideDown.duration = 'slow';
+  Drupal.webform.states.slideUp = Drupal.webform.states.slideUp || {};
+  Drupal.webform.states.slideUp.duration = 'fast';
+
   /**
    * Check if an element has a specified data attribute.
    *
@@ -56,7 +63,7 @@
       // Fix #required file upload.
       // @see Issue #2860529: Conditional required File upload field don't work.
       if (e.value) {
-        $target.find('input[type="file"]').attr({'required': 'required', 'aria-required': 'aria-required'});
+        $target.find('input[type="file"]').attr({'required': 'required', 'aria-required': 'true'});
       }
       else {
         $target.find('input[type="file"]').removeAttr('required aria-required');
@@ -79,7 +86,7 @@
       // @see Issue #2856795: If radio buttons are required but not filled form is nevertheless submitted.
       if ($target.is('.js-webform-type-radios, .js-form-type-webform-radios-other')) {
         if (e.value) {
-          $target.find('input[type="radio"]').attr({'required': 'required', 'aria-required': 'aria-required'});
+          $target.find('input[type="radio"]').attr({'required': 'required', 'aria-required': 'true'});
         }
         else {
           $target.find('input[type="radio"]').removeAttr('required aria-required');
@@ -96,7 +103,7 @@
           // to all checkboxes.
           $checkboxes.bind('click', checkboxRequiredhandler);
           if (!$checkboxes.is(':checked')) {
-            $checkboxes.attr({'required': 'required', 'aria-required': 'aria-required'});
+            $checkboxes.attr({'required': 'required', 'aria-required': 'true'});
           }
         }
         else {
@@ -117,7 +124,7 @@
     }
   });
 
-  $document.on('state:visible', function (e) {
+  $document.on('state:visible state:visible-slide', function (e) {
     if (e.trigger) {
       if (e.value) {
         $(':input', e.target).addBack().each(function () {
@@ -135,6 +142,15 @@
       }
     }
   });
+
+  $document.bind('state:visible-slide', function(e) {
+    if (e.trigger) {
+      var effect = e.value ? 'slideDown' : 'slideUp';
+      var duration = Drupal.webform.states[effect].duration;
+      $(e.target).closest('.js-form-item, .js-form-submit, .js-form-wrapper')[effect ](duration);
+    }
+  });
+  Drupal.states.State.aliases['invisible-slide'] = '!visible-slide';
 
   $document.on('state:disabled', function (e) {
     if (e.trigger) {
@@ -162,7 +178,7 @@
       $checkboxes.removeAttr('required aria-required');
     }
     else {
-      $checkboxes.attr({'required': 'required', 'aria-required': 'aria-required'});
+      $checkboxes.attr({'required': 'required', 'aria-required': 'true'});
     }
   }
 

@@ -102,6 +102,9 @@ class WebformAddonsManager implements WebformAddonsManagerInterface {
     $categories['utility'] = [
       'title' => $this->t('Utility'),
     ];
+    $categories['workflow'] = [
+      'title' => $this->t('Workflow'),
+    ];
     $categories['development'] = [
       'title' => $this->t('Development'),
     ];
@@ -147,6 +150,14 @@ class WebformAddonsManager implements WebformAddonsManagerInterface {
       'title' => $this->t('Webform Composite Tools'),
       'description' => $this->t("Provides a reusable composite element for use on webforms."),
       'url' => Url::fromUri('https://www.drupal.org/project/webform_composite'),
+      'category' => 'element',
+    ];
+    
+    // Element: Webform Checkboxes Table.
+    $projects['webform_checkboxes_table'] = [
+      'title' => $this->t('Webform Checkboxes Table'),
+      'description' => $this->t('Displays checkboxes element in a table grid.'),
+      'url' => Url::fromUri('https://github.com/minnur/webform_checkboxes_table'),
       'category' => 'element',
     ];
 
@@ -203,6 +214,14 @@ class WebformAddonsManager implements WebformAddonsManagerInterface {
       'title' => $this->t('Webform HubSpot'),
       'description' => $this->t('Provides HubSpot leads API integration with Drupal.'),
       'url' => Url::fromUri('https://www.drupal.org/project/hubspot'),
+      'category' => 'integration',
+    ];
+
+    // Integrations: Micro Webform.
+    $projects['micro_webform'] = [
+      'title' => $this->t('Micro Webform'),
+      'description' => $this->t('Integrate webform module with a micro site.'),
+      'url' => Url::fromUri('https://www.drupal.org/project/micro_webform'),
       'category' => 'integration',
     ];
 
@@ -422,6 +441,14 @@ class WebformAddonsManager implements WebformAddonsManagerInterface {
       'category' => 'utility',
     ];
 
+    // Utility: Webform Ip Track.
+    $projects['webform_ip_track'] = [
+      'title' => $this->t('Webform Ip Track'),
+      'description' => $this->t('Ip Location details as custom tokens to use in webform submission values.'),
+      'url' => Url::fromUri('https://www.drupal.org/project/webform_ip_track'),
+      'category' => 'utility',
+    ];
+
     // Utility: IMCE.
     $projects['imce'] = [
       'title' => $this->t('IMCE'),
@@ -457,6 +484,15 @@ class WebformAddonsManager implements WebformAddonsManagerInterface {
       'description' => $this->t('Provides Symfony (form) Validators for Drupal 8.'),
       'url' => Url::fromUri('https://www.drupal.org/project/validators'),
       'category' => 'validation',
+    ];
+
+    // Workflow: Maestro.
+    $projects['maestro'] = [
+      'title' => $this->t('Maestro Workflow Engine'),
+      'description' => $this->t('A business process workflow solution that allows you to create and automate a sequence of tasks representing any business, document approval or collaboration process.'),
+      'url' => Url::fromUri('https://www.drupal.org/project/maestro'),
+      'category' => 'workflow',
+      'recommended' => TRUE,
     ];
 
     // Devel: Maillog / Mail Developer.

@@ -33,6 +33,14 @@ elements: |
       one: One
       two: Two
       three: Three
+  select_other:
+    '#type': webform_select_other
+    '#title': 'Select other'
+    '#default_value': Four
+    '#options':
+      one: One
+      two: Two
+      three: Three
 css: ''
 javascript: ''
 settings:
@@ -56,6 +64,7 @@ settings:
   form_reset: false
   form_disable_autocomplete: false
   form_novalidate: false
+  form_disable_inline_errors: false
   form_required: false
   form_unsaved: false
   form_disable_back: false
@@ -101,6 +110,8 @@ settings:
   confirmation_back: true
   confirmation_back_label: ''
   confirmation_back_attributes: {  }
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
   limit_total: null
   limit_total_interval: null
   limit_total_message: ''
@@ -155,7 +166,7 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-  administer:
+  test:
     roles: {  }
     users: {  }
     permissions: {  }

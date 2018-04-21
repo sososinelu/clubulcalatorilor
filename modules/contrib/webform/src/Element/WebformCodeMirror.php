@@ -102,13 +102,9 @@ class WebformCodeMirror extends Textarea {
       }
     }
 
-    // Set validation.
-    if (isset($element['#element_validate'])) {
-      $element['#element_validate'] = array_merge([[get_called_class(), 'validateWebformCodeMirror']], $element['#element_validate']);
-    }
-    else {
-      $element['#element_validate'] = [[get_called_class(), 'validateWebformCodeMirror']];
-    }
+    // Add validate callback.
+    $element += ['#element_validate' => []];
+    array_unshift($element['#element_validate'], [get_called_class(), 'validateWebformCodeMirror']);
 
     return $element;
   }
@@ -141,7 +137,8 @@ class WebformCodeMirror extends Textarea {
       $form_state->setValueForElement($element, $element['#default_value']);
     }
 
-    if ($errors = static::getErrors($element, $form_state, $complete_form)) {
+    $errors = static::getErrors($element, $form_state, $complete_form);
+    if ($errors) {
       $build = [
         'title' => [
           '#markup' => t('%title is not valid.', ['%title' => (isset($element['#title']) ? $element['#title'] : t('YAML'))]),
@@ -153,16 +150,18 @@ class WebformCodeMirror extends Textarea {
       ];
       $form_state->setError($element, \Drupal::service('renderer')->render($build));
     }
-
-    if ($element['#mode'] == 'yaml' && (isset($element['#default_value']) && is_array($element['#default_value']))) {
-      // Handle rare case where single array value is not parsed correctly.
-      if (preg_match('/^- (.*?)\s*$/', $element['#value'], $match)) {
-        $value = [$match[1]];
+    else {
+      // If editing YAML and #default_value is an array, decode #value.
+      if ($element['#mode'] == 'yaml' && (isset($element['#default_value']) && is_array($element['#default_value']))) {
+        // Handle rare case where single array value is not parsed correctly.
+        if (preg_match('/^- (.*?)\s*$/', $element['#value'], $match)) {
+          $value = [$match[1]];
+        }
+        else {
+          $value = $element['#value'] ? Yaml::decode($element['#value']) : [];
+        }
+        $form_state->setValueForElement($element, $value);
       }
-      else {
-        $value = $element['#value'] ? Yaml::decode($element['#value']) : [];
-      }
-      $form_state->setValueForElement($element, $value);
     }
   }
 

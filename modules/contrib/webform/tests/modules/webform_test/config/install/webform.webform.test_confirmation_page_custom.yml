@@ -41,6 +41,7 @@ settings:
   form_reset: false
   form_disable_autocomplete: false
   form_novalidate: false
+  form_disable_inline_errors: false
   form_required: false
   form_unsaved: false
   form_disable_back: false
@@ -89,6 +90,8 @@ settings:
   confirmation_back_attributes:
     class:
       - button
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
   limit_total: null
   limit_total_interval: null
   limit_total_message: ''
@@ -101,8 +104,8 @@ settings:
   entity_limit_user_interval: null
   purge: none
   purge_days: null
-  results_disabled: true
-  results_disabled_ignore: true
+  results_disabled: false
+  results_disabled_ignore: false
   token_update: false
 access:
   create:
@@ -143,7 +146,7 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-  administer:
+  test:
     roles: {  }
     users: {  }
     permissions: {  }

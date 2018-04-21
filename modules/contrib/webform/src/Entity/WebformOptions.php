@@ -24,7 +24,7 @@ use Drupal\webform\WebformOptionsInterface;
  *       "add" = "Drupal\webform\WebformOptionsForm",
  *       "edit" = "Drupal\webform\WebformOptionsForm",
  *       "duplicate" = "Drupal\webform\WebformOptionsForm",
- *       "delete" = "Drupal\Core\Entity\EntityDeleteForm",
+ *       "delete" = "Drupal\webform\WebformOptionsDeleteForm",
  *     }
  *   },
  *   admin_permission = "administer webform",
@@ -158,7 +158,7 @@ class WebformOptions extends ConfigEntityBase implements WebformOptionsInterface
     $temp_element = [];
     \Drupal::moduleHandler()->alter('webform_options_' . $this->id(), $altered_options, $temp_element);
     $altered_options = WebformOptionsHelper::convertOptionsToString($altered_options);
-    if ($altered_options == $this->getOptions()) {
+    if ($altered_options === $this->getOptions()) {
       $this->options = '';
     }
   }

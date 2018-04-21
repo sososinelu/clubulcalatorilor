@@ -199,48 +199,6 @@ elements: |
           postal_code: Loremipsum
           country: Afghanistan
         '#format': list
-    webform_creditcard:
-      '#type': details
-      '#title': 'Credit card'
-      webform_creditcard_value:
-        '#type': webform_creditcard
-        '#title': 'Credit card (Value)'
-        '#default_value':
-          warning: null
-          name: Loremipsum
-          type: VI
-          number: '4111111111111111'
-          civ: 111
-          expiration: null
-          expiration_month: 1
-          expiration_year: 2017
-        '#format': value
-      webform_creditcard_raw:
-        '#type': webform_creditcard
-        '#title': 'Credit card (Raw value)'
-        '#default_value':
-          warning: null
-          name: Loremipsum
-          type: VI
-          number: '4111111111111111'
-          civ: 111
-          expiration: null
-          expiration_month: 1
-          expiration_year: 2017
-        '#format': raw
-      webform_creditcard_list:
-        '#type': webform_creditcard
-        '#title': 'Credit card (List)'
-        '#default_value':
-          warning: null
-          name: Loremipsum
-          type: VI
-          number: '4111111111111111'
-          civ: 111
-          expiration: null
-          expiration_month: 1
-          expiration_year: 2017
-        '#format': list
     webform_link:
       '#type': details
       '#title': Link
@@ -457,6 +415,7 @@ settings:
   form_reset: false
   form_disable_autocomplete: false
   form_novalidate: false
+  form_disable_inline_errors: false
   form_required: false
   form_unsaved: false
   form_disable_back: false
@@ -502,6 +461,8 @@ settings:
   confirmation_back: true
   confirmation_back_label: ''
   confirmation_back_attributes: {  }
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
   limit_total: null
   limit_total_interval: null
   limit_total_message: ''
@@ -556,7 +517,7 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-  administer:
+  test:
     roles: {  }
     users: {  }
     permissions: {  }

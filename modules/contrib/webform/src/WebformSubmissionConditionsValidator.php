@@ -29,6 +29,7 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
   protected $aliases = [
     'enabled' => '!disabled',
     'invisible' => '!visible',
+    'invisible-slide' => '!visible-slide',
     'invalid' => '!valid',
     'optional' => '!required',
     'filled' => '!empty',
@@ -77,7 +78,7 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
 
     // Loop through visible elements with #states.
     foreach ($elements as &$element) {
-      $states = static::getElementStates($element);
+      $states = WebformElementHelper::getStates($element);
       foreach ($states as $original_state => $conditions) {
         if (!is_array($conditions)) {
           continue;
@@ -87,9 +88,8 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
         list($state, $negate) = $this->processState($original_state);
 
         // @todo Track an element's states.
-
         // If hide/show we need to make sure that validation is not triggered.
-        if ($state === 'visible') {
+        if (strpos($state, 'visible') === 0) {
           $element['#after_build'][] = [get_class($this), 'elementAfterBuild'];
         }
 
@@ -118,6 +118,7 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
             break;
 
           case 'visible':
+          case 'visible-slide':
             $element['#access'] = $result;
             break;
 
@@ -181,7 +182,7 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
    * {@inheritdoc}
    */
   public function isElementVisible(array $element, WebformSubmissionInterface $webform_submission) {
-    $states = static::getElementStates($element);
+    $states = WebformElementHelper::getStates($element);
 
     $visible = TRUE;
     foreach ($states as $state => $conditions) {
@@ -202,7 +203,7 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
       $result = ($negate) ? !$result : $result;
 
       // Apply result to element state.
-      if ($state === 'visible' && $result === FALSE) {
+      if (strpos($state, 'visible') === 0 && $result === FALSE) {
         $visible = FALSE;
       }
     }
@@ -256,7 +257,7 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
    *   The current state of the form.
    */
   protected function validateFormElement(array $element, FormStateInterface $form_state) {
-    $states = static::getElementStates($element);
+    $states = WebformElementHelper::getStates($element);
     if (empty($states)) {
       return;
     }
@@ -552,8 +553,14 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
             if (isset($element['#states']['visible'])) {
               $element['#states']['required'] = $element['#states']['visible'];
             }
+            elseif (isset($element['#states']['visible-slide'])) {
+              $element['#states']['required'] = $element['#states']['visible-slide'];
+            }
             elseif (isset($element['#states']['invisible'])) {
               $element['#states']['optional'] = $element['#states']['invisible'];
+            }
+            elseif (isset($element['#states']['invisible-slide'])) {
+              $element['#states']['optional'] = $element['#states']['invisible-slide'];
             }
             elseif ($parent_states) {
               $element += ['#states' => []];
@@ -578,8 +585,14 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
         if (isset($element['#states']['visible'])) {
           $subelement_states = ['required' => $element['#states']['visible']];
         }
+        elseif (isset($element['#states']['visible-slide'])) {
+          $subelement_states = ['required' => $element['#states']['visible-slide']];
+        }
         elseif (isset($element['#states']['invisible'])) {
           $subelement_states = ['optional' => $element['#states']['invisible']];
+        }
+        elseif (isset($element['#states']['invisible-slide'])) {
+          $subelement_states = ['optional' => $element['#states']['invisible-slide']];
         }
       }
 
@@ -631,27 +644,6 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
   // Static input and selector methods.
   // @see \Drupal\webform\Plugin\WebformElementBase::getElementSelectorInputValue
   /****************************************************************************/
-
-  /**
-   * Get an element's states API array.
-   *
-   * @param array $element
-   *   An element.
-   *
-   * @return array
-   *   an element's states API array or an empty array.
-   */
-  public static function getElementStates(array $element) {
-    if (isset($element['#states'])) {
-      return $element['#states'];
-    }
-    // @see \Drupal\webform\Utility\WebformElementHelper::fixStatesWrapper
-    if (isset($element['#_webform_states'])) {
-      return $element['#_webform_states'];
-    }
-
-    return [];
-  }
 
   /**
    * Get input name from CSS :input[name="*"] selector.

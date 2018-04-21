@@ -57,6 +57,8 @@ settings:
   form_reset: false
   form_disable_autocomplete: false
   form_novalidate: false
+  form_disable_inline_errors: false
+  form_required: false
   form_unsaved: false
   form_disable_back: false
   form_submit_back: false
@@ -70,6 +72,10 @@ settings:
   submission_login: false
   submission_login_message: ''
   submission_exception_message: ''
+  submission_locked_message: ''
+  autofill: false
+  autofill_message: ''
+  autofill_excluded_elements: {  }
   wizard_progress_bar: true
   wizard_progress_pages: false
   wizard_progress_percentage: false
@@ -97,6 +103,8 @@ settings:
   confirmation_back: true
   confirmation_back_label: ''
   confirmation_back_attributes: {  }
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
   limit_total: null
   limit_total_interval: null
   limit_total_message: ''
@@ -147,6 +155,14 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
+  administer:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  test:
+    roles: {  }
+    users: {  }
+    permissions: {  }
 handlers:
   tomorrow:
     id: scheduled_email
@@ -176,6 +192,7 @@ handlers:
       exclude_empty: true
       html: true
       attachments: false
+      twig: false
       debug: true
       reply_to: ''
       return_path: ''
@@ -212,6 +229,7 @@ handlers:
       exclude_empty: true
       html: true
       attachments: false
+      twig: false
       debug: true
       reply_to: ''
       return_path: ''
@@ -248,6 +266,7 @@ handlers:
       exclude_empty: true
       html: true
       attachments: false
+      twig: false
       debug: true
       reply_to: ''
       return_path: ''
@@ -284,6 +303,7 @@ handlers:
       exclude_empty: true
       html: true
       attachments: false
+      twig: false
       debug: true
       reply_to: ''
       return_path: ''
@@ -322,6 +342,7 @@ handlers:
       exclude_empty: true
       html: true
       attachments: false
+      twig: false
       debug: true
       reply_to: ''
       return_path: ''
@@ -358,6 +379,7 @@ handlers:
       exclude_empty: true
       html: true
       attachments: false
+      twig: false
       debug: true
       reply_to: ''
       return_path: ''

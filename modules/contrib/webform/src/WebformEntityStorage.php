@@ -191,7 +191,22 @@ class WebformEntityStorage extends ConfigEntityStorage implements WebformEntityS
         $uncategorized_options[$id] = $webform->label();
       }
     }
-    return $uncategorized_options + $categorized_options;
+
+    // Merge uncategorized options with categorized options.
+    $options = $uncategorized_options;
+    foreach ($categorized_options as $optgroup => $optgroup_options) {
+      // If webform id and optgroup conflict move the webform into the optgroup.
+      if (isset($options[$optgroup])) {
+        $options[$optgroup] = [$optgroup => $options[$optgroup]]
+          + $optgroup_options;
+        asort($options[$optgroup]);
+      }
+      else {
+        $options[$optgroup] = $optgroup_options;
+      }
+    }
+
+    return $options;
   }
 
   /**
@@ -222,9 +237,11 @@ class WebformEntityStorage extends ConfigEntityStorage implements WebformEntityS
     // Use a transaction with SELECT ... FOR UPDATE to lock the row between
     // the SELECT and the UPDATE, ensuring that multiple Webform submissions
     // at the same time do not have duplicate numbers. FOR UPDATE must be inside
-    // a transaction. The return value of db_transaction() must be assigned or the
-    // transaction will commit immediately. The transaction will commit when $txn
-    // goes out-of-scope.
+    // a transaction. The return value of db_transaction() must be assigned or
+    // the transaction will commit immediately.
+    //
+    // The transaction will commit when $transaction goes out-of-scope.
+    //
     // @see \Drupal\Core\Database\Transaction
     $transaction = $this->database->startTransaction();
 

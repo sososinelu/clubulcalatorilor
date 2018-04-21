@@ -3,6 +3,7 @@
 namespace Drupal\webform\Element;
 
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Form\OptGroup;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Render\Element\FormElement;
@@ -74,7 +75,8 @@ class WebformElementStates extends FormElement {
     $element['#tree'] = TRUE;
 
     // Add validate callback that extracts the associative array of states.
-    $element['#element_validate'] = [[get_called_class(), 'validateWebformElementStates']];
+    $element += ['#element_validate' => []];
+    array_unshift($element['#element_validate'], [get_called_class(), 'validateWebformElementStates']);
 
     // For customized #states display a CodeMirror YAML editor.
     if ($warning_message = static::isDefaultValueCustomizedFormApiStates($element)) {
@@ -306,7 +308,7 @@ class WebformElementStates extends FormElement {
     ];
     $row['condition']['pattern'] = [
       '#type' => 'container',
-      'description' => ['#markup' => t('Enter a <a href=":href">regular expression</a>')],
+      'description' => ['#markup' => t('Enter a <a href=":href">regular expression</a>', [':href' => 'http://www.w3schools.com/js/js_regexp.asp'])],
       '#states' => [
         'visible' => [
           [$trigger_selector => ['value' => 'pattern']],
@@ -499,6 +501,8 @@ class WebformElementStates extends FormElement {
       $states = static::convertFormValuesToFormApiStates($element['states']['#value']);
     }
     $form_state->setValueForElement($element, NULL);
+
+    $element['#value'] = $states;
     $form_state->setValueForElement($element, $states);
   }
 
@@ -599,8 +603,12 @@ class WebformElementStates extends FormElement {
         continue;
       }
 
+      // Define values extracted from
+      // WebformElementStates::getFormApiStatesCondition().
       $selector = NULL;
       $trigger = NULL;
+      $value = NULL;
+
       $operator = $state_array['operator'];
       $conditions = $state_array['conditions'];
       if (count($conditions) === 1) {
@@ -731,9 +739,10 @@ class WebformElementStates extends FormElement {
       return t('Conditional logic (Form API #states) is not an array.');
     }
 
+    $state_options = OptGroup::flattenOptions($element['#state_options']);
     $states = $element['#default_value'];
     foreach ($states as $state => $conditions) {
-      if (!isset($element['#state_options'][$state])) {
+      if (!isset($state_options[$state])) {
         return t('Conditional logic (Form API #states) is using a custom %state state.', ['%state' => $state]);
       }
 
@@ -777,19 +786,33 @@ class WebformElementStates extends FormElement {
    *   An associative array of translated state options.
    */
   public static function getStateOptions() {
+    $visibility_optgroup = (string) t('Visibility');
+    $state_optgroup = (string) t('State');
+    $validation_optgroup = (string) t('Validation');
+    $value_optgroup = (string) t('Value');
     return [
-      'visible' => t('Visible'),
-      'invisible' => t('Hidden'),
-      'enabled' => t('Enabled'),
-      'disabled' => t('Disabled'),
-      'readwrite' => t('Read/write'),
-      'readonly' => t('Read-only'),
-      'required' => t('Required'),
-      'optional' => t('Optional'),
-      'checked' => t('Checked'),
-      'unchecked' => t('Unchecked'),
-      'expanded' => t('Expanded'),
-      'collapsed' => t('Collapsed'),
+      $visibility_optgroup => [
+        'visible' => t('Visible'),
+        'invisible' => t('Hidden'),
+        'visible-slide' => t('Visible (Slide)'),
+        'invisible-slide' => t('Hidden (Slide)'),
+      ],
+      $state_optgroup => [
+        'enabled' => t('Enabled'),
+        'disabled' => t('Disabled'),
+        'readwrite' => t('Read/write'),
+        'readonly' => t('Read-only'),
+        'expanded' => t('Expanded'),
+        'collapsed' => t('Collapsed'),
+      ],
+      $validation_optgroup => [
+        'required' => t('Required'),
+        'optional' => t('Optional'),
+      ],
+      $value_optgroup => [
+        'checked' => t('Checked'),
+        'unchecked' => t('Unchecked'),
+      ],
     ];
   }
 

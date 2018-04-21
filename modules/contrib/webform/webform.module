@@ -65,6 +65,18 @@ function webform_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
+ * Implements hook_webform_message_custom().
+ */
+function webform_webform_message_custom($operation, $id) {
+  if (strpos($id, 'webform_help_notification__') === 0 && $operation === 'close') {
+    $id = str_replace('webform_help_notification__', '', $id);
+    /** @var \Drupal\webform\WebformHelpManagerInterface $help_manager */
+    $help_manager = \Drupal::service('webform.help_manager');
+    $help_manager->deleteNotification($id);
+  }
+}
+
+/**
  * Implements hook_modules_installed().
  */
 function webform_modules_installed($modules) {
@@ -130,13 +142,10 @@ function webform_local_tasks_alter(&$local_tasks) {
     $local_tasks['config_translation.local_tasks:config_translation.item.overview.webform.config']['parent_id'] = 'webform.config';
   }
 
-  // Disable 'About' tab.
-  if (\Drupal::config('webform.settings')->get('ui.about_disabled')) {
-    unset(
-      $local_tasks['webform.about'],
-      $local_tasks['webform.about.webform'],
-      $local_tasks['webform.about.drupal']
-    );
+  // Disable 'Contribute' tab if explicitly disabled or the Contribute module
+  // is installed.
+  if (\Drupal::config('webform.settings')->get('ui.contribute_disabled') || \Drupal::moduleHandler()->moduleExists('contribute')) {
+    unset($local_tasks['webform.contribute']);
   }
 }
 
@@ -195,6 +204,31 @@ function webform_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     return;
   }
 
+  // Get form object.
+  $form_object = $form_state->getFormObject();
+
+  // Alter the webform submission form.
+  if (strpos($form_id, 'webform_submission') === 0
+    && $form_object instanceof WebformSubmissionForm) {
+    // Make sure webform libraries are always attached to submission form.
+    _webform_page_attachments($form);
+
+    // Execute hook_form_BASE_FORM_ID_alter for the webform & source entity
+    // without the operation. (i.e. 'add', 'edit', 'notes', etc...)
+    // @see \Drupal\webform\WebformSubmissionForm::getFormId
+    /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
+    $webform_submission = $form_object->getEntity();
+    $webform = $webform_submission->getWebform();
+
+    $hook = 'form_webform_submission_' . $webform->id() . '_form';
+    $form_id = $form_object->getFormId();
+    \Drupal::service('module_handler')->alter($hook, $form, $form_state, $form_id);
+    \Drupal::service('theme.manager')->alter($hook, $form, $form_state, $form_id);
+
+    // After build.
+    $form['#after_build'][] = '_webform_form_webform_submission_form_after_build';
+  }
+
   // Display editing original language warning.
   if (\Drupal::moduleHandler()->moduleExists('config_translation') && preg_match('/^entity.webform.(?:edit|settings|assets|access|handlers|third_party_settings)_form$/', \Drupal::routeMatch()->getRouteName())) {
     /** @var \Drupal\webform\WebformInterface $webform */
@@ -218,8 +252,6 @@ function webform_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     }
   }
 
-  $form_object = $form_state->getFormObject();
-
   // Add details 'toggle all' to all webforms (except submission forms).
   if (!($form_object instanceof WebformSubmissionForm)) {
     $form['#attributes']['class'][] = 'js-webform-details-toggle';
@@ -227,37 +259,6 @@ function webform_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     $form['#attached']['library'][] = 'webform/webform.element.details.toggle';
     return;
   }
-}
-
-/**
- * Implements hook_form_BASE_ID_alter().
- */
-function webform_form_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // Make sure webform libraries are always attached to submission form.
-  _webform_page_attachments($form);
-
-  // Execute hook_form_BASE_FORM_ID_alter for the webform & source entity
-  // without the operation. (i.e. 'add', 'edit', 'notes', etc...)
-  // @see \Drupal\webform\WebformSubmissionForm::getFormId
-  $form_object = $form_state->getFormObject();
-
-  /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
-  $webform_submission = $form_object->getEntity();
-  $webform = $webform_submission->getWebform();
-  $source_entity = $webform_submission->getSourceEntity();
-
-  $hooks = [];
-  $hooks[] = 'form_webform_submission_' . $webform->id() . '_form';
-  if ($source_entity) {
-    $hooks[] = 'form_webform_submission_' . $webform->id() . '_' . $source_entity->getEntityTypeId() . '_' . $source_entity->id() . '_form';
-  }
-
-  $form_id = $form_object->getFormId();
-  \Drupal::service('module_handler')->alter($hooks, $form, $form_state, $form_id);
-  \Drupal::service('theme.manager')->alter($hooks, $form, $form_state, $form_id);
-
-  // After build.
-  $form['#after_build'][] = '_webform_form_webform_submission_form_after_build';
 }
 
 /**
@@ -466,6 +467,20 @@ function webform_page_attachments(array &$attachments) {
   if (strpos($route_name, 'block.admin_display') === 0) {
     $attachments['#attached']['library'][] = 'webform/webform.block';
   }
+
+  // Attach 'Contribute' section style.
+  if (\Drupal::routeMatch()->getRouteName() === 'webform.contribute') {
+    /** @var \Drupal\webform\WebformContributeManagerInterface $contribute_manager */
+    $contribute_manager = \Drupal::service('webform.contribute_manager');
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#type' => 'html_tag',
+        '#tag' => 'style',
+        '#value' => $contribute_manager->getStyle(),
+      ],
+      'webform_contribute',
+    ];
+  }
 }
 
 /**
@@ -626,9 +641,15 @@ function webform_file_download($uri) {
 
 /**
  * Implements hook_contextual_links_view_alter().
+ *
+ * Add .webform-contextual class to all webform context links.
+ *
+ * @see webform.links.contextual.yml
+ * @see js/webform.contextual.js
  */
 function webform_contextual_links_view_alter(&$element, $items) {
   $links = [
+    'entitywebformtest-form',
     'entitywebformresults-submissions',
     'entitywebformedit-form',
     'entitywebformsettings',

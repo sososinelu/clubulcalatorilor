@@ -297,14 +297,11 @@ elements: |
             Male: Male
             Female: Female
       '#default_value':
-        -
-          name: Loremipsum
+        - name: Loremipsum
           gender: Male
-        -
-          name: Loremipsum
+        - name: Loremipsum
           gender: Male
-        -
-          name: Loremipsum
+        - name: Loremipsum
           gender: Male
       '#states':
         visible:
@@ -351,36 +348,6 @@ elements: |
         state_province: Alabama
         postal_code: Loremipsum
         country: Afghanistan
-      '#states':
-        visible:
-          ':input[name="visible_trigger"]':
-            checked: true
-        required:
-          ':input[name="visible_trigger"]':
-            checked: true
-    visible_webform_creditcard:
-      '#type': webform_creditcard
-      '#title': 'Credit card'
-      '#default_value':
-        warning: null
-        name: Loremipsum
-        type: VI
-        number: '4111111111111111'
-        civ: 111
-        expiration: null
-        expiration_month: 1
-        expiration_year: 2017
-      '#states':
-        visible:
-          ':input[name="visible_trigger"]':
-            checked: true
-        required:
-          ':input[name="visible_trigger"]':
-            checked: true
-    visible_webform_creditcard_number:
-      '#type': webform_creditcard_number
-      '#title': 'Credit card number'
-      '#default_value': '4111111111111111'
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -1293,14 +1260,11 @@ elements: |
             Male: Male
             Female: Female
       '#default_value':
-        -
-          name: Loremipsum
+        - name: Loremipsum
           gender: Male
-        -
-          name: Loremipsum
+        - name: Loremipsum
           gender: Male
-        -
-          name: Loremipsum
+        - name: Loremipsum
           gender: Male
       '#states':
         invisible:
@@ -1338,30 +1302,6 @@ elements: |
         state_province: Alabama
         postal_code: Loremipsum
         country: Afghanistan
-      '#states':
-        invisible:
-          ':input[name="invisible_trigger"]':
-            checked: true
-    invisible_webform_creditcard:
-      '#type': webform_creditcard
-      '#title': 'Credit card'
-      '#default_value':
-        warning: null
-        name: Loremipsum
-        type: VI
-        number: '4111111111111111'
-        civ: 111
-        expiration: null
-        expiration_month: 1
-        expiration_year: 2017
-      '#states':
-        invisible:
-          ':input[name="invisible_trigger"]':
-            checked: true
-    invisible_webform_creditcard_number:
-      '#type': webform_creditcard_number
-      '#title': 'Credit card number'
-      '#default_value': '4111111111111111'
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -2045,14 +1985,11 @@ elements: |
             Male: Male
             Female: Female
       '#default_value':
-        -
-          name: Loremipsum
+        - name: Loremipsum
           gender: Male
-        -
-          name: Loremipsum
+        - name: Loremipsum
           gender: Male
-        -
-          name: Loremipsum
+        - name: Loremipsum
           gender: Male
       '#states':
         disabled:
@@ -2090,30 +2027,6 @@ elements: |
         state_province: Alabama
         postal_code: Loremipsum
         country: Afghanistan
-      '#states':
-        disabled:
-          ':input[name="disabled_trigger"]':
-            checked: true
-    disabled_webform_creditcard:
-      '#type': webform_creditcard
-      '#title': 'Credit card'
-      '#default_value':
-        warning: null
-        name: Loremipsum
-        type: VI
-        number: '4111111111111111'
-        civ: 111
-        expiration: null
-        expiration_month: 1
-        expiration_year: 2017
-      '#states':
-        disabled:
-          ':input[name="disabled_trigger"]':
-            checked: true
-    disabled_webform_creditcard_number:
-      '#type': webform_creditcard_number
-      '#title': 'Credit card number'
-      '#default_value': '4111111111111111'
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2678,6 +2591,7 @@ settings:
   form_reset: false
   form_disable_autocomplete: false
   form_novalidate: false
+  form_disable_inline_errors: false
   form_required: false
   form_unsaved: false
   form_disable_back: false
@@ -2723,6 +2637,8 @@ settings:
   confirmation_back: true
   confirmation_back_label: ''
   confirmation_back_attributes: {  }
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
   limit_total: null
   limit_total_interval: null
   limit_total_message: ''
@@ -2777,7 +2693,7 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-  administer:
+  test:
     roles: {  }
     users: {  }
     permissions: {  }

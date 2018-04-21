@@ -233,7 +233,7 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
       '#type' => 'machine_name',
       '#title' => $this->t('Key'),
       '#machine_name' => [
-        'label' => $this->t('Key'),
+        'label' => '<br/>' . $this->t('Key'),
         'exists' => [$this, 'exists'],
         'source' => ['title'],
       ],
@@ -272,7 +272,7 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
     ];
 
     $form = $this->buildDefaultValueForm($form, $form_state);
-    
+
     return $this->buildDialogForm($form, $form_state);
   }
 
@@ -519,11 +519,12 @@ abstract class WebformUiElementFormBase extends FormBase implements WebformUiEle
     if ($element = $form_state->get('default_value_element')) {
       // Display the default value element.
       $element['#webform_key'] = $this->getWebform()->id();
-      $element_plugin = $this->elementManager->getElementInstance($element);
-      $element_plugin->initialize($element);
-      $element_plugin->prepare($element);
-      $element_plugin->finalize($element);
-      $element_plugin->setDefaultValue($element);
+
+      // Initialize the element.
+      $this->elementManager->initializeElement($element);
+
+      // Build the element.
+      $this->elementManager->buildElement($element, $form, $form_state);
 
       $form['default'] = [
         '#type' => 'fieldset',

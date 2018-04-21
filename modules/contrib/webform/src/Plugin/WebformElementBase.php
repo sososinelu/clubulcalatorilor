@@ -18,6 +18,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\webform\Element\WebformHtmlEditor;
+use Drupal\webform\Element\WebformMessage;
 use Drupal\webform\Entity\WebformOptions;
 use Drupal\webform\Plugin\WebformElement\Checkbox;
 use Drupal\webform\Plugin\WebformElement\Checkboxes;
@@ -27,6 +28,7 @@ use Drupal\webform\Utility\WebformArrayHelper;
 use Drupal\webform\Utility\WebformElementHelper;
 use Drupal\webform\Utility\WebformFormHelper;
 use Drupal\webform\Utility\WebformHtmlHelper;
+use Drupal\webform\Utility\WebformOptionsHelper;
 use Drupal\webform\Utility\WebformReflectionHelper;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformLibrariesManagerInterface;
@@ -233,6 +235,8 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
     return [
       'multiple' => FALSE,
       'multiple__header_label' => '',
+      'multiple__label' => $this->t('item'),
+      'multiple__labels' => $this->t('items'),
       'multiple__min_items' => 1,
       'multiple__empty_items' => 1,
       'multiple__add_more' => 1,
@@ -307,6 +311,57 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
   public function getDefaultProperty($property_name) {
     $default_properties = $this->getDefaultProperties();
     return (isset($default_properties[$property_name])) ? $default_properties[$property_name] : NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getElementProperty(array $element, $property_name) {
+    return (isset($element["#$property_name"])) ? $element["#$property_name"] : $this->getDefaultProperty($property_name);
+  }
+
+  /**
+   * Set element's default callback.
+   *
+   * This makes sure that an element's default callback is not clobbered by
+   * any additional callbacks.
+   *
+   * @param array $element
+   *   A render element.
+   * @param string $callback_name
+   *   A render element's callback.
+   */
+  protected function setElementDefaultCallback(array &$element, $callback_name) {
+    $callback_name = ($callback_name[0] !== '#') ? '#' . $callback_name : $callback_name;
+    $callback_value = $this->getElementInfoDefaultProperty($element, $callback_name) ?: [];
+    if (!empty($element[$callback_name])) {
+      $element[$callback_name] = array_merge($callback_value, $element[$callback_name]);
+    }
+    else {
+      $element[$callback_name] = $callback_value;
+    }
+  }
+
+  /**
+   * Get a render element's default property.
+   *
+   * @param array $element
+   *   A render element.
+   * @param string $property_name
+   *   An element's property name.
+   *
+   * @return mixed
+   *   A render element's default value, or NULL if
+   *   property does not exist.
+   */
+  protected function getElementInfoDefaultProperty(array $element, $property_name) {
+    if (!isset($element['#type'])) {
+      return NULL;
+    }
+    $property_name = ($property_name[0] !== '#') ? '#' . $property_name : $property_name;
+    $type = $element['#type'];
+    return $property_value = $this->elementInfo->getInfoProperty($type, $property_name, NULL)
+      ?: $this->elementInfo->getInfoProperty("webform_$type", $property_name, NULL);
   }
 
   /****************************************************************************/
@@ -566,6 +621,9 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
     if (!empty($element['#title']) && empty($element['#admin_title'])) {
       $element['#admin_title'] = strip_tags($element['#title']);
     }
+
+    // Replace global tokens which could include the [site:name].
+    $this->replaceTokens($element);
   }
 
   /**
@@ -573,7 +631,6 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
    */
   public function prepare(array &$element, WebformSubmissionInterface $webform_submission = NULL) {
     $attributes_property = ($this->hasWrapper($element)) ? '#wrapper_attributes' : '#attributes';
-
     if ($webform_submission) {
       // Add webform and webform_submission IDs to every element.
       $element['#webform'] = $webform_submission->getWebform()->id();
@@ -673,6 +730,10 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
       $element[$attributes_property]['class'][] = 'webform-has-field-suffix';
     }
 
+    // Set element's #element_validate callback so that is not replaced by
+    // additional #element_validate callbacks.
+    $this->setElementDefaultCallback($element, 'element_validate');
+
     if ($this->isInput($element)) {
       // Handle #readonly support.
       // @see \Drupal\Core\Form\FormBuilder::handleInputElement
@@ -690,24 +751,6 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
         $element['#attributes']['data-webform-required-error'] = $element['#required_error'];
       }
 
-      $type = $element['#type'];
-
-      // Get and set the element's default #element_validate property so that
-      // it is not skipped when custom callbacks are added to #element_validate.
-      // @see \Drupal\Core\Render\Element\Color
-      // @see \Drupal\Core\Render\Element\Number
-      // @see \Drupal\Core\Render\Element\Email
-      // @see \Drupal\Core\Render\Element\MachineName
-      // @see \Drupal\Core\Render\Element\Url
-      $element_validate = $this->elementInfo->getInfoProperty($type, '#element_validate', [])
-        ?: $this->elementInfo->getInfoProperty("webform_$type", '#element_validate', []);
-      if (!empty($element['#element_validate'])) {
-        $element['#element_validate'] = array_merge($element_validate, $element['#element_validate']);
-      }
-      else {
-        $element['#element_validate'] = $element_validate;
-      }
-
       // Add webform element #minlength, #unique, and/or #multiple
       // validation handler.
       if (isset($element['#minlength'])) {
@@ -721,9 +764,6 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
       }
     }
 
-    // Prepare Flexbox and #states wrapper.
-    $this->prepareWrapper($element);
-
     // Replace tokens for all properties.
     if ($webform_submission) {
       $this->replaceTokens($element, $webform_submission);
@@ -736,6 +776,9 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
   public function finalize(array &$element, WebformSubmissionInterface $webform_submission = NULL) {
     // Prepare multiple element.
     $this->prepareMultipleWrapper($element);
+
+    // Prepare #states and flexbox wrapper.
+    $this->prepareWrapper($element);
 
     // Set hidden element #after_build handler.
     $element['#after_build'][] = [get_class($this), 'hiddenElementAfterBuild'];
@@ -820,14 +863,9 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
   }
 
   /**
-   * Replace tokens for all element properties.
-   *
-   * @param array $element
-   *   An element.
-   * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
-   *   A webform submission.
+   * {@inheritdoc}
    */
-  protected function replaceTokens(array &$element, WebformSubmissionInterface $webform_submission) {
+  public function replaceTokens(array &$element, WebformSubmissionInterface $webform_submission = NULL) {
     foreach ($element as $key => $value) {
       if (!Element::child($key)) {
         $element[$key] = $this->tokenManager->replace($value, $webform_submission);
@@ -836,24 +874,71 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
   }
 
   /**
-   * Set an elements Flexbox and #states wrapper.
+   * Set an elements #states and flexbox wrapper.
    *
    * @param array $element
    *   An element.
    */
   protected function prepareWrapper(array &$element) {
+    $has_states_wrapper = $this->pluginDefinition['states_wrapper'];
+    $has_flexbox_wrapper = !empty($element['#webform_parent_flexbox']);
+    if (!$has_states_wrapper && !$has_flexbox_wrapper) {
+      return;
+    }
+
+    $class = get_class($this);
+
+    // Set element's #pre_render callback so that is not replaced by
+    // additional element #pre_render callbacks.
+    $this->setElementDefaultCallback($element, 'pre_render');
+
     // Fix #states wrapper.
-    if ($this->pluginDefinition['states_wrapper']) {
-      WebformElementHelper::fixStatesWrapper($element);
+    if ($has_states_wrapper) {
+      $element['#pre_render'][] = [$class, 'preRenderFixStatesWrapper'];
     }
 
     // Add flex(box) wrapper.
-    if (!empty($element['#webform_parent_flexbox'])) {
-      $flex = (isset($element['#flex'])) ? $element['#flex'] : 1;
-      $element += ['#prefix' => '', '#suffix' => ''];
-      $element['#prefix'] = '<div class="webform-flex webform-flex--' . $flex . '"><div class="webform-flex--container">' . $element['#prefix'];
-      $element['#suffix'] = $element['#suffix'] . '</div></div>';
+    if ($has_flexbox_wrapper) {
+      $element['#pre_render'][] = [$class, 'preRenderFixFlexboxWrapper'];
     }
+  }
+
+  /**
+   * Fix state wrapper.
+   *
+   * Notes:
+   * - Certain elements don't support #states so a workaround is to adds a
+   *   wrapper that renders the #states in a #prefix and #suffix div tag.
+   * - Composite elements tend not to properly handle #states.
+   * - Composite elements need propagate a visible/hidden #states to
+   *   sub-element required #state.
+   *
+   * @param array $element
+   *   An element.
+   *
+   * @return array
+   *   An element with #states added to the #prefix and #suffix.
+   */
+  public static function preRenderFixStatesWrapper(array $element) {
+    WebformElementHelper::fixStatesWrapper($element);
+    return $element;
+  }
+
+  /**
+   * Fix flexbox wrapper.
+   *
+   * @param array $element
+   *   An element.
+   *
+   * @return array
+   *   An element with flexbox wrapper added to the #prefix and #suffix.
+   */
+  public static function preRenderFixFlexboxWrapper(array $element) {
+    $flex = (isset($element['#flex'])) ? $element['#flex'] : 1;
+    $element += ['#prefix' => '', '#suffix' => ''];
+    $element['#prefix'] = '<div class="webform-flex webform-flex--' . $flex . '"><div class="webform-flex--container">' . $element['#prefix'];
+    $element['#suffix'] = $element['#suffix'] . '</div></div>';
+    return $element;
   }
 
   /**
@@ -871,6 +956,11 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
     $element['#element'] = $element;
     // Remove properties that should only be applied to the parent element.
     $element['#element'] = array_diff_key($element['#element'], array_flip(['#default_value', '#description', '#description_display', '#required', '#required_error', '#states', '#wrapper_attributes', '#prefix', '#suffix', '#element', '#tags', '#multiple']));
+    // Propagate #states to sub element.
+    // @see \Drupal\webform\Element\WebformCompositeBase::processWebformComposite
+    if (!empty($element['#states'])) {
+      $element['#element']['#_webform_states'] = $element['#states'];
+    }
     // Always make the title invisible.
     $element['#element']['#title_display'] = 'invisible';
 
@@ -898,7 +988,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
     }
 
     // Remove properties that should only be applied to the child element.
-    $element = array_diff_key($element, array_flip(['#attributes', '#field_prefix', '#field_suffix', '#pattern', '#placeholder', '#maxlength', '#element_validate']));
+    $element = array_diff_key($element, array_flip(['#attributes', '#field_prefix', '#field_suffix', '#pattern', '#placeholder', '#maxlength', '#element_validate', '#pre_render']));
 
     // Apply #unique multiple validation.
     if (isset($element['#unique'])) {
@@ -1012,7 +1102,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
 
     // Convert string to renderable #markup.
     if (is_string($value)) {
-      $value = ['#markup' => $value];
+      $value = ['#' . ($format === 'text' ? 'plain_text' : 'markup') => $value];
     }
 
     return [
@@ -1813,22 +1903,35 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
    * {@inheritdoc}
    */
   public function getElementStateOptions() {
+    $visibility_optgroup = (string) $this->t('Visibility');
+    $state_optgroup = (string) $this->t('State');
+    $validation_optgroup = (string) $this->t('Validation');
+    $value_optgroup = (string) $this->t('Value');
+
     $states = [];
 
     // Set default states that apply to the element/container and sub elements.
     $states += [
-      'visible' => $this->t('Visible'),
-      'invisible' => $this->t('Hidden'),
-      'enabled' => $this->t('Enabled'),
-      'disabled' => $this->t('Disabled'),
-      'required' => $this->t('Required'),
-      'optional' => $this->t('Optional'),
+      $visibility_optgroup => [
+        'visible' => $this->t('Visible'),
+        'invisible' => $this->t('Hidden'),
+        'visible-slide' => $this->t('Visible (Slide)'),
+        'invisible-slide' => $this->t('Hidden (Slide)'),
+      ],
+      $state_optgroup => [
+        'enabled' => $this->t('Enabled'),
+        'disabled' => $this->t('Disabled'),
+      ],
+      $validation_optgroup => [
+        'required' => $this->t('Required'),
+        'optional' => $this->t('Optional'),
+      ]
     ];
 
     // Set readwrite/readonly states for any element that supports it
     // and containers.
     if ($this->hasProperty('readonly') || $this->isContainer(['#type' => $this->getPluginId()])) {
-      $states += [
+      $states[$state_optgroup] += [
         'readwrite' => $this->t('Read/write'),
         'readonly' => $this->t('Read-only'),
       ];
@@ -1836,7 +1939,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
 
     // Set checked/unchecked states for any element that contains checkboxes.
     if ($this instanceof Checkbox || $this instanceof Checkboxes) {
-      $states += [
+      $states[$value_optgroup] = [
         'checked' => $this->t('Checked'),
         'unchecked' => $this->t('Unchecked'),
       ];
@@ -1844,7 +1947,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
 
     // Set expanded/collapsed states for any details element.
     if ($this instanceof Details) {
-      $states += [
+      $states[$state_optgroup] += [
         'expanded' => $this->t('Expanded'),
         'collapsed' => $this->t('Collapsed'),
       ];
@@ -2410,6 +2513,18 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
       '#title' => $this->t('Table header label'),
       '#description' => $this->t('This is used as the table header for this webform element when displaying multiple values.'),
     ];
+    $form['multiple']['multiple__label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Item label'),
+      '#attributes' => ['data-webform-states-no-clear' => TRUE],
+      '#description' => $this->t('This is used as the item label for this webform element when displaying multiple values.'),
+    ];
+    $form['multiple']['multiple__labels'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Item labels'),
+      '#attributes' => ['data-webform-states-no-clear' => TRUE],
+      '#description' => $this->t('This is used as the items label for this webform element when displaying multiple values.'),
+    ];
     $form['multiple']['multiple__min_items'] = [
       '#type' => 'number',
       '#title' => $this->t('Minimum amount of items'),
@@ -2492,11 +2607,11 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
       '#type' => 'select',
       '#title' => $this->t('Item format'),
       '#description' => $this->t('Select how a single value is displayed.'),
-      '#options' => $this->getItemFormats(),
+      '#options' => WebformOptionsHelper::appendValueToText($this->getItemFormats()),
     ];
     $format = isset($element_properties['format']) ? $element_properties['format'] : NULL;
     $format_custom = ($has_edit_twig_access || $format === 'custom');
-    if ($format_custom ) {
+    if ($format_custom) {
       $form['display']['item']['format']['#options'] += ['custom' => $this->t('Custom...')];
     }
     $custom_states = [
@@ -2565,7 +2680,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
       '#type' => 'select',
       '#title' => $this->t('Items format'),
       '#description' => $this->t('Select how multiple values are displayed.'),
-      '#options' => $this->getItemsFormats(),
+      '#options' => WebformOptionsHelper::appendValueToText($this->getItemsFormats()),
     ];
     $format_items = isset($element_properties['format_items']) ? $element_properties['format_items'] : NULL;
     $format_items_custom = ($has_edit_twig_access || $format_items === 'custom');
@@ -2694,6 +2809,20 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
       }
     }
 
+    // Add warning to all password elements that are stored in the database.
+    if (strpos($this->pluginId, 'password') !== FALSE && !$webform->getSetting('results_disabled')) {
+      $form['element']['password_message'] = [
+        '#type' => 'webform_message',
+        '#message_type' => 'warning',
+        '#message_message' => $this->t('Webform submissions store passwords as plain text.') . ' ' .
+          $this->t('<a href=":href">Encryption</a> should be enabled for this element.', [':href' => 'https://www.drupal.org/project/webform_encrypt']),
+        '#access' => TRUE,
+        '#weight' => -100,
+        '#message_close' => TRUE,
+        '#message_storage' => WebformMessage::STORAGE_SESSION,
+      ];
+    }
+
     return $form;
   }
 
@@ -2778,6 +2907,8 @@ class WebformElementBase extends PluginBase implements WebformElementInterface {
     ];
 
     $form['token_tree_link'] = $this->tokenManager->buildTreeLink();
+
+    $this->tokenManager->elementValidate($form);
 
     // Set custom properties.
     // Note: Storing this information in the webform's state allows modules to

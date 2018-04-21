@@ -2,7 +2,6 @@
 
 namespace Drupal\webform\Form\AdminConfig;
 
-use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -11,6 +10,7 @@ use Drupal\Core\Url;
 use Drupal\file\Plugin\Field\FieldType\FileItem;
 use Drupal\webform\Utility\WebformArrayHelper;
 use Drupal\webform\Plugin\WebformElementManagerInterface;
+use Drupal\webform\Utility\WebformOptionsHelper;
 use Drupal\webform\WebformLibrariesManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -137,7 +137,7 @@ class WebformAdminConfigElementsForm extends WebformAdminConfigBaseForm {
     $form['element']['default_description_display'] = [
       '#type' => 'select',
       '#title' => $this->t('Default description display'),
-      '#empty_option' => $this->t('- Default - '),
+      '#empty_option' => $this->t('- Default -'),
       '#options' => [
         'before' => $this->t('Before'),
         'after' => $this->t('After'),
@@ -182,7 +182,7 @@ class WebformAdminConfigElementsForm extends WebformAdminConfigBaseForm {
       '#type' => 'select',
       '#title' => $this->t('Enhance checkboxes/radio buttons using iCheck'),
       '#description' => $this->t('If set, all checkboxes/radio buttons with be enhanced using jQuery <a href=":href">iCheck</a> boxes.', [':href' => 'http://icheck.fronteed.com/']),
-      '#empty_option' => $this->t('- Default - '),
+      '#empty_option' => $this->t('- Default -'),
       '#options' => [
         (string) $this->t('Minimal') => [
           'minimal' => $this->t('Minimal: Black'),
@@ -400,6 +400,29 @@ class WebformAdminConfigElementsForm extends WebformAdminConfigBaseForm {
     $form['types']['excluded_elements']['#header']['title']['width'] = '25%';
     $form['types']['excluded_elements']['#header']['id']['width'] = '25%';
     $form['types']['excluded_elements']['#header']['description']['width'] = '50%';
+    // Add warning to all password elements.
+    foreach ($form['types']['excluded_elements']['#options'] as $element_type => &$excluded_element_option) {
+      if (strpos($element_type,'password') !== FALSE) {
+        $excluded_element_option['description'] = [
+          'data' => [
+            'description' => ['#markup' => $excluded_element_option['description']],
+            'message' => [
+              '#type' => 'webform_message',
+              '#message_type' => 'warning',
+              '#message_message' => $this->t('Webform submissions store passwords as plain text.') . ' ' .
+                $this->t('Any webform that includes this element should enable <a href=":href">encryption</a>.', [':href' => 'https://www.drupal.org/project/webform_encrypt']),
+              '#attributes' => ['class' => ['js-form-wrapper']],
+              '#states' => [
+                'visible' => [
+                  ':input[name="excluded_elements[' . $element_type . ']"]' => ['checked' => TRUE],
+                ],
+              ],
+            ],
+          ],
+        ];
+
+      }
+    }
 
     // Element: Format.
     $form['format'] = [
@@ -427,19 +450,7 @@ class WebformAdminConfigElementsForm extends WebformAdminConfigBaseForm {
       $row['id'] = ['#markup' => $element_id];
 
       // Item format.
-      $item_formats = $element_plugin->getItemFormats();
-      foreach ($item_formats as $format_name => $format_label) {
-        if (is_array($format_label)) {
-          // Support optgroup.
-          // @see \Drupal\webform\Plugin\WebformElement\WebformImageFile::getItemFormats.
-          foreach ($format_label as $format_label_value => $format_label_text) {
-            $item_formats[$format_name][$format_label_value] = new FormattableMarkup('@label (@name)', ['@label' => $format_label_text, '@name' => $format_label_value]);
-          }
-        }
-        else {
-          $item_formats[$format_name] = new FormattableMarkup('@label (@name)', ['@label' => $format_label, '@name' => $format_name]);
-        }
-      }
+      $item_formats = WebformOptionsHelper::appendValueToText($element_plugin->getItemFormats());
       $item_default_format = $element_plugin->getItemDefaultFormat();
       $item_default_format_label = (isset($item_formats[$item_default_format])) ? $item_formats[$item_default_format] : $item_default_format;
       $row['item'] = [
@@ -459,10 +470,7 @@ class WebformAdminConfigElementsForm extends WebformAdminConfigBaseForm {
 
       // Items format.
       if ($element_plugin->supportsMultipleValues()) {
-        $items_formats = $element_plugin->getItemsFormats();
-        foreach ($items_formats as $format_name => $format_label) {
-          $items_formats[$format_name] = new FormattableMarkup('@label (@name)', ['@label' => $format_label, '@name' => $format_name]);
-        }
+        $items_formats = WebformOptionsHelper::appendValueToText($element_plugin->getItemsFormats());
         $items_default_format = $element_plugin->getItemsDefaultFormat();
         $items_default_format_label = (isset($item_formats[$items_default_format])) ? $items_formats[$items_default_format] : $items_default_format;
         $row['items'] = [
