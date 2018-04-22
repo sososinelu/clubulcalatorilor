@@ -1,0 +1,34 @@
+#block-homepagehowitworksblock {
+  h2 {
+    @include span-columns(12);
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 6rem;
+  }
+  .panel {
+    padding: 0;
+    border: none;
+    height: 23rem;
+    h3 {
+      text-align: center;
+      height: 5.6rem;
+    }
+    @include media($tablet-screen) {
+      @include span-columns(6);
+      @include omega(2n);
+    }
+    @include media($standard-screen) {
+      @include omega-reset(2n);
+      @include span-columns(3);
+      @include omega(5n);
+    }
+
+
+  }
+  .read-more {
+    @include span-columns(12);
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: 6rem;
+  }
+}
