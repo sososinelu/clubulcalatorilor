@@ -15,13 +15,16 @@
       </div>
     </section>
   {% endif %}
-
-  <main role="main">
-    <a id="main-content" tabindex="-1"></a>
-    <section id="content">
-      {{ page.content }}
-    </section>
-  </main>
+  <div id="main-content">
+    <div class="outer-wrapper">
+      <main role="main">
+        <a id="main-content" tabindex="-1"></a>
+        <section id="content">
+          {{ page.content }}
+        </section>
+      </main>
+    </div>
+  </div>
 
   {% if page.bellow_content %}
     <section id="above-content">

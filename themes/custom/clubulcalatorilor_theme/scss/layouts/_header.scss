@@ -1,4 +1,10 @@
 #site-header {
+  background-image: url("../images/cloud_white.png");
+  //background-image: url("../images/cloud_blue.png");
+  //background-image: url("../images/cloud.png");
+  background-repeat: repeat-x;
+  background-size: 500px 100px;
+  background-color: #78D2F7;
   .header-wrapper {
     @include outer-container($max-width);
   }

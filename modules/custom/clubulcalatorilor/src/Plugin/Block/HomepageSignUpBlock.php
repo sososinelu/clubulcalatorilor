@@ -20,8 +20,6 @@ class HomepageSignUpBlock extends BlockBase
   public function build()
   {
     if($node = \Drupal::routeMatch()->getParameter('node')) {
-      $useful_links = array();
-
       $slogan = ($node->field_site_slogan ? $node->field_site_slogan->value : '');
       $intro_text = ($node->field_intro_text ? $node->field_intro_text->value : '');
 
