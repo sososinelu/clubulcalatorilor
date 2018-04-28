@@ -15,7 +15,6 @@ $gputek-bold: 'Gputeks-Bold';
   font-style: normal;
 }
 
-
 // convert px to em
 $browser-context: 16; // Default
 
@@ -39,6 +38,7 @@ $heading-font: 'astoria', sans-serif;
 
 body {
   font-family: $base-font;
+  color: $dark-grey;
   font-size: ms(-1);
   line-height: $base-line-height;
   font-weight: $normal;

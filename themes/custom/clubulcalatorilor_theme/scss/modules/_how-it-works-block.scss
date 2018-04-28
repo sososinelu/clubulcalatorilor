@@ -1,4 +1,18 @@
 #block-homepagehowitworksblock {
+  margin-top: -5rem;
+  margin-bottom: -5rem;
+  .top-clouds,
+  .bottom-clouds {
+    background-repeat: repeat-x;
+    background-size: 50rem 10rem;
+    height: 10rem;
+  }
+  .top-clouds {
+    background-image: url("../images/cloud_white_top.png");
+  }
+  .bottom-clouds {
+    background-image: url("../images/cloud_white_bottom.png");
+  }
   h2 {
     @include span-columns(12);
     text-align: center;
@@ -8,10 +22,18 @@
   .panel {
     padding: 0;
     border: none;
-    height: 23rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    img {
+      height: 10rem;
+      margin-bottom: 2rem;
+    }
     h3 {
       text-align: center;
       height: 5.6rem;
+    }
+    p {
+      text-align: left;
     }
     @include media($tablet-screen) {
       @include span-columns(6);
@@ -21,14 +43,14 @@
       @include omega-reset(2n);
       @include span-columns(3);
       @include omega(5n);
+      margin-bottom: 0;
     }
-
-
   }
   .read-more {
     @include span-columns(12);
     text-align: center;
-    margin-top: 4rem;
-    margin-bottom: 6rem;
+    a {
+      padding: 1.5rem 1.8rem;
+    }
   }
 }
