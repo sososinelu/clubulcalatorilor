@@ -1,31 +1,33 @@
 <div class="top-clouds"></div>
-<div class="outer-wrapper cols-4">
-  <h2>{{ vars.title }}</h2>
-  <div class="panel-container">
-    <div class="panel">
-      <img src="{{ file_url(vars.sections.section_1_image.entity.uri.value) }}" title="Te abonezi" alt="Te abonezi">
-      <h3>{{ vars.sections.section_1_title }}</h3>
-      {{ vars.sections.section_1_text|raw }}
+<div class="background-color">
+  <div class="outer-wrapper cols-4">
+    <h2>{{ vars.title }}</h2>
+    <div class="panel-container">
+      <div class="panel">
+        <img src="{{ file_url(vars.sections.section_1_image.entity.uri.value) }}" title="Te abonezi" alt="Te abonezi">
+        <h3>{{ vars.sections.section_1_title }}</h3>
+        {{ vars.sections.section_1_text|raw }}
+      </div>
+      <div class="panel">
+        <img src="{{ file_url(vars.sections.section_2_image.entity.uri.value) }}" title="Te abonezi" alt="Te abonezi">
+        <h3>{{ vars.sections.section_2_title }}</h3>
+        {{ vars.sections.section_2_text|raw }}
+      </div>
+      <div class="panel">
+        <img src="{{ file_url(vars.sections.section_3_image.entity.uri.value) }}" title="Te abonezi" alt="Te abonezi">
+        <h3>{{ vars.sections.section_3_title }}</h3>
+        {{ vars.sections.section_3_text|raw}}
+      </div>
+      <div class="panel">
+        <img src="{{ file_url(vars.sections.section_4_image.entity.uri.value) }}" title="Te abonezi" alt="Te abonezi">
+        <h3>{{ vars.sections.section_4_title }}</h3>
+        {{ vars.sections.section_4_text|raw }}
+      </div>
     </div>
-    <div class="panel">
-      <img src="{{ file_url(vars.sections.section_2_image.entity.uri.value) }}" title="Te abonezi" alt="Te abonezi">
-      <h3>{{ vars.sections.section_2_title }}</h3>
-      {{ vars.sections.section_2_text|raw }}
-    </div>
-    <div class="panel">
-      <img src="{{ file_url(vars.sections.section_3_image.entity.uri.value) }}" title="Te abonezi" alt="Te abonezi">
-      <h3>{{ vars.sections.section_3_title }}</h3>
-      {{ vars.sections.section_3_text|raw}}
-    </div>
-    <div class="panel">
-      <img src="{{ file_url(vars.sections.section_4_image.entity.uri.value) }}" title="Te abonezi" alt="Te abonezi">
-      <h3>{{ vars.sections.section_4_title }}</h3>
-      {{ vars.sections.section_4_text|raw }}
-    </div>
-  </div>
 
-  <div class="read-more">
-    <a href="/faqs" class="btn--block" title="Citește mai mult">Citește mai mult</a>
+    <div class="read-more">
+      <a href="/faqs" class="btn--block" title="Citește mai mult">Citește mai mult</a>
+    </div>
   </div>
 </div>
 <div class="bottom-clouds"></div>

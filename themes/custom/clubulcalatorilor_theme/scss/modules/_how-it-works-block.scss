@@ -1,6 +1,6 @@
 #block-homepagehowitworksblock {
   margin-top: -5rem;
-  margin-bottom: -5rem;
+  z-index: 1;
   .top-clouds,
   .bottom-clouds {
     background-repeat: repeat-x;
@@ -12,6 +12,9 @@
   }
   .bottom-clouds {
     background-image: url("../images/cloud_white_bottom.png");
+  }
+  .background-color {
+    background-color: $white;
   }
   h2 {
     @include span-columns(12);

@@ -26,5 +26,9 @@ function clubulcalatorilor_theme($existing, $type, $theme, $path)
       'variables' => array('vars' => NULL),
       'template' => 'homepage-how-it-works-template'
     ),
+    'homepage_about_us_template' => array(
+      'variables' => array('vars' => NULL),
+      'template' => 'homepage-about-us-template'
+    ),
   );
 }

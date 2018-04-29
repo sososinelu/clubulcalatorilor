@@ -1,0 +1,21 @@
+<div class="outer-wrapper cols-4">
+
+  <div class="panel-container">
+
+    {% for section in vars.sections %}
+
+        {% if section.entity.field_title %}
+    <div class="panel">
+          <h2>{{ section.entity.field_title.value|raw }}</h2>
+        {% else %}
+            <img src="{{ file_url(section.entity.field_alternative_image.entity.uri.value) }}" alt="" title="">
+            <div class="text-container">
+              {{ section.entity.field_alternative_text.value|raw }}
+            </div>
+          </div>
+        {% endif %}
+
+    {% endfor %}
+
+  </div>
+</div>

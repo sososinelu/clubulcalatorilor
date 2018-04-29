@@ -2,7 +2,7 @@
   background-image: url("../images/cloud_white_bottom.png");
   background-repeat: repeat-x;
   background-size: 50rem 10rem;
-  background-color: #78D2F7;
+  background-color: $malibu;
   .header-wrapper {
     @include outer-container($max-width);
   }

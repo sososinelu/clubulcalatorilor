@@ -20,9 +20,8 @@ class HeaderBranding extends BlockBase
   {
     $content = '<div class="branding-logo">';
     $content .= '<a href="/" title="Home" rel="home">';
-    //$content .= '<img src="/themes/custom/clubulcalatorilor_theme/images/cc_logo_header_red.png" alt="Home">';
-    $content .= '<img src="/themes/custom/clubulcalatorilor_theme/images/cc_logo_header_blue_white.png" alt="Home">';
-    //$content .= '<img src="/themes/custom/clubulcalatorilor_theme/images/cc_logo_header.png" alt="Home">';
+    //$content .= '<img src="/themes/custom/clubulcalatorilor_theme/images/cc_logo_header_blue_white.png" title="Clubul calatorilor logo" alt="Clubul calatorilor logo">';
+    $content .= '<img src="/themes/custom/clubulcalatorilor_theme/images/cc_logo_header_blue_pink.png" title="Clubul calatorilor logo" alt="Clubul calatorilor logo">';
     $content .= '</a></div>';
 
     return array(

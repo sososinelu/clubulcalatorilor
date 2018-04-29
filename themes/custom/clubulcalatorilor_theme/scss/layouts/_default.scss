@@ -11,11 +11,18 @@ body {
   }
 
   main {
-    @include outer-container();
+    //@include outer-container();
     padding-top: $base-spacing !important;
     margin-bottom: $base-spacing * 3;
-    overflow: auto;
-    overflow-x: hidden;
+    //overflow: auto;
+    //overflow-x: hidden;
+  }
+  .status-messages {
+    @include outer-container();
+  }
+  #block-clubulcalatorilor-theme-local-tasks {
+    @include outer-container();
+    margin-bottom: 5rem;
   }
 }
 

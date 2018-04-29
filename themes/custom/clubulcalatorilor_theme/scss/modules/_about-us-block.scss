@@ -1,0 +1,36 @@
+#block-homepageaboutusblock {
+  z-index: 0;
+  background-color: $malibu;
+  padding-top: 5rem;
+  h2 {
+    //@include span-columns(12);
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 6rem;
+  }
+  img {
+    height: 24.4rem;
+  }
+  .panel {
+    margin-bottom: 5rem;
+    text-align: center;
+    p {
+      text-align: left;
+    }
+  }
+  @include media($standard-screen) {
+    .panel:nth-child(odd) {
+      img {
+        float: left;
+        margin-right: 2rem;
+      }
+    }
+    .panel:nth-child(even) {
+      img {
+        float: right;
+        margin-left: 2rem;
+      }
+    }
+  }
+
+}
