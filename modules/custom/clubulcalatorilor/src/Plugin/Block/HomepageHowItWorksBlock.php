@@ -22,10 +22,20 @@ class HomepageHowItWorksBlock extends BlockBase
 
       $sections = [];
       $title = ($node->field_how_it_works_title ? $node->field_how_it_works_title->value : '');
+      // titles
       $sections['section_1_title'] = ($node->field_hiw_section_1_title ? $node->field_hiw_section_1_title->value : '');
       $sections['section_2_title'] = ($node->field_hiw_section_2_title ? $node->field_hiw_section_2_title->value : '');
       $sections['section_3_title'] = ($node->field_hiw_section_3_title ? $node->field_hiw_section_3_title->value : '');
       $sections['section_4_title'] = ($node->field_hiw_section_4_title ? $node->field_hiw_section_4_title->value : '');
+      // images
+      $sections['section_1_image'] = ($node->field_hiw_section_1_img ? $node->field_hiw_section_1_img : '');
+
+      //echo '<pre>';kint($node->field_hiw_section_1_img);echo '</pre>';exit;
+
+      $sections['section_2_image'] = ($node->field_hiw_section_2_img ? $node->field_hiw_section_2_img : '');
+      $sections['section_3_image'] = ($node->field_hiw_section_3_img ? $node->field_hiw_section_3_img : '');
+      $sections['section_4_image'] = ($node->field_hiw_section_4_img ? $node->field_hiw_section_4_img : '');
+      //text
       $sections['section_1_text'] = ($node->field_hiw_section_1_text ? $node->field_hiw_section_1_text->value : '');
       $sections['section_2_text'] = ($node->field_hiw_section_2_text ? $node->field_hiw_section_2_text->value : '');
       $sections['section_3_text'] = ($node->field_hiw_section_3_text ? $node->field_hiw_section_3_text->value : '');
