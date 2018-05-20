@@ -1,0 +1,15 @@
+.top-clouds,
+.bottom-clouds {
+  background-repeat: repeat-x;
+  background-size: 50rem 10rem;
+  height: 10rem;
+}
+.top-clouds {
+  background-image: url("../images/cloud_white_top.png");
+}
+.bottom-clouds {
+  background-image: url("../images/cloud_white_bottom.png");
+}
+.background-color-white {
+  background-color: $white;
+}

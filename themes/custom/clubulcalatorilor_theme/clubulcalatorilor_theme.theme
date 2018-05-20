@@ -12,7 +12,7 @@ use Drupal\Component\Utility\Html;
  * Implements template_preprocess_html().
  * @param array $variables
  */
-function ppf_theme_preprocess_html(&$variables) {
+function clubulcalatorilor_theme_preprocess_html(&$variables) {
   $current_path = \Drupal::service('path.current')->getPath();
   $path_alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_path);
   $path_alias = ltrim($path_alias, '/');
@@ -21,9 +21,9 @@ function ppf_theme_preprocess_html(&$variables) {
 
 /**
  * Implements template_preprocess_page.
- * @param array $variables
+ * @param array $variable  s
  */
-function ppf_theme_preprocess_page(&$variables) {
+function clubulcalatorilor_theme_preprocess_page(&$variables) {
   $site_name = \Drupal::configFactory()->get('system.site')->get('name');
   $variables['linked_site_name'] = ['#type' => 'link', '#title' => $site_name, '#url' => Url::fromRoute('<front>')];
 }
@@ -32,7 +32,7 @@ function ppf_theme_preprocess_page(&$variables) {
  * Implements template_preprocess_node.
  * @param array $variables
  */
-function ppf_theme_preprocess_node(&$variables) {
+function clubulcalatorilor_theme_preprocess_node(&$variables) {
   $node = $variables['node'];
   $content_type = $node->getType();
   $view_mode = $variables['view_mode'];

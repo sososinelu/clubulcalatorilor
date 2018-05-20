@@ -29,3 +29,8 @@ global-scripts:
     - core/drupal
     - clubulcalatorilor_theme/velocity
     - clubulcalatorilor_theme/sumo-select
+faq:
+  js:
+    js/faq.js: {}
+  dependencies:
+    - core/jquery.once
