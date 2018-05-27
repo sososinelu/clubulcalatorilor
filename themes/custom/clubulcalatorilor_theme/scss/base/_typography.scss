@@ -63,10 +63,9 @@ h1 {
 }
 
 h2 {
-  margin-bottom: 1rem;
-  @media(min-width: $standard-screen) {
-    margin-bottom: 2rem;
-  }
+  text-align: center;
+  padding-top: 2rem;
+  margin-bottom: 6rem;
 }
 
 h3 {

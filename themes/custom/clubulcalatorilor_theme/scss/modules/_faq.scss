@@ -1,11 +1,9 @@
 .node--faq {
-  margin-bottom: 1rem;
+  padding-bottom: 1rem;
   .node--faq-question {
     position: relative;
     cursor: pointer;
     border-top: 0.2rem solid $tonys-pink;
-   // background: $off-white;
-    //color: $blue-brand;
     font-size: ms(0);
     user-select: none;
     padding: $small-spacing;

@@ -1,0 +1,13 @@
+#block-homepagesignupblock {
+  text-align: center;
+  padding-bottom: 7rem;
+  h2 {
+    margin-bottom: 2rem;
+  }
+  .intro-text {
+    @include media($large-screen) {
+      padding: 0 20rem;
+    }
+  }
+}
+
