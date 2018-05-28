@@ -1,0 +1,8 @@
+name: Clubul Calatorilor settings module
+description: Clubul Calatorilor configuration settings
+package: Custom
+
+type: module
+core: 8.x
+
+configure: clubulcalatorilor_settings.configure

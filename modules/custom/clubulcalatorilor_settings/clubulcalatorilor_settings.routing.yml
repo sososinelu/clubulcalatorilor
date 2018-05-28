@@ -1,0 +1,8 @@
+clubulcalatorilor_settings.configure:
+  path: '/admin/config/clubulcalatorilor-settings'
+  defaults:
+    _form: '\Drupal\clubulcalatorilor_settings\Form\ClubulCalatorilorSettingsConfigForm'
+    _title: 'Clubul Calatorilor Settings'
+    _description: 'Configure the Clubul Calatorilor website settings'
+  requirements:
+    _permission: 'administer clubulcalatorilor settings'
