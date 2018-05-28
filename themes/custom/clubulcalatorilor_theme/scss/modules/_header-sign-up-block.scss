@@ -1,5 +1,5 @@
 #block-headersignupblock {
-  padding-top: 15rem;
+  padding-top: 9rem;
   margin-bottom: 4rem;
   @include span-columns(12);
   .header-logo,
@@ -8,17 +8,24 @@
   }
   .header-logo {
     text-align: center;
-    margin-bottom: 3rem;
     @include media($large-screen) {
+      margin-top: 3rem;
       margin-bottom: 0;
       @include span-columns(4);
     }
     img {
-      width: 30rem;
+      width: 50rem;
     }
   }
   .signup {
     .mailchimp-signup-subscribe-form {
+      text-align: center;
+      margin-bottom: 0;
+    }
+    h2 {
+      margin-bottom: 1rem;
+    }
+    h3 {
       text-align: center;
     }
     @include media($large-screen) {

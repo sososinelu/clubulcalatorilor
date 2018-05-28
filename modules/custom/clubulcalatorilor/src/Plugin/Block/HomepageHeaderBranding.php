@@ -20,7 +20,7 @@ class HomepageHeaderBranding extends BlockBase
   {
     $content = '<div class="homepage-header-logo">';
     $content .= '<a href="/" title="Home" rel="home">';
-    $content .= '<img src="/themes/custom/clubulcalatorilor_theme/images/cc_logo_header_blue_pink.png" title="Clubul calatorilor logo" alt="Clubul calatorilor logo">';
+    $content .= '<img src="/themes/custom/clubulcalatorilor_theme/images/cc_logo.png" title="Clubul calatorilor logo" alt="Clubul calatorilor logo">';
     $content .= '</a></div>';
 
     return array(

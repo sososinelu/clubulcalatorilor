@@ -11,6 +11,12 @@
   img {
     height: 24.4rem;
   }
+  a {
+    &:after {
+      content: '↬';
+      padding-left: 1rem;
+    }
+  }
   .panel {
     margin-bottom: 5rem;
     text-align: center;

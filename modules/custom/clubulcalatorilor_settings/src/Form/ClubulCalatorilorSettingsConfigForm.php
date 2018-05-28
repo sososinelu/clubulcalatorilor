@@ -56,6 +56,16 @@ class ClubulCalatorilorSettingsConfigForm extends FormBase
       '#default_value' => ($site_slogan_default) ? $site_slogan_default['value'] : '',
     );
 
+    // Site slogan
+    $sign_up_text_default = \Drupal::state()->get('sign_up_text');
+    $form['general']['sign_up_text'] = array(
+      '#type' => 'text_format',
+      '#title' => t('Sign up text'),
+      '#format' => 'basic_html',
+      '#allowed_formats' => array('basic_html'),
+      '#default_value' => ($sign_up_text_default) ? $sign_up_text_default['value'] : '',
+    );
+
     // Submit button
     $form['submit'] = array(
       '#type' => 'submit',

@@ -56,10 +56,9 @@ body {
 }
 
 h1 {
-  margin-bottom: 1.5rem;
-  @media(min-width: $standard-screen) {
-    margin-bottom: 2rem;
-  }
+  text-align: center;
+  padding-top: 2rem;
+  margin-bottom: 6rem;
 }
 
 h2 {
@@ -91,4 +90,13 @@ h6 {
 }
 a {
   text-decoration: none;
+  color: $prussian_blue;
+  font-weight: $bold;
+  &:visited {
+    color: $prussian_blue;
+  }
+  &:hover {
+    color: $deep-cerulean;
+    text-decoration: underline;
+  }
 }

@@ -1,0 +1,10 @@
+.page-node-type-blog-post {
+
+  .node--blog_post {
+    .field--name-body {
+      @include media($large-screen) {
+        padding: 0 15rem;
+      }
+    }
+  }
+}

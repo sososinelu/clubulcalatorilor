@@ -20,8 +20,8 @@ class HomepageSignUpBlock extends BlockBase
   public function build()
   {
     if($node = \Drupal::routeMatch()->getParameter('node')) {
-      $slogan = ($node->field_site_slogan ? $node->field_site_slogan->value : '');
-      $intro_text = ($node->field_intro_text ? $node->field_intro_text->value : '');
+      $slogan = (\Drupal::state()->get('site_slogan') ? \Drupal::state()->get('site_slogan')['value'] : '');
+      $sign_up_text = (\Drupal::state()->get('sign_up_text') ? \Drupal::state()->get('sign_up_text')['value'] : '');
 
       $block = Block::load('clubulcalatorilor_theme_mailchimpsubscriptionformclubulcalatorilor');
       $mailchimp_block = \Drupal::entityTypeManager()->getViewBuilder('block')->view($block);
@@ -30,7 +30,7 @@ class HomepageSignUpBlock extends BlockBase
         '#theme' => 'homepage_sign_up_template',
         '#vars' => array(
           'slogan' => $slogan,
-          'intro_text' => $intro_text,
+          'sign_up_text' => $sign_up_text,
           'mailchimp_block' => $mailchimp_block,
         ),
         '#cache' => array('max-age' => 0),

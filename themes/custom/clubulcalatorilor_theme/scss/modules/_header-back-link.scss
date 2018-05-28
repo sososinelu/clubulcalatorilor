@@ -1,0 +1,10 @@
+#block-headermenu {
+  a {
+    font-size: 1.8rem;
+    line-height: 2.5rem;
+    font-weight: $normal;
+    &:before {
+      content: '↫';
+    }
+  }
+}
