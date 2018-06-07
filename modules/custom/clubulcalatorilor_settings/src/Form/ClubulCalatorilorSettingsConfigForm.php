@@ -39,11 +39,25 @@ class ClubulCalatorilorSettingsConfigForm extends FormBase
       '#group'       => 'clubulcalatorilor'
     );
 
-    // No reply email address
-    $form['general']['no_reply_email'] = array(
+    // Info email address
+    $form['general']['info_email'] = array(
       '#type' => 'textfield',
-      '#title' => t('No reply email address'),
-      '#default_value' => (\Drupal::state()->get('no_reply_email')) ? \Drupal::state()->get('no_reply_email'): '',
+      '#title' => t('Info email address'),
+      '#default_value' => (\Drupal::state()->get('info_email')) ? \Drupal::state()->get('info_email'): '',
+    );
+
+    // Facebook page
+    $form['general']['facebook'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Facebook page'),
+      '#default_value' => (\Drupal::state()->get('facebook')) ? \Drupal::state()->get('facebook'): '',
+    );
+
+    // Instagram page
+    $form['general']['instagram'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Instagram page'),
+      '#default_value' => (\Drupal::state()->get('instagram')) ? \Drupal::state()->get('instagram'): '',
     );
 
     // Site slogan
