@@ -1,11 +1,9 @@
 #site-footer {
   background-color: $malibu;
-  .footer_top {
-    @include outer-container($max-width);
-  }
+  padding-top: 3rem;
   .footer_bottom {
     background-color: #3B434F;
-    border-top: 1rem solid $black;
+    border-top: 1rem solid #000b0d;
     color: $white;
     text-align: center;
     h4, a, a:visited, p {

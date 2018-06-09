@@ -1,38 +1,43 @@
 #block-headersignupblock,
 #block-headersignupblock-2 {
-  padding-top: 6rem;
-  @include span-columns(12);
-  .header-logo,
-  .signup {
+  .sign-up-container {
+    padding-top: 6rem;
     @include span-columns(12);
-  }
-  .header-logo {
-    text-align: center;
-    @include media($large-screen) {
-      margin-top: 3rem;
-      margin-bottom: 0;
-      @include span-columns(4);
+    .header-logo,
+    .signup {
+      @include span-columns(12);
     }
-    img {
-      width: 50rem;
-    }
-  }
-  .signup {
-    .mailchimp-signup-subscribe-form {
+    .header-logo {
       text-align: center;
-      margin-bottom: 0;
+      @include media($large-screen) {
+        margin-top: 3rem;
+        margin-bottom: 0;
+        @include span-columns(4);
+      }
+      img {
+        width: 50rem;
+      }
     }
-    h2 {
-      margin-bottom: 1rem;
-    }
-    h3 {
-      text-align: center;
-    }
-    @include media($large-screen) {
-      @include span-columns(8);
+    .signup {
+      .mailchimp-signup-subscribe-form {
+        text-align: center;
+        margin-bottom: 0;
+      }
+      h2 {
+        margin-bottom: 1rem;
+      }
+      h3 {
+        text-align: center;
+      }
+      @include media($large-screen) {
+        @include span-columns(8);
+      }
     }
   }
-
-
-
+}
+#block-headersignupblock-2 {
+  @include outer-container();
+  .sign-up-container {
+    padding-top: 3rem;
+  }
 }

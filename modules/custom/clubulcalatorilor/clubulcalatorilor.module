@@ -36,7 +36,11 @@ function clubulcalatorilor_theme($existing, $type, $theme, $path)
     ),
     'footer_block_template' => array(
       'variables' => array('vars' => NULL),
-      'template' => 'footer-lock-template'
+      'template' => 'footer-block-template'
+    ),
+    'footer_building_block_template' => array(
+      'variables' => array('vars' => NULL),
+      'template' => 'footer-building-block-template'
     ),
   );
 }

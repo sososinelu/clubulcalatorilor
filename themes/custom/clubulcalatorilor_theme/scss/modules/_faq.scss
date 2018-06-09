@@ -38,11 +38,12 @@
   }
   .node--faq-answer {
     p {
+      margin-top: 0;
       color: $black;
     }
     padding: 2rem $small-spacing;
     @include media($large-screen) {
-      padding: 2rem $small-spacing;
+      padding: 0 $small-spacing 2rem;
     }
   }
 }

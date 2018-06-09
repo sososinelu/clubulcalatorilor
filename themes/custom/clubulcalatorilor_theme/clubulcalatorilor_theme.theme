@@ -5,6 +5,7 @@
  * Functions to support theming in the clubulcalatorilor_theme.
  */
 
+use Drupal\block\Entity\Block;
 use Drupal\Core\Url;
 use Drupal\Component\Utility\Html;
 
@@ -39,4 +40,17 @@ function clubulcalatorilor_theme_preprocess_node(&$variables) {
 
   $variables['attributes']['class'][] = 'node--' . $content_type;
   $variables['attributes']['class'][] = 'view-mode--' . $view_mode;
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function clubulcalatorilor_theme_preprocess_block(&$variables) {
+
+
+  if($variables['elements']['#id'] == 'headersignupblock_2') {
+    $block = Block::load($variables['elements']['#id']);
+    //var_dump($block, $block->getRegion());exit;
+    $variables['region'] = $block->getRegion();
+  }
 }

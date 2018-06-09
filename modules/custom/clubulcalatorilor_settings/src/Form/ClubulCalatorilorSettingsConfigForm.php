@@ -70,7 +70,7 @@ class ClubulCalatorilorSettingsConfigForm extends FormBase
       '#default_value' => ($site_slogan_default) ? $site_slogan_default['value'] : '',
     );
 
-    // Site slogan
+    // Sign up text
     $sign_up_text_default = \Drupal::state()->get('sign_up_text');
     $form['general']['sign_up_text'] = array(
       '#type' => 'text_format',
@@ -78,6 +78,16 @@ class ClubulCalatorilorSettingsConfigForm extends FormBase
       '#format' => 'basic_html',
       '#allowed_formats' => array('basic_html'),
       '#default_value' => ($sign_up_text_default) ? $sign_up_text_default['value'] : '',
+    );
+
+    // Footer sign up text
+    $footer_sign_up_text_default = \Drupal::state()->get('footer_sign_up_text');
+    $form['general']['footer_sign_up_text'] = array(
+      '#type' => 'text_format',
+      '#title' => t('Footer sign up text'),
+      '#format' => 'basic_html',
+      '#allowed_formats' => array('basic_html'),
+      '#default_value' => ($footer_sign_up_text_default) ? $footer_sign_up_text_default['value'] : '',
     );
 
     // Submit button

@@ -1,15 +1,21 @@
-<div class="header-logo">
-  <a href="/" title="Home" rel="home">
-    <img src="/themes/custom/clubulcalatorilor_theme/images/cc_logo.png" title="Clubul calatorilor logo" alt="Clubul calatorilor logo">
-  </a>
-</div>
-<div class="signup">
-  {{ vars.slogan|raw }}
-  {{ vars.mailchimp_block }}
-  <div class="sign-up-text">
-    {{ vars.sign_up_text|raw }}
+<div class="sign-up-container">
+  <div class="header-logo">
+    <a href="/" title="Home" rel="home">
+      <img src="/themes/custom/clubulcalatorilor_theme/images/cc_logo.png" title="Clubul calatorilor logo" alt="Clubul calatorilor logo">
+    </a>
+  </div>
+  <div class="signup">
+
+    {% if region == 'header' %}
+      {{ vars.slogan|raw }}
+    {% else %}
+      {{ vars.footer_sign_up_text|raw }}
+    {% endif %}
+    {{ vars.mailchimp_block }}
+    <div class="sign-up-text">
+        {{ vars.sign_up_text|raw }}
+    </div>
   </div>
 </div>
-
 
 
