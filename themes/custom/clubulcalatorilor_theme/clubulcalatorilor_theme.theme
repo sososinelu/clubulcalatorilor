@@ -46,11 +46,8 @@ function clubulcalatorilor_theme_preprocess_node(&$variables) {
  * Implements hook_preprocess_block().
  */
 function clubulcalatorilor_theme_preprocess_block(&$variables) {
-
-
-  if($variables['elements']['#id'] == 'headersignupblock_2') {
+  if($variables['elements']['#id'] == 'headersignupblock_2' || $variables['elements']['#id'] == 'headersignupblock') {
     $block = Block::load($variables['elements']['#id']);
-    //var_dump($block, $block->getRegion());exit;
-    $variables['region'] = $block->getRegion();
+    $variables["content"]["attributes"]["region"] = $block->getRegion();
   }
 }

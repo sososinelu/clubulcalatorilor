@@ -80,14 +80,28 @@ class ClubulCalatorilorSettingsConfigForm extends FormBase
       '#default_value' => ($sign_up_text_default) ? $sign_up_text_default['value'] : '',
     );
 
+    $form['footer'] = array(
+      '#type' => 'details',
+      '#title' => t('Footer'),
+      '#collapsible' => TRUE,
+      '#group'       => 'clubulcalatorilor'
+    );
+
     // Footer sign up text
     $footer_sign_up_text_default = \Drupal::state()->get('footer_sign_up_text');
-    $form['general']['footer_sign_up_text'] = array(
+    $form['footer']['footer_sign_up_text'] = array(
       '#type' => 'text_format',
       '#title' => t('Footer sign up text'),
       '#format' => 'basic_html',
       '#allowed_formats' => array('basic_html'),
       '#default_value' => ($footer_sign_up_text_default) ? $footer_sign_up_text_default['value'] : '',
+    );
+
+    // Info email address
+    $form['footer']['footer_contact_text'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Footer contact text'),
+      '#default_value' => (\Drupal::state()->get('footer_contact_text')) ? \Drupal::state()->get('footer_contact_text'): '',
     );
 
     // Submit button

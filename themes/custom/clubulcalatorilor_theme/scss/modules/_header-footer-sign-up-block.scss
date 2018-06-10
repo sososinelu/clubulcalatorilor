@@ -1,5 +1,5 @@
 #block-headersignupblock,
-#block-headersignupblock-2 {
+#block-footersignupblock {
   .sign-up-container {
     padding-top: 6rem;
     @include span-columns(12);
@@ -35,9 +35,19 @@
     }
   }
 }
-#block-headersignupblock-2 {
+#block-footersignupblock {
   @include outer-container();
   .sign-up-container {
     padding-top: 3rem;
+    .header-logo {
+      @include media($large-screen) {
+        margin-top: 0rem;
+      }
+    }
+    .signup {
+      @include media($large-screen) {
+        margin-top: 1.5rem;
+      }
+    }
   }
 }

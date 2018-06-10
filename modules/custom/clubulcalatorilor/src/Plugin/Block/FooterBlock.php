@@ -20,6 +20,7 @@ class FooterBlock extends BlockBase
   public function build()
   {
     if($node = \Drupal::routeMatch()->getParameter('node')) {
+      $footer_contact_text = (\Drupal::state()->get('footer_contact_text') ? \Drupal::state()->get('footer_contact_text') : '');
       $info_email = (\Drupal::state()->get('info_email') ? \Drupal::state()->get('info_email') : '');
       $faccebook = (\Drupal::state()->get('facebook') ? \Drupal::state()->get('facebook') : '');
       $instagram = (\Drupal::state()->get('instagram') ? \Drupal::state()->get('instagram') : '');
@@ -30,6 +31,7 @@ class FooterBlock extends BlockBase
       return array(
         '#theme' => 'footer_block_template',
         '#vars' => array(
+          'footer_contact_text' => $footer_contact_text,
           'info_email' => $info_email,
           'faccebook' => $faccebook,
           'instagram' => $instagram,

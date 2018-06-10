@@ -22,6 +22,10 @@ function clubulcalatorilor_theme($existing, $type, $theme, $path)
       'variables' => array('vars' => NULL),
       'template' => 'header-sign-up-template'
     ),
+    'footer_sign_up_template' => array(
+      'variables' => array('vars' => NULL),
+      'template' => 'footer-sign-up-template'
+    ),
     'homepage_sign_up_template' => array(
       'variables' => array('vars' => NULL),
       'template' => 'homepage-sign-up-template'
