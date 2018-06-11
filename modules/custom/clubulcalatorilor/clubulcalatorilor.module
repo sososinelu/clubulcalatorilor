@@ -38,6 +38,10 @@ function clubulcalatorilor_theme($existing, $type, $theme, $path)
       'variables' => array('vars' => NULL),
       'template' => 'homepage-about-us-template'
     ),
+    'homepage_deal_block_template' => array(
+      'variables' => array('vars' => NULL),
+      'template' => 'homepage-deal-block-template'
+    ),
     'footer_block_template' => array(
       'variables' => array('vars' => NULL),
       'template' => 'footer-block-template'
