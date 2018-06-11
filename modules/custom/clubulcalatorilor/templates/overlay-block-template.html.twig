@@ -1,0 +1,11 @@
+<div class="overlay">
+  <div class="overlay-inner">
+    <div class="overlay-close btn--block">{{ 'Close'|t }}</div>
+    {% if(vars.popup_title) %}
+      <h3>{{ vars.popup_title }}</h3>
+    {% endif %}
+    {% if(vars.popup_text) %}
+      {{ vars.popup_text.value|raw }}
+    {% endif %}
+  </div>
+</div>

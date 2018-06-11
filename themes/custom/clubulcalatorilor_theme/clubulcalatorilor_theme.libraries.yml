@@ -19,3 +19,9 @@ faq:
     js/faq.js: {}
   dependencies:
     - core/jquery.once
+overlay:
+  js:
+    js/overlay.js: {}
+  dependencies:
+    - core/jquery
+    - clubulcalatorilor_theme/velocity

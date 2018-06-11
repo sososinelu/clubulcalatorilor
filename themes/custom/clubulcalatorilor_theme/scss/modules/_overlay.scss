@@ -1,0 +1,68 @@
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  padding: 0 $small-spacing;
+  display: none;
+  opacity: 0;
+  .notification-inner {
+    max-width: 76.5rem;
+    background: $white;
+    padding: 6.4rem 2rem 2rem;
+    margin: 0 auto;
+    position: relative;
+    .notification-close {
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: $small-spacing 1.8rem;
+      cursor: pointer;
+      font-size: ms(-2);
+      line-height: 1.4rem;
+      height: 4.4rem;
+      &:after {
+        content: $cross;
+        font-family: $icomoon;
+        font-size: 1rem;
+        margin: 0 0 0 0.5rem;
+      }
+    }
+  }
+  p {
+    font-size: ms(-1) !important;
+    margin-bottom: 2rem !important;
+  }
+  .btn--block {
+    display: block;
+  }
+  &:before {
+    content: " ";
+    display: block;
+    background: rgba($black, 0.9);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+  @include media($tablet-screen) {
+    padding: 0 $base-spacing;
+    .notification-inner {
+      padding: 7.4rem $base-spacing $base-spacing;
+    }
+    h3 {
+      font-size: ms(3);
+    }
+    p {
+      margin-bottom: $base-spacing !important;
+    }
+    .btn--block {
+      display: inline-block;
+      padding-left: 5rem;
+      padding-right: 5rem;
+    }
+  }
+}

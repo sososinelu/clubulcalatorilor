@@ -104,6 +104,30 @@ class ClubulCalatorilorSettingsConfigForm extends FormBase
       '#default_value' => (\Drupal::state()->get('footer_contact_text')) ? \Drupal::state()->get('footer_contact_text'): '',
     );
 
+    $form['overlay'] = array(
+      '#type' => 'details',
+      '#title' => t('Site-wide overlay'),
+      '#collapsible' => TRUE,
+      '#group'       => 'clubulcalatorilor'
+    );
+
+    // Overlay title text
+    $form['overlay']['overlay_title'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Overlay title'),
+      '#default_value' => (\Drupal::state()->get('overlay_title')) ? \Drupal::state()->get('overlay_title'): '',
+    );
+
+    // Overlay message text
+    $message_default = \Drupal::state()->get('overlay_text');
+    $form['overlay']['overlay_text'] = array(
+      '#type' => 'text_format',
+      '#title' => t('Overlay message'),
+      '#format' => 'restricted_html',
+      '#allowed_formats' => array('restricted_html'),
+      '#default_value' => ($message_default) ? $message_default['value'] : '',
+    );
+
     // Submit button
     $form['submit'] = array(
       '#type' => 'submit',
