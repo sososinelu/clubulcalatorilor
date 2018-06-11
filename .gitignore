@@ -23,7 +23,7 @@ sites/*/private
 sites/simpletest
 
 # Ignore root .htaccess file.
-#/.htaccess
+.htaccess
 
 # phpStorm
 .idea
