@@ -5,7 +5,7 @@
   $(document).ready(function() {
 
     // Add placeholder to signup form
-    $('#edit-mergevars-email').attr('placeholder', 'Adresa ta de email');
+    $('.form-email').attr('placeholder', 'Adresa ta de email');
 
     $('input.error, select.error').each(function() {
       $(this).parents('.form-item').first().addClass('error');
