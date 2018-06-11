@@ -1,6 +1,7 @@
 #block-homepagehowitworksblock {
   margin-top: -5rem;
   z-index: 1;
+  position: relative;
   h2 {
     @include span-columns(12);
     text-align: center;

@@ -1,5 +1,7 @@
 #block-homepagedealsblock {
   margin-top: -50px;
+  z-index: 0;
+  position: relative;
   .deal {
     width: 100%;
     background-size: cover;
