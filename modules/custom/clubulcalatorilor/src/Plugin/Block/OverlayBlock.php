@@ -10,7 +10,6 @@
 
 namespace Drupal\clubulcalatorilor\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Cache\Cache;
 
 class OverlayBlock extends BlockBase {
   public function build() {
@@ -29,11 +28,11 @@ class OverlayBlock extends BlockBase {
         '#cache' => array(
           'max-age' => 0,
         ),
-        '#attached' => array(
-          'library' => array(
-            'clubulcalatorilor_theme/overlay',
-          ),
-        ),
+//        '#attached' => array(
+//          'library' => array(
+//            'clubulcalatorilor_theme/overlay',
+//          ),
+//        ),
       );
     }
 

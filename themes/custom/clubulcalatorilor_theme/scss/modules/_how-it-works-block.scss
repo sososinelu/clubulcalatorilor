@@ -24,6 +24,20 @@
     p {
       text-align: left;
     }
+    span {
+      text-decoration: none;
+      color: $prussian_blue;
+      font-weight: $bold;
+      cursor: pointer;
+      &:hover {
+        color: $deep-cerulean;
+        text-decoration: underline;
+      }
+      &:after {
+        content: '↬';
+        padding-left: 1rem;
+      }
+    }
     @include media($tablet-screen) {
       @include span-columns(6);
       @include omega(2n);

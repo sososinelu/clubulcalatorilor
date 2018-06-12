@@ -1,18 +1,25 @@
+.noscroll {
+  height: 100%;
+  overflow-y: hidden;
+}
 .overlay {
   position: fixed;
-  left: 0;
-  top: 50%;
   width: 100%;
   padding: 0 $small-spacing;
   display: none;
   opacity: 0;
-  .notification-inner {
+  z-index: 100;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  top: 5rem; right: 0; bottom: 5rem; left: 0;
+  .overlay-inner {
     max-width: 76.5rem;
     background: $white;
     padding: 6.4rem 2rem 2rem;
     margin: 0 auto;
     position: relative;
-    .notification-close {
+    text-align: center;
+    .overlay-close {
       position: absolute;
       left: 0;
       top: 0;
@@ -28,6 +35,11 @@
         margin: 0 0 0 0.5rem;
       }
     }
+    .overlay-close-bottom {
+      bottom: 0;
+      top: initial;
+    }
+
   }
   p {
     font-size: ms(-1) !important;
@@ -50,7 +62,7 @@
   }
   @include media($tablet-screen) {
     padding: 0 $base-spacing;
-    .notification-inner {
+    .overlay-inner {
       padding: 7.4rem $base-spacing $base-spacing;
     }
     h3 {

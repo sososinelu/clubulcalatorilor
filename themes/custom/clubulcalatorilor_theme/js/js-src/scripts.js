@@ -1,3 +1,50 @@
+
+
+(function($) {
+  $(document).ready(function() {
+    var notification = $('.overlay');
+    var close_button = $('.overlay-close');
+
+    $('#block-homepagehowitworksblock .panel span').click(function() {
+      notification.show();
+      //centrePopup();
+
+      $(document.body).addClass('noscroll');
+      notification.velocity({opacity: 1});
+      notification.scrollTop = 0;
+    });
+
+    $(window).resize(function() {
+      //centrePopup();
+    });
+
+    // $(document).click(function(event) {
+    //   if(!$(event.target).closest('.notification-inner').length) {
+    //     hidePopup();
+    //   }
+    // });
+
+    close_button.click(function(event) {
+      hidePopup();
+      $(document.body).removeClass('noscroll');
+    });
+
+    function centrePopup() {
+      var popupHeight = notification.height();
+      var marginTop = popupHeight / 2;
+      notification.css('margin-top', '-' + marginTop + 'px');
+    }
+
+    function hidePopup() {
+      if(notification.is(":visible")) {
+        notification.velocity({opacity: 0}, 400, function(){
+          notification.hide();
+        });
+      }
+    }
+
+  });
+})(jQuery);
 /*
  * form styling
  */

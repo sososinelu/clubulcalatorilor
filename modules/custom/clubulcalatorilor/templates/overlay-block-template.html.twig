@@ -1,11 +1,13 @@
 <div class="overlay">
   <div class="overlay-inner">
-    <div class="overlay-close btn--block">{{ 'Close'|t }}</div>
-    {% if(vars.popup_title) %}
-      <h3>{{ vars.popup_title }}</h3>
+    <div class="overlay-close btn--block">{{ 'Închide'|t }}</div>
+    {% if(vars.overlay_title) %}
+      <h3>{{ vars.overlay_title }}</h3>
     {% endif %}
-    {% if(vars.popup_text) %}
-      {{ vars.popup_text.value|raw }}
+    {% if(vars.overlay_text) %}
+      {{ vars.overlay_text.value|raw }}
     {% endif %}
+    <img src="/themes/custom/clubulcalatorilor_theme/images/email_example.png" title="Email example" alt="Email example">
+    <div class="overlay-close btn--block overlay-close-bottom">{{ 'Închide'|t }}</div>
   </div>
 </div>
