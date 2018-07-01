@@ -42,6 +42,11 @@ function clubulcalatorilor_theme($existing, $type, $theme, $path)
       'variables' => array('vars' => NULL),
       'template' => 'homepage-deal-block-template'
     ),
+    'homepage_premium_template' => array(
+      'variables' => array('vars' => NULL),
+      'template' => 'homepage-premium-template'
+    ),
+
     'overlay_block_template' => array(
       'variables' => array('vars' => NULL),
       'template' => 'overlay-block-template'

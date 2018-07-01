@@ -1,0 +1,15 @@
+#block-homepagepremiumblock {
+  margin-top: -5rem;
+  z-index: 1;
+  .panel {
+    padding: 1rem 0 2rem;
+    @include media($tablet-screen) {
+      width: 50%;
+      float: left;
+      padding: 1rem 2rem 2rem;
+    }
+    .bottom, h3 {
+      text-align: center;
+    }
+  }
+}
