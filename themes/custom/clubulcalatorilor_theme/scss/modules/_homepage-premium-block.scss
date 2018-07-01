@@ -1,15 +1,89 @@
 #block-homepagepremiumblock {
   margin-top: -5rem;
   z-index: 1;
-  .panel {
-    padding: 1rem 0 2rem;
-    @include media($tablet-screen) {
-      width: 50%;
-      float: left;
-      padding: 1rem 2rem 2rem;
+  position: relative;
+  .panel-container {
+    @include media($large-screen) {
+      padding: 0 20rem;
     }
-    .bottom, h3 {
-      text-align: center;
+    .panel {
+      padding: 1rem 0 5rem;
+      position: relative;
+      @include media($tablet-screen) {
+        width: 50%;
+        float: left;
+        padding: 1rem 2rem 2rem;
+      }
+      ul {
+        //padding: 0 5rem;
+      }
+      li {
+        position: relative;
+        padding-bottom: 1rem;
+      }
+      ul li {
+        color: $black;
+        list-style-type: none;
+      }
+
+      ul li:before {
+        content: '\2022 ';
+        color: $tonys-pink;
+        padding-right: 0.5rem;
+        margin: 0 0 0 -1rem;
+        font-size: 3rem;
+        position: absolute;
+        top: -1.2rem;
+        left: -1.2rem;
+      }
+      .bottom, h3 {
+        text-align: center;
+      }
+      .img {
+        display: block;
+        @include media($large-screen) {
+          position: absolute;
+        }
+      }
+      .excursionist-img {
+        background: url("/themes/custom/clubulcalatorilor_theme/images/excursionist.png") no-repeat;
+        background-size: 13rem 24rem;
+        //width: 13rem;
+        height: 24rem;
+        @include media($large-screen) {
+          background-size: 20rem 37rem;
+          width: 20rem;
+          height: 37rem;
+          left: -25rem;
+        }
+      }
+      .calator-img {
+        background: url("/themes/custom/clubulcalatorilor_theme/images/calator.png") no-repeat;
+
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+        background-size: 25rem 24rem;
+        //width: 25rem;
+        height: 24rem;
+        @include media($large-screen) {
+          background-size: 38rem 37rem;
+          width: 38rem;
+          height: 37rem;
+          right: -32rem;
+        }
+      }
+      .bottom {
+        //position: absolute;
+        //bottom: 0;
+        //width: 100%;
+        a, span {
+          width: 20rem;
+        }
+      }
     }
   }
 }

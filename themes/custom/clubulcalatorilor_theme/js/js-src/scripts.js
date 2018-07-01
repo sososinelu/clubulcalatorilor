@@ -51,6 +51,8 @@
 (function ($) {
   $(document).ready(function() {
 
+    //equalizeHeights($('#block-homepagepremiumblock  .panel'));
+
     // Add placeholder to signup form
     $('.form-email').attr('placeholder', 'Adresa ta de email');
 
@@ -68,6 +70,8 @@
 
   });
 }(jQuery));
+
+
 
 /*
  * Equalise heights

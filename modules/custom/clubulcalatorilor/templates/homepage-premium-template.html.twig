@@ -1,22 +1,20 @@
 <div class="top-clouds"></div>
 <div class="background-color-white">
   <div class="outer-wrapper cols-2">
-    <h2>Devino călător</h2>
+    <h2>{{ vars.title }}</h2>
     <div class="panel-container">
       <div class="panel">
-        <h3>Hai în club!</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dapibus cursus massa vel tempus. In in neque tristique, maximus enim a, vestibulum mauris. Curabitur tempor ante ut elit tempor, non mollis erat suscipit
-        </p>
+        {#<img src="/themes/custom/clubulcalatorilor_theme/images/excursionist.png" title="Excursionist" alt="Excursionist">#}
+        <span class="img excursionist-img"></span>
+        {{ vars.text.0.value|raw }}
         <div class="bottom">
-          <a href="#top" class="btn--block" title="Înregistreazăte">Înregistreazăte</a>
+          <a href="#top" class="btn--block" title="Ȋnscrie-te">Ȋnscrie-te</a>
         </div>
       </div>
       <div class="panel">
-        <h3>Călător</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dapibus cursus massa vel tempus. In in neque tristique, maximus enim a, vestibulum mauris. Curabitur tempor ante ut elit tempor, non mollis erat suscipit
-        </p>
+        {#<img src="/themes/custom/clubulcalatorilor_theme/images/calator.png" title="Calator" alt="Calator">#}
+        <span class="img calator-img"></span>
+        {{ vars.text.1.value|raw }}
         <div class="bottom">
           <span class="btn--block btn-disabled" title="În curând">În curând</span>
         </div>
