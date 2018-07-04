@@ -1,0 +1,8 @@
+name: Clubul Calatorilor sendgrid module
+description: Clubul Calatorilor SendGrid API integration
+package: Custom
+
+type: module
+core: 8.x
+
+configure: clubulcalatorilor_sendgrid.configure
