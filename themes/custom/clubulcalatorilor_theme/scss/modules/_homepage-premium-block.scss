@@ -25,7 +25,6 @@
         color: $black;
         list-style-type: none;
       }
-
       ul li:before {
         content: '\2022 ';
         color: $tonys-pink;
@@ -41,15 +40,15 @@
       }
       .img {
         display: block;
+
+        height: 24rem;
         @include media($large-screen) {
           position: absolute;
         }
       }
       .excursionist-img {
-        background: url("/themes/custom/clubulcalatorilor_theme/images/excursionist.png") no-repeat;
+        background: url("/themes/custom/clubulcalatorilor_theme/images/excursionist.jpg") no-repeat center;
         background-size: 13rem 24rem;
-        //width: 13rem;
-        height: 24rem;
         @include media($large-screen) {
           background-size: 20rem 37rem;
           width: 20rem;
@@ -58,17 +57,8 @@
         }
       }
       .calator-img {
-        background: url("/themes/custom/clubulcalatorilor_theme/images/calator.png") no-repeat;
-
-        -moz-transform: scaleX(-1);
-        -o-transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
-        filter: FlipH;
-        -ms-filter: "FlipH";
+        background: url("/themes/custom/clubulcalatorilor_theme/images/calator.jpg") no-repeat center;
         background-size: 25rem 24rem;
-        //width: 25rem;
-        height: 24rem;
         @include media($large-screen) {
           background-size: 38rem 37rem;
           width: 38rem;
