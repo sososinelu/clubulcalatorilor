@@ -128,6 +128,19 @@ class ClubulCalatorilorSettingsConfigForm extends FormBase
       '#default_value' => ($message_default) ? $message_default['value'] : '',
     );
 
+    $form['sendgrid'] = array(
+      '#type' => 'details',
+      '#title' => t('SendGrid'),
+      '#collapsible' => TRUE,
+      '#group'       => 'clubulcalatorilor'
+    );
+
+    $form['sendgrid']['sendgrid_api_key'] = array(
+      '#type' => 'textfield',
+      '#title' => t('SendGrid API Key'),
+      '#default_value' => (\Drupal::state()->get('sendgrid_api_key')) ? \Drupal::state()->get('sendgrid_api_key'): '',
+    );
+
     // Submit button
     $form['submit'] = array(
       '#type' => 'submit',
