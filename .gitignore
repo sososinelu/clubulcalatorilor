@@ -28,5 +28,8 @@ sites/simpletest
 # phpStorm
 .idea
 
+# vscode
+.vscode
+
 # node modules
 node_modules
