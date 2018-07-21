@@ -25,3 +25,49 @@
   }
 
 }
+
+.sendgrid-email-registration-form {
+  margin-bottom: 2rem;
+  label {
+    display: none;
+  }
+  .result_message {
+    min-height: 2.3rem;
+    text-align: center;
+    color: $prussian_blue;
+    font-weight: $bold;
+    a::after {
+      content: '↬';
+      padding-left: 0.5rem;
+    }
+  }
+  .ajax-progress-throbber {
+    position: absolute;
+    right: 4rem;
+    top: 2rem;
+    .message {
+      display: none;
+    }
+  }
+  input[type="email"] {
+    height: 6.5rem;
+  }
+  .form-item-email,
+  .submit-wrapper {
+    @include media($tablet-screen) {
+      display: inline-block;
+    }
+  }
+  .form-item-email {
+    width: 100%;
+    @include media($tablet-screen) {
+      width: 40rem;
+    }
+  }
+  .submit-wrapper {
+    position: relative;
+    @include media($tablet-screen) {
+      margin-left: 2rem;
+    }
+  }
+}

@@ -141,6 +141,12 @@ class ClubulCalatorilorSettingsConfigForm extends FormBase
       '#default_value' => (\Drupal::state()->get('sendgrid_api_key')) ? \Drupal::state()->get('sendgrid_api_key'): '',
     );
 
+    $form['sendgrid']['sendgrid_cc_list_id'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Clubul Calatorilor List ID'),
+      '#default_value' => (\Drupal::state()->get('sendgrid_cc_list_id')) ? \Drupal::state()->get('sendgrid_cc_list_id'): '',
+    );
+
     // Submit button
     $form['submit'] = array(
       '#type' => 'submit',

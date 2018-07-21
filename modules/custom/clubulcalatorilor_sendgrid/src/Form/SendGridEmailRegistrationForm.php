@@ -8,6 +8,9 @@ namespace Drupal\clubulcalatorilor_sendgrid\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\clubulcalatorilor_sendgrid\Controller\ClubulCalatorilorSendgridController;
 
 /**
  * SendGrid email registration form.
@@ -25,7 +28,12 @@ class SendGridEmailRegistrationForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    $form['details']['email'] = array(
+    $form['message'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="result_message"></div>'
+    ];
+
+    $form['email'] = array(
       '#type' => 'email',
       '#title' => t('Adresa ta de email'),
       '#attributes' => array(
@@ -34,11 +42,24 @@ class SendGridEmailRegistrationForm extends FormBase {
       '#required' => TRUE
     );
 
+    $form['markup'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="submit-wrapper">'
+    ];
+
     // Submit button
     $form['actions']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Înscrie-te'),
+      '#ajax' => [
+        'callback' => '::setMessage',
+      ],
     );
+
+    $form['markup1'] = [
+      '#type' => 'markup',
+      '#markup' => '</div>'
+    ];
 
     \Drupal::service('page_cache_kill_switch')->trigger();
 
@@ -49,32 +70,62 @@ class SendGridEmailRegistrationForm extends FormBase {
     return $form;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-
-    if ($form_state->getValue('role_id') == '_none') {
-      $form_state->setErrorByName('role_id', $this->t('Please select your role.'));
-    }
-
+  public function setMessage(array $form, FormStateInterface $form_state) {
     $email = $form_state->getValue('email');
+    $response = new AjaxResponse();
+    //var_dump($email);exit;
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      $form_state->setErrorByName('email', $this->t('Email is not valid. Please check your email address and try again.'));
+    // No email address provided
+    if (empty($email)) {
+
+      $response->addCommand(
+        new HtmlCommand(
+          '.result_message',
+          'Adresa de email este necesară pentru a te înscrie.'
+        )
+      );
+
+      return $response;
     }
 
-//    try {
-//      // contact sendgrid and check if the user is already registered
-//    } catch (InvalidPluginDefinitionException $e) {}
-//
-//    // if the user is alredy registered return error
-//    if(!empty($not_details)) {
-//      $form_state->setErrorByName('email', $this->t('You have already subscribed to email alerts with this email.
-//        <br>If you would like to unsubscribe or edit your preferences, follow the link in the email digest.'));
-//    }
+    // Email address is not valid
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-  }
+      $response->addCommand(
+        new HtmlCommand(
+          '.result_message',
+          'Adresa de email nu este validă. Verifică adresa de email și mai încearcă odată.'
+        )
+      );
+
+      return $response;
+    }
+
+    // Check if the user is already subscribed
+    $sendgrid = new \SendGrid(\Drupal::state()->get('sendgrid_api_key') ? \Drupal::state()->get('sendgrid_api_key') : '');
+    if(ClubulCalatorilorSendgridController::checkIfUserIsSubscribed($sendgrid, $email)) {
+
+      $response->addCommand(
+        new HtmlCommand(
+          '.result_message',
+          'Se pare că ești înregistrat deja în club! Dacă nu primești emailurile cu oferte contactează-ne la <a href="mailto:info@clubulcalatorilor.ro">info@clubulcalatorilor.ro</a>'
+        )
+      );
+
+      return $response;
+    }
+
+
+    // $response = new AjaxResponse();
+    // $response->addCommand(
+    //   new HtmlCommand(
+    //     '.result_message',
+    //     '<div class="my_top_message"> The results is </div>')
+    //   );
+
+    return $response;
+
+   }
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $form_values = $form_state->getValues();

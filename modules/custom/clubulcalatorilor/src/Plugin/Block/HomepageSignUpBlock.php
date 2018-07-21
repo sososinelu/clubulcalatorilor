@@ -24,6 +24,7 @@ class HomepageSignUpBlock extends BlockBase
       $sign_up_text = (\Drupal::state()->get('sign_up_text') ? \Drupal::state()->get('sign_up_text')['value'] : '');
 
       $block = Block::load('clubulcalatorilor_theme_mailchimpsubscriptionformclubulcalatorilor');
+      $signup_form = \Drupal::formBuilder()->getForm('Drupal\clubulcalatorilor_sendgrid\Form\SendGridEmailRegistrationForm');
       $mailchimp_block = \Drupal::entityTypeManager()->getViewBuilder('block')->view($block);
 
       return array(
@@ -31,6 +32,7 @@ class HomepageSignUpBlock extends BlockBase
         '#vars' => array(
           'slogan' => $slogan,
           'sign_up_text' => $sign_up_text,
+          'sign_up_form' => $signup_form,
           'mailchimp_block' => $mailchimp_block,
         ),
         '#cache' => array('max-age' => 0),
