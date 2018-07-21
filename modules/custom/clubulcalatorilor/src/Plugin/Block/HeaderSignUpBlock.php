@@ -22,16 +22,14 @@ class HeaderSignUpBlock extends BlockBase
     if($node = \Drupal::routeMatch()->getParameter('node')) {
       $slogan = (\Drupal::state()->get('site_slogan') ? \Drupal::state()->get('site_slogan')['value'] : '');
       $sign_up_text = (\Drupal::state()->get('sign_up_text') ? \Drupal::state()->get('sign_up_text')['value'] : '');
-
-      $block = Block::load('clubulcalatorilor_theme_mailchimpsubscriptionformclubulcalatorilor');
-      $mailchimp_block = \Drupal::entityTypeManager()->getViewBuilder('block')->view($block);
+      $signup_form = \Drupal::formBuilder()->getForm('Drupal\clubulcalatorilor_sendgrid\Form\SendGridEmailRegistrationForm');
 
       return array(
         '#theme' => 'header_sign_up_template',
         '#vars' => array(
           'slogan' => $slogan,
           'sign_up_text' => $sign_up_text,
-          'mailchimp_block' => $mailchimp_block,
+          'sign_up_form' => $signup_form,
         ),
         '#cache' => array('max-age' => 0),
       );

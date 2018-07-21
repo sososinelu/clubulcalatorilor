@@ -10,7 +10,10 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\Component\Utility\Crypt;
 use Drupal\clubulcalatorilor_sendgrid\Controller\ClubulCalatorilorSendgridController;
+use Drupal\clubulcalatorilor_sendgrid\Entity\ClubulCalatorilorUserConfirmation;
 
 /**
  * SendGrid email registration form.
@@ -39,7 +42,7 @@ class SendGridEmailRegistrationForm extends FormBase {
       '#attributes' => array(
         'placeholder' => t('Adresa ta de email'),
       ),
-      '#required' => TRUE
+      '#required' => FALSE
     );
 
     $form['markup'] = [
@@ -52,7 +55,7 @@ class SendGridEmailRegistrationForm extends FormBase {
       '#type' => 'submit',
       '#value' => t('Înscrie-te'),
       '#ajax' => [
-        'callback' => '::setMessage',
+        'callback' => '::processSubmit',
       ],
     );
 
@@ -70,10 +73,9 @@ class SendGridEmailRegistrationForm extends FormBase {
     return $form;
   }
 
-  public function setMessage(array $form, FormStateInterface $form_state) {
+  public function processSubmit(array $form, FormStateInterface $form_state) {
     $email = $form_state->getValue('email');
     $response = new AjaxResponse();
-    //var_dump($email);exit;
 
     // No email address provided
     if (empty($email)) {
@@ -108,37 +110,49 @@ class SendGridEmailRegistrationForm extends FormBase {
       $response->addCommand(
         new HtmlCommand(
           '.result_message',
-          'Se pare că ești înregistrat deja în club! Dacă nu primești emailurile cu oferte contactează-ne la <a href="mailto:info@clubulcalatorilor.ro">info@clubulcalatorilor.ro</a>'
+          'Se pare că ești înregistrat deja în club! <br> Dacă nu primești emailurile cu oferte contactează-ne la <a href="mailto:info@clubulcalatorilor.ro">info@clubulcalatorilor.ro</a>'
         )
       );
 
       return $response;
     }
 
+    // Check if the user already tried to register
+    if(!ClubulCalatorilorUserConfirmation::getUserByEmail($email)) {
+      $token = Crypt::hashBase64($email);
+      $details = ClubulCalatorilorUserConfirmation::create([
+        'email' => $email,
+        'token' => $token,
+      ]);
+      $details->save();
+    }
 
-    // $response = new AjaxResponse();
-    // $response->addCommand(
-    //   new HtmlCommand(
-    //     '.result_message',
-    //     '<div class="my_top_message"> The results is </div>')
-    //   );
+    if(ClubulCalatorilorSendgridController::sendConfirmationEmail($sendgrid, $token)) {
+      $response->addCommand(
+        new HtmlCommand(
+          '.result_message',
+          'Emailul de confirmare trimis. <br> Verifică căsuța de email și confirmă abonarea.'
+        )
+      );
+
+      $response->addCommand(new InvokeCommand('.form-email', 'val', ['']));
+
+      return $response;
+    }else {
+      $response->addCommand(
+        new HtmlCommand(
+          '.result_message',
+          'Emailul de confirmare nu a fost trimis. Te rugăm mai încearcă odată.'
+        )
+      );
+
+      return $response;
+    }
 
     return $response;
 
-   }
+  }
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $form_values = $form_state->getValues();
-
-    $email = $form_values['email'];
-
-    // contact sendgrid and add a new user
-
-    // check if sendgrid sends the confirmation email automatically or send the confirmation email
-
-    // Confirmation message
-//    drupal_set_message(t('Thank you for subscribing to our email digest.<br>
-//        Please click the link in the confirmation email to verify your email address.'));
-//    $form_state->setRedirect('<front>');
   }
 }

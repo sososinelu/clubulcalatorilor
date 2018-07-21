@@ -21,15 +21,14 @@ class FooterSignUpBlock extends BlockBase
   {
     if($node = \Drupal::routeMatch()->getParameter('node')) {
       $footer_sign_up_text = (\Drupal::state()->get('footer_sign_up_text') ? \Drupal::state()->get('footer_sign_up_text')['value'] : '');
-
-      $block = Block::load('clubulcalatorilor_theme_mailchimpsubscriptionformclubulcalatorilor');
-      $mailchimp_block = \Drupal::entityTypeManager()->getViewBuilder('block')->view($block);
+      $sign_up_text = (\Drupal::state()->get('sign_up_text') ? \Drupal::state()->get('sign_up_text')['value'] : '');
+      $signup_form = \Drupal::formBuilder()->getForm('Drupal\clubulcalatorilor_sendgrid\Form\SendGridEmailRegistrationForm');
 
       return array(
         '#theme' => 'footer_sign_up_template',
         '#vars' => array(
           'footer_sign_up_text' => $footer_sign_up_text,
-          'mailchimp_block' => $mailchimp_block,
+          'sign_up_form' => $signup_form,
         ),
         '#cache' => array('max-age' => 0),
       );

@@ -20,32 +20,19 @@ class ClubulCalatorilorSendgridController extends ControllerBase
   {
     $sendgrid = new \SendGrid(\Drupal::state()->get('sendgrid_api_key') ? \Drupal::state()->get('sendgrid_api_key') : '');
 
-    $user_id = 'ZXhhbXBsZTFAZXhhbXBsZS5jb20=';
-    //$user_id = $this->sendUserToSendgrid($sendgrid);
-
-    //$this->moveUserToList($sendgrid, $user_id);
-
-    $this->checkIfUserIsSubscribed($sendgrid);
-
-    return true;
-  }
-
-  public function sendConfirmationEmail($sendgrid)
-  {
     $email = new \SendGrid\Mail\Mail();
     $email->setFrom("info@clubulcalatorilor.ro", "Clubul Călătorilor");
     $email->setSubject("Confirmă abonarea la Clubul Călătorilor!");
-    $email->addTo("sorinsoso4@gmail.com", "Sorin Secan");
+    $email->addTo("sorinsoso4@gmail.com", "");
 
     $body_data = array (
       '#theme' => 'email_confirmation_template',
       '#vars' => array(
-        "unique_url" => \Drupal::request()->getHost()
+        "unique_url" => \Drupal::request()->getSchemeAndHttpHost().'/email-confirmation?token='
       )
     );
 
     $body =  \Drupal::service('renderer')->render($body_data);
-
 
     $email->addContent("text/html", $body);
 
@@ -55,6 +42,44 @@ class ClubulCalatorilorSendgridController extends ControllerBase
       print $response->statusCode() . "\n";
       print_r($response->headers());
       print $response->body() . "\n";
+    } catch (Exception $e) {
+      echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+
+    return true;
+  }
+
+  public static function sendConfirmationEmail($sendgrid, $token)
+  {
+    $email = new \SendGrid\Mail\Mail();
+    $email->setFrom("info@clubulcalatorilor.ro", "Clubul Călătorilor");
+    $email->setSubject("Confirmă abonarea la Clubul Călătorilor!");
+    $email->addTo("sorinsoso4@gmail.com", "");
+
+    $body_data = array (
+      '#theme' => 'email_confirmation_template',
+      '#vars' => array(
+        "unique_url" => \Drupal::request()->getSchemeAndHttpHost().'/email-confirmation?token='.$token
+      )
+    );
+
+    $body =  \Drupal::service('renderer')->render($body_data);
+
+    $email->addContent("text/html", $body);
+
+    try {
+      $response = $sendgrid->send($email);
+
+      // print $response->statusCode() . "\n";
+      // print_r($response->headers());
+      // print $response->body() . "\n";
+
+      if (strpos($response->statusCode(), '20') !== false) {
+        return true;
+      }else {
+        return false;
+      }
+
     } catch (Exception $e) {
       echo 'Caught exception: ',  $e->getMessage(), "\n";
     }

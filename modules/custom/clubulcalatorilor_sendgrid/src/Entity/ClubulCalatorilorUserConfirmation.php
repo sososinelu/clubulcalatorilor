@@ -48,9 +48,22 @@ class ClubulCalatorilorUserConfirmation extends ContentEntityBase implements Con
    * @param $token
    * @return object
    */
-  public function getUserByToken($token) {
+  public static function getUserByToken($token) {
     try {
       $user_details = \Drupal::entityTypeManager()->getStorage('cc_user_conf_entity')->loadByProperties(['token' => $token]);
+    } catch (InvalidPluginDefinitionException $e) {
+    }
+
+    return reset($user_details);
+  }
+
+    /**
+   * @param $token
+   * @return object
+   */
+  public static function getUserByEmail($email) {
+    try {
+      $user_details = \Drupal::entityTypeManager()->getStorage('cc_user_conf_entity')->loadByProperties(['email' => $email]);
     } catch (InvalidPluginDefinitionException $e) {
     }
 
