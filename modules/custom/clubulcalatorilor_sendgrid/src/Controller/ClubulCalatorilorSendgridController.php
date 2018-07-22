@@ -20,7 +20,6 @@ class ClubulCalatorilorSendgridController extends ControllerBase
   public function emailConfirmationProcessing()
   {
     $token = \Drupal::request()->query->get('token');
-    $markup = '<p>We couldn\'t find your details on our system.</p>';
     $sendgrid = new \SendGrid(\Drupal::state()->get('sendgrid_api_key') ? \Drupal::state()->get('sendgrid_api_key') : '');
     $markup = '<div class="email-confirmation outer-wrapper">';
 
@@ -76,12 +75,12 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     return true;
   }
 
-  public static function sendConfirmationEmail($sendgrid, $token)
+  public static function sendConfirmationEmail($sendgrid, $token, $email_address)
   {
     $email = new \SendGrid\Mail\Mail();
     $email->setFrom("info@clubulcalatorilor.ro", "Clubul Călătorilor");
     $email->setSubject("Confirmă abonarea la Clubul Călătorilor!");
-    $email->addTo("sorinsoso4@gmail.com", "");
+    $email->addTo($email_address, "");
 
     $body_data = array (
       '#theme' => 'email_confirmation_template',

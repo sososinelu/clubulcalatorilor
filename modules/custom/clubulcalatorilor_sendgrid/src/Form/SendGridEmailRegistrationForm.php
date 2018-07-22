@@ -127,7 +127,7 @@ class SendGridEmailRegistrationForm extends FormBase {
       $details->save();
     }
 
-    if(ClubulCalatorilorSendgridController::sendConfirmationEmail($sendgrid, $token)) {
+    if(ClubulCalatorilorSendgridController::sendConfirmationEmail($sendgrid, $token, $email)) {
       $response->addCommand(
         new HtmlCommand(
           '.result_message',
