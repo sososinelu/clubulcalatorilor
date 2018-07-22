@@ -117,14 +117,18 @@ class SendGridEmailRegistrationForm extends FormBase {
       return $response;
     }
 
+    $local_user_record = ClubulCalatorilorUserConfirmation::getUserByEmail($email);
+
     // Check if the user already tried to register
-    if(!ClubulCalatorilorUserConfirmation::getUserByEmail($email)) {
+    if(!$local_user_record) {
       $token = Crypt::hashBase64($email);
       $details = ClubulCalatorilorUserConfirmation::create([
         'email' => $email,
         'token' => $token,
       ]);
       $details->save();
+    }else{
+      $token = $local_user_record->get('token')->value;
     }
 
     if(ClubulCalatorilorSendgridController::sendConfirmationEmail($sendgrid, $token, $email)) {
