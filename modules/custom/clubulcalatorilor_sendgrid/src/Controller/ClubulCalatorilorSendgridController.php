@@ -4,6 +4,7 @@ namespace Drupal\clubulcalatorilor_sendgrid\Controller;
 
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\clubulcalatorilor_sendgrid\Entity\ClubulCalatorilorUserConfirmation;
 
 
 class ClubulCalatorilorSendgridController extends ControllerBase
@@ -16,35 +17,61 @@ class ClubulCalatorilorSendgridController extends ControllerBase
 
   }
 
+  public function emailConfirmationProcessing()
+  {
+    $token = \Drupal::request()->query->get('token');
+    $markup = '<p>We couldn\'t find your details on our system.</p>';
+    $sendgrid = new \SendGrid(\Drupal::state()->get('sendgrid_api_key') ? \Drupal::state()->get('sendgrid_api_key') : '');
+    $markup = '<div class="email-confirmation outer-wrapper">';
+
+    if($token) {
+      if($local_user_record = ClubulCalatorilorUserConfirmation::getUserByToken($token)) {
+
+        $email = $local_user_record->get('email')->value;
+        //var_dump($email);exit;
+
+        if($sendgrid_id = ClubulCalatorilorSendgridController::sendUserToSendgrid($sendgrid, $email)) {
+          if(ClubulCalatorilorSendgridController::moveUserToList($sendgrid, $sendgrid_id[0])) {
+            try {
+              $local_user_record->delete();
+
+              // Send Bine ai venit in club email
+
+              $markup .= '<h4>Adresa ta de email a fost confirmată. <br> Bine ai venit în club! </h4>';
+              $markup .= '<p class="back-link"><a href="/">Înapoi la pagina principală.</a></p>';
+              $markup .= '</div>';
+
+              return array(
+                '#type' => 'markup',
+                '#markup' => $markup,
+                '#cache' => array('max-age' => 0),
+              );
+
+            }catch (Exception $exception) {
+              \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Delete local user error: $email >>> '.$exception);
+            }
+          }
+        }
+      }
+    }
+
+    $markup .= '<h4>Nu ți-am găsit detaliile ca să te putem înscrie! <br> Mai încearcă să te înscrii odată sau contactează-ne la <a class="info" href="mailto:info@clubulcalatorilor.ro">info@clubulcalatorilor.ro</a></h4>';
+    $markup .= '<p class="back-link"><a href="/">Înapoi la pagina principală.</a></p>';
+    $markup .= '</div>';
+
+    return array(
+      '#type' => 'markup',
+      '#markup' => $markup,
+      '#cache' => array('max-age' => 0),
+    );
+  }
+
   public function testSendgrid()
   {
     $sendgrid = new \SendGrid(\Drupal::state()->get('sendgrid_api_key') ? \Drupal::state()->get('sendgrid_api_key') : '');
+    $sendgrid_id = ClubulCalatorilorSendgridController::sendUserToSendgrid($sendgrid, "example3@email.com");
 
-    $email = new \SendGrid\Mail\Mail();
-    $email->setFrom("info@clubulcalatorilor.ro", "Clubul Călătorilor");
-    $email->setSubject("Confirmă abonarea la Clubul Călătorilor!");
-    $email->addTo("sorinsoso4@gmail.com", "");
-
-    $body_data = array (
-      '#theme' => 'email_confirmation_template',
-      '#vars' => array(
-        "unique_url" => \Drupal::request()->getSchemeAndHttpHost().'/email-confirmation?token='
-      )
-    );
-
-    $body =  \Drupal::service('renderer')->render($body_data);
-
-    $email->addContent("text/html", $body);
-
-    try {
-      $response = $sendgrid->send($email);
-
-      print $response->statusCode() . "\n";
-      print_r($response->headers());
-      print $response->body() . "\n";
-    } catch (Exception $e) {
-      echo 'Caught exception: ',  $e->getMessage(), "\n";
-    }
+    var_dump($sendgrid_id);exit;
 
     return true;
   }
@@ -107,7 +134,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     return false;
   }
 
-  public function moveUserToList($sendgrid, $user_id)
+  public static function moveUserToList($sendgrid, $user_id)
    {
     $list_id = (\Drupal::state()->get('sendgrid_cc_list_id')) ? \Drupal::state()->get('sendgrid_cc_list_id'): '';
 
@@ -115,35 +142,46 @@ class ClubulCalatorilorSendgridController extends ControllerBase
       try {
 
         $response = $sendgrid->client->contactdb()->lists()->_($list_id)->recipients()->_($user_id)->post();
-        print $response->statusCode() . "\n";
-        print_r($response->headers());
-        print $response->body() . "\n";
+        // print $response->statusCode() . "\n";
+        // print_r($response->headers());
+        // print $response->body() . "\n";
+
+        if (strpos($response->statusCode(), '20') !== false) {
+          return true;
+        }else {
+          return false;
+        }
       } catch (Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
       }
     }
   }
 
-  public function sendUserToSendgrid($sendgrid)
+  public static function sendUserToSendgrid($sendgrid, $email)
   {
 
     $new_contact = json_decode('[
       {
-        "email": "example1@example.com",
+        "email": "'.$email.'",
         "first_name": "",
         "last_name": ""
       }
     ]');
-
-    $list_id = json_decode('{"list_id": 4485808}');
-
 
     try {
 
       $response = $sendgrid->client->contactdb()->recipients()->post($new_contact);
       //print $response->statusCode() . "\n";
       //print_r($response->headers());
-      print $response->body() . "\n";
+      //print $response->body() . "\n";
+
+      $response_data = json_decode($response->body());
+
+      if($response_data->{"new_count"} == 1) {
+        return $response_data->{"persisted_recipients"};
+      }else {
+        return false;
+      }
     } catch (Exception $e) {
       echo 'Caught exception: ',  $e->getMessage(), "\n";
     }

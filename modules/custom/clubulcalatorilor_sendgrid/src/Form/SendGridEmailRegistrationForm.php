@@ -131,7 +131,7 @@ class SendGridEmailRegistrationForm extends FormBase {
       $response->addCommand(
         new HtmlCommand(
           '.result_message',
-          'Emailul de confirmare trimis. <br> Verifică căsuța de email și confirmă abonarea.'
+          'Emailul de confirmare a fost trimis. <br> Verifică căsuța ta de email și confirmă abonarea.'
         )
       );
 

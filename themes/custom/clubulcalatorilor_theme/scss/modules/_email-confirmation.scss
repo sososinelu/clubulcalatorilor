@@ -1,0 +1,14 @@
+.email-confirmation {
+  text-align: center;
+  padding-top: 2rem;
+  margin-bottom: -5rem;
+  .info::after {
+    content: '↬';
+    padding-left: 0.5rem;
+  }
+  .back-link {
+    a::before {
+      content: '↫';
+    }
+  }
+}

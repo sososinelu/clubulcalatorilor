@@ -18,16 +18,11 @@ class FooterBuildingBlock extends BlockBase
    */
   public function build()
   {
-    if($node = \Drupal::routeMatch()->getParameter('node')) {
-
-      return array(
-        '#theme' => 'footer_building_block_template',
-        '#vars' => array(
-        ),
-        '#cache' => array('max-age' => 0),
-      );
-    }
-
-    return array();
+    return array(
+      '#theme' => 'footer_building_block_template',
+      '#vars' => array(
+      ),
+      '#cache' => array('max-age' => 0),
+    );
   }
 }

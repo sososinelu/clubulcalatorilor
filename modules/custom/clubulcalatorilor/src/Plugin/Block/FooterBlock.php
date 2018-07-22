@@ -19,28 +19,24 @@ class FooterBlock extends BlockBase
    */
   public function build()
   {
-    if($node = \Drupal::routeMatch()->getParameter('node')) {
-      $footer_contact_text = (\Drupal::state()->get('footer_contact_text') ? \Drupal::state()->get('footer_contact_text') : '');
-      $info_email = (\Drupal::state()->get('info_email') ? \Drupal::state()->get('info_email') : '');
-      $faccebook = (\Drupal::state()->get('facebook') ? \Drupal::state()->get('facebook') : '');
-      $instagram = (\Drupal::state()->get('instagram') ? \Drupal::state()->get('instagram') : '');
+    $footer_contact_text = (\Drupal::state()->get('footer_contact_text') ? \Drupal::state()->get('footer_contact_text') : '');
+    $info_email = (\Drupal::state()->get('info_email') ? \Drupal::state()->get('info_email') : '');
+    $facebook = (\Drupal::state()->get('facebook') ? \Drupal::state()->get('facebook') : '');
+    $instagram = (\Drupal::state()->get('instagram') ? \Drupal::state()->get('instagram') : '');
 
-      $footer_menu = Block::load('footer');
-      $footer_menu_block = \Drupal::entityTypeManager()->getViewBuilder('block')->view($footer_menu);
+    $footer_menu = Block::load('footer');
+    $footer_menu_block = \Drupal::entityTypeManager()->getViewBuilder('block')->view($footer_menu);
 
-      return array(
-        '#theme' => 'footer_block_template',
-        '#vars' => array(
-          'footer_contact_text' => $footer_contact_text,
-          'info_email' => $info_email,
-          'faccebook' => $faccebook,
-          'instagram' => $instagram,
-          'footer_menu_block' => $footer_menu_block,
-        ),
-        '#cache' => array('max-age' => 0),
-      );
-    }
-
-    return array();
+    return array(
+      '#theme' => 'footer_block_template',
+      '#vars' => array(
+        'footer_contact_text' => $footer_contact_text,
+        'info_email' => $info_email,
+        'facebook' => $facebook,
+        'instagram' => $instagram,
+        'footer_menu_block' => $footer_menu_block,
+      ),
+      '#cache' => array('max-age' => 0),
+    );
   }
 }
