@@ -1,0 +1,34 @@
+.eu-cookie-compliance-banner{
+  background-color: $bright-gray;
+  border-top: 0.5rem solid #000b0d;
+  #popup-text {
+    p {
+      color: $white;
+      font-weight: normal;
+    }
+  }
+
+  .eu-cookie-compliance-default-button {
+    color: $white;
+    cursor: pointer;
+    border: none;
+    background: none;
+    margin-top: 1em;
+    padding: 0 8px;
+    vertical-align: middle;
+    margin-left: 30px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    font-family: inherit;
+    font-weight: normal;
+    text-shadow: none;
+    &:hover {
+      text-decoration: underline;
+      background: $deep-cerulean;
+      color: $white;
+    }
+  }
+
+}
