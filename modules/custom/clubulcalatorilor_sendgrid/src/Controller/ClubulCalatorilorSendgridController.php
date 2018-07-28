@@ -27,7 +27,6 @@ class ClubulCalatorilorSendgridController extends ControllerBase
       if($local_user_record = ClubulCalatorilorUserConfirmation::getUserByToken($token)) {
 
         $email = $local_user_record->get('email')->value;
-        //var_dump($email);exit;
 
         if($sendgrid_id = ClubulCalatorilorSendgridController::sendUserToSendgrid($sendgrid, $email)) {
           if(ClubulCalatorilorSendgridController::moveUserToList($sendgrid, $sendgrid_id[0])) {

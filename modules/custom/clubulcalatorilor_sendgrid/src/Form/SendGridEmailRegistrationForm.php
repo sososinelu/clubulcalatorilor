@@ -125,6 +125,7 @@ class SendGridEmailRegistrationForm extends FormBase {
       $details = ClubulCalatorilorUserConfirmation::create([
         'email' => $email,
         'token' => $token,
+        'date' => date("Y-m-d h:i:sa")
       ]);
       $details->save();
     }else{

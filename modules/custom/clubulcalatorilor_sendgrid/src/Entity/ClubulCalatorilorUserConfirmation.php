@@ -38,6 +38,10 @@ class ClubulCalatorilorUserConfirmation extends ContentEntityBase implements Con
       ->setLabel(t('Token'))
       ->setSetting('max_length', 128);
 
+    $fields['date'] = BaseFieldDefinition::create('string')
+    ->setLabel(t('Date'))
+    ->setSetting('max_length', 128);
+
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'));
 
