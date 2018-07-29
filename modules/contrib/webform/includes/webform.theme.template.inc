@@ -15,6 +15,7 @@ use Drupal\image\Entity\ImageStyle;
 use Drupal\webform\Element\WebformCodeMirror;
 use Drupal\webform\Element\WebformHtmlEditor;
 use Drupal\webform\WebformMessageManagerInterface;
+use Drupal\webform\WebformSubmissionInterface;
 use Drupal\webform\Utility\WebformDateHelper;
 use Drupal\webform\Utility\WebformDialogHelper;
 use Drupal\webform\Utility\WebformElementHelper;
@@ -169,7 +170,7 @@ function template_preprocess_webform_confirmation(array &$variables) {
   }
 
   // Set message.
-  $variables['message'] = $message_manager->build(WebformMessageManagerInterface::SUBMISSION_CONFIRMATION);
+  $variables['message'] = $message_manager->build(WebformMessageManagerInterface::SUBMISSION_CONFIRMATION_MESSAGE);
 
   // Set attributes.
   $variables['attributes'] = new Attribute($settings['confirmation_attributes']);
@@ -277,8 +278,9 @@ function template_preprocess_webform_submission_navigation(array &$variables) {
 function template_preprocess_webform_submission(array &$variables) {
   $variables['view_mode'] = $variables['elements']['#view_mode'];
   $variables['webform_submission'] = $variables['elements']['#webform_submission'];
-  $variables['webform'] = $variables['elements']['#webform_submission']->getWebform();
-
+  if ($variables['webform_submission'] instanceof WebformSubmissionInterface) {
+    $variables['webform'] = $variables['webform_submission']->getWebform();
+  }
 }
 
 /**

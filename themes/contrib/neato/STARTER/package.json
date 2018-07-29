@@ -2,19 +2,24 @@
   "name": "STARTER",
   "version": "8.1.2",
   "devDependencies": {
+    "bourbon": "~4.2.1",
+    "bourbon-bitters": "~1.2.0",
+    "bourbon-neat": "~1.7.2",
     "browser-sync": "^2.10.0",
     "gulp": "^3.9.0",
     "gulp-notify": "^2.2.0",
+    "gulp-replace": "^0.6.1",
     "gulp-sass": "2.1.0",
     "gulp-shell": "^0.5.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",
     "gulp-util": "3.0.7",
     "gulp-watch": "4.3.5",
+    "normalize.css": "~3.0.2",
     "rimraf": "*",
     "run-sequence": "^1.1.5"
   },
   "scripts": {
-    "postinstall": "node_modules/.bin/rimraf node_modules/**/*.info && gulp sass && gulp compress"
+    "postinstall": "node_modules/.bin/rimraf node_modules/**/*.info && gulp bitters-copy && gulp bitters-fix && gulp sass && gulp compress"
   }
 }

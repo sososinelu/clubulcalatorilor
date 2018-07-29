@@ -1,69 +1,62 @@
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var sass = require('gulp-sass');
-var watch = require('gulp-watch');
-var shell = require('gulp-shell');
-var notify = require('gulp-notify');
-var browserSync = require('browser-sync').create();
-var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
-var fs = require("fs");
-var runSequence = require('run-sequence');
-var config = require("./example.config");
+const gulp = require('gulp'),
+  gutil = require('gulp-util'),
+  sass = require('gulp-sass'),
+  watch = require('gulp-watch'),
+  shell = require('gulp-shell'),
+  notify = require('gulp-notify'),
+  browserSync = require('browser-sync').create(),
+  sourcemaps = require('gulp-sourcemaps'),
+  uglify = require('gulp-uglify'),
+  runSequence = require('run-sequence'),
+  replace = require('gulp-replace');
 
-/**
- * If config.js exists, load that config for overriding certain values below.
- */
-function loadConfig() {
-  if (fs.existsSync(__dirname + "/./config.js")) {
-    config = {};
-    config = require("./config");
-  }
-
-  return config;
+// Only include config if exists.
+let config;
+try {
+  config = require("./config");
+} catch (error) {
+  config = require("./example.config");
 }
-
-loadConfig();
 
 /**
  * This task generates CSS from all SCSS files and compresses them down.
  */
 gulp.task('sass', function () {
   return gulp.src('./scss/**/*.scss')
-    .pipe(sourcemaps.init())
-    .pipe(sass({
-      noCache: true,
-      outputStyle: "compressed",
-      lineNumbers: false,
-      loadPath: './css/*',
-      sourceMap: true
-    })).on('error', function(error) {
-      gutil.log(error);
-      this.emit('end');
-    })
-    .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest('./css'))
-    .pipe(notify({
-      title: "SASS Compiled",
-      message: "All SASS files have been recompiled to CSS.",
-      onLast: true
-    }));
+  .pipe(sourcemaps.init())
+  .pipe(sass({
+    noCache: true,
+    outputStyle: "compressed",
+    lineNumbers: false,
+    loadPath: './css/*',
+    sourceMap: true
+  })).on('error', function (error) {
+    gutil.log(error);
+    this.emit('end');
+  })
+  .pipe(sourcemaps.write('./maps'))
+  .pipe(gulp.dest('./css'))
+  .pipe(notify({
+    title: "SASS Compiled",
+    message: "All SASS files have been recompiled to CSS.",
+    onLast: true
+  }));
 });
 
 /**
  * This task minifies javascript in the js/js-src folder and places them in the js directory.
  */
-gulp.task('compress', function() {
+gulp.task('compress', function () {
   return gulp.src('./js/js-src/*.js')
-    .pipe(sourcemaps.init())
-    .pipe(uglify())
-    .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest('./js'))
-    .pipe(notify({
-      title: "JS Minified",
-      message: "All JS files in the theme have been minified.",
-      onLast: true
-    }));
+  .pipe(sourcemaps.init())
+  .pipe(uglify())
+  .pipe(sourcemaps.write('./maps'))
+  .pipe(gulp.dest('./js'))
+  .pipe(notify({
+    title: "JS Minified",
+    message: "All JS files in the theme have been minified.",
+    onLast: true
+  }));
 });
 
 /**
@@ -75,14 +68,14 @@ gulp.task('drush:cc', function () {
   }
 
   return gulp.src('', {read: false})
-    .pipe(shell([
-      config.drush.alias.css_js
-    ]))
-    .pipe(notify({
-      title: "Caches cleared",
-      message: "Drupal CSS/JS caches cleared.",
-      onLast: true
-    }));
+  .pipe(shell([
+    config.drush.alias.css_js
+  ]))
+  .pipe(notify({
+    title: "Caches cleared",
+    message: "Drupal CSS/JS caches cleared.",
+    onLast: true
+  }));
 });
 
 /**
@@ -94,21 +87,21 @@ gulp.task('drush:cr', function () {
   }
 
   return gulp.src('', {read: false})
-    .pipe(shell([
-      config.drush.alias.cr
-    ]))
-    .pipe(notify({
-      title: "Cache rebuilt",
-      message: "Drupal cache rebuilt.",
-      onLast: true
-    }));
+  .pipe(shell([
+    config.drush.alias.cr
+  ]))
+  .pipe(notify({
+    title: "Cache rebuilt",
+    message: "Drupal cache rebuilt.",
+    onLast: true
+  }));
 });
 
 /**
  * Define a task to spawn Browser Sync.
  * Options are defaulted, but can be overridden within your config.js file.
  */
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', function () {
   browserSync.init({
     files: ['css/**/*.css', 'js/*.js'],
     port: config.browserSync.port,
@@ -122,21 +115,21 @@ gulp.task('browser-sync', function() {
 /**
  * Define a task to be called to instruct browser sync to reload.
  */
-gulp.task('reload', function() {
+gulp.task('reload', function () {
   browserSync.reload();
 });
 
 /**
  * Combined tasks that are run synchronously specifically for twig template changes.
  */
-gulp.task('flush', function() {
+gulp.task('flush', function () {
   runSequence('drush:cr', 'reload');
 });
 
 /**
  * Defines the watcher task.
  */
-gulp.task('watch', function() {
+gulp.task('watch', function () {
   // watch scss for changes and clear drupal theme cache on change
   gulp.watch(['scss/**/*.scss'], ['sass', 'drush:cc']);
 
@@ -147,6 +140,19 @@ gulp.task('watch', function() {
   if (!config.twig.useCache) {
     gulp.watch(['templates/**/*.html.twig'], ['flush']);
   }
+});
+
+// Copy Bitters to the subtheme folder.
+gulp.task('bitters-copy', function () {
+  gulp.src(['node_modules/bourbon-bitters/app/assets/stylesheets/**/*'])
+  .pipe(gulp.dest('scss/base', {overwrite: false}));
+});
+
+// Fix Bitters Neat import.
+gulp.task('bitters-fix', function () {
+  gulp.src(['scss/base/_grid-settings.scss'])
+  .pipe(replace('@import "neat-helpers";', '@import "../../node_modules/bourbon-neat/app/assets/stylesheets/neat-helpers";'))
+  .pipe(gulp.dest('scss/base/'));
 });
 
 gulp.task('default', ['watch', 'browser-sync']);

@@ -14,21 +14,23 @@
 @charset "UTF-8";
 
 // Import normalize.css
-@import "../../../contrib/neato/bower_components/normalize.css/normalize.css";
+@import "../node_modules/normalize.css/normalize.css";
 
 // Import Bourbon.
-@import "../../../contrib/neato/bower_components/bourbon/app/assets/stylesheets/bourbon";
+@import "../node_modules/bourbon/app/assets/stylesheets/bourbon";
+
+// Import Bitters.
+@import "base/bitters";
 
 // Import Neat.
-@import "../../../contrib/neato/bower_components/neat/app/assets/stylesheets/neat";
-@import "../../../contrib/neato/bower_components/neat/app/assets/stylesheets/neat-helpers";
+@import "../node_modules/bourbon-neat/app/assets/stylesheets/neat";
+@import "../node_modules/bourbon-neat/app/assets/stylesheets/neat-helpers";
 
 // Import variables.
 @import "variables/breakpoints";
 @import "variables/colors";
 
 // Import layout.
-@import "base/base";
 @import "base/layout";
 
 // Import Drupal element overrides

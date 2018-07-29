@@ -10,8 +10,8 @@ dependencies:
 
 # configure: action.admin.config.services.mailchimp.signup
 
-# Information added by Drupal.org packaging script on 2018-02-27
-version: '8.x-1.6'
+# Information added by Drupal.org packaging script on 2018-06-25
+version: '8.x-1.7'
 core: '8.x'
 project: 'mailchimp'
-datestamp: 1519758801
+datestamp: 1529895829

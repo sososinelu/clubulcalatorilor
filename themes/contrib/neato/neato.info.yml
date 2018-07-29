@@ -13,8 +13,8 @@ regions:
   footer_top: 'Footer Top'
   footer_bottom: 'Footer Bottom'
 
-# Information added by Drupal.org packaging script on 2016-12-20
-version: '8.x-1.6'
+# Information added by Drupal.org packaging script on 2018-05-08
+version: '8.x-1.8'
 core: '8.x'
 project: 'neato'
-datestamp: 1482244985
+datestamp: 1525773494
