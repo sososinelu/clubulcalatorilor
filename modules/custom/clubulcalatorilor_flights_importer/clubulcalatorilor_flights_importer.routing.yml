@@ -1,0 +1,7 @@
+clubulcalatorilor_flights_importer.importers:
+  path: '/admin/flights-importers'
+  defaults:
+    _form: '\Drupal\clubulcalatorilor_flights_importer\Form\FlightImportersForm'
+    _title: 'Flight Importers'
+  requirements:
+    _permission: 'access flights content'

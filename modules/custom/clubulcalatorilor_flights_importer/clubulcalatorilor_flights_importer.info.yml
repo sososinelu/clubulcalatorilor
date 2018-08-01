@@ -1,0 +1,4 @@
+name: Clubul Calatorilor flight importers
+description: Import flights from a csv file and add them to an html template
+core: 8.x
+type: module
