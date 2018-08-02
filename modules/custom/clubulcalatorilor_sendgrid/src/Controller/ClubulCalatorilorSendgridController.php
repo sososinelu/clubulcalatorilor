@@ -28,8 +28,8 @@ class ClubulCalatorilorSendgridController extends ControllerBase
 
         $email = $local_user_record->get('email')->value;
 
-        if($sendgrid_id = ClubulCalatorilorSendgridController::sendUserToSendgrid($sendgrid, $email)) {
-          if(ClubulCalatorilorSendgridController::moveUserToList($sendgrid, $sendgrid_id[0])) {
+        if($sendgrid_id = self::sendUserToSendgrid($sendgrid, $email)) {
+          if(self::moveUserToList($sendgrid, $sendgrid_id[0])) {
             try {
               $local_user_record->delete();
 
@@ -67,7 +67,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
   public function testSendgrid()
   {
     $sendgrid = new \SendGrid(\Drupal::state()->get('sendgrid_api_key') ? \Drupal::state()->get('sendgrid_api_key') : '');
-    $sendgrid_id = ClubulCalatorilorSendgridController::sendUserToSendgrid($sendgrid, "example3@email.com");
+    $sendgrid_id = self::sendUserToSendgrid($sendgrid, "example3@email.com");
 
     var_dump($sendgrid_id);exit;
 
