@@ -5,6 +5,7 @@ namespace Drupal\clubulcalatorilor_flights_importer\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\clubulcalatorilor_flights_importer\Controller\ClubulCalatorilorFlightsImporter;
 
 /**
  * Admin-facing form for the s120 importers
@@ -32,13 +33,9 @@ class FlightImportersForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $form['#tree'] = TRUE;
-    $form['options'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Select which S120 file you want to import'),
-    ];
 
     $form['main_container'] = array(
-      '#markup' => '<div class="file-container hidden">'
+      '#markup' => '<div class="file-container"><h2>Select a flights CSV to import</h2'
     );
 
     $form['file'] = [
@@ -82,13 +79,22 @@ class FlightImportersForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
     if ($flights_data = ClubulCalatorilorFlightsImporter::processUpload($this->csv_file)) {
-      drupal_set_message(t('Successfully imported @count CSV rows.', ['@count' => $flights_data['count']]));
+      drupal_set_message(t('Successfully processed @count CSV rows.', ['@count' => $flights_data['count']]));
     }
     else {
       drupal_set_message(t('No CSV rows imported.'));
     }
 
-    $form_state->setRedirectUrl(new Url('clubulcalatorilor_flights_importer.importers'));
+
+    //$form_state->setRedirectUrl(new Url('clubulcalatorilor_flights_importer.importers'));
+    echo '<a href="/">Back to homepage</a>';
+    echo "<br/>";
+    echo "<br/>";
+    echo htmlspecialchars($flights_data['flights_template']);
+    echo "<br/>";
+    echo "<br/>";
+    echo '<a href="/">Back to homepage</a>';
+    exit;
   }
 
 }

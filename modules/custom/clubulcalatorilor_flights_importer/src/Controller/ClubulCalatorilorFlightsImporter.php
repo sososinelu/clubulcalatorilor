@@ -33,6 +33,7 @@ class ClubulCalatorilorFlightsImporter {
       $values = self::prepareFlightRow($row);
       if ($values) {
         $flights_data[] = $values;
+        $count++;
       }
     }
 
@@ -52,19 +53,23 @@ class ClubulCalatorilorFlightsImporter {
    {
 
     return array(
-      'employer_name' => ($row[0] == 'NULL' ? NULL : $row[0]),
-      'crn' => ($row[1] == 'NULL' ? NULL : $row[1]),
-      'address_1' => ($row[2] == 'NULL' ? NULL : $row[2]),
-      'address_2' => ($row[3] == 'NULL' ? NULL : $row[3]),
-      'address_3' => ($row[4] == 'NULL' ? NULL : $row[4]),
-      'address_4' => ($row[5] == 'NULL' ? NULL : $row[5]),
-      'address_5' => ($row[6] == 'NULL' ? NULL : $row[6]),
-      'postcode' => ($row[7] == 'NULL' ? NULL : $row[7]),
-      'country' => ($row[8] == 'NULL' ? NULL : $row[8]),
-      'ppf_employer_ref' => ($row[9] == 'NULL' ? NULL : $row[9]),
+      'zbor_id' => ($row[0] == 'NULL' ? NULL : $row[0]),
+      'din' => ($row[1] == 'NULL' ? NULL : $row[1]),
+      'tip_zbor' => ($row[2] == 'NULL' ? NULL : $row[2]),
+      'destinatie' => ($row[3] == 'NULL' ? NULL : $row[3]),
+      'pret' => ($row[4] == 'NULL' ? NULL : $row[4]),
+      'tip_pret' => ($row[5] == 'NULL' ? NULL : $row[5]),
+      'pret_normal' => ($row[6] == 'NULL' ? NULL : $row[6]),
+      'luna' => ($row[7] == 'NULL' ? NULL : $row[7]),
+      'an' => ($row[8] == 'NULL' ? NULL : $row[8]),
+      'companie' => ($row[9] == 'NULL' ? NULL : $row[9]),
+      'link' => ($row[9] == 'NULL' ? NULL : $row[9]),
     );
   }
 
+  /**
+   *
+   */
   private static function processTemplate($flights_data)
   {
     $template_data = array (
@@ -78,5 +83,4 @@ class ClubulCalatorilorFlightsImporter {
 
     return $flights_template;
   }
-
 }

@@ -1,0 +1,44 @@
+<div style="background: rgb(243, 243, 243); padding: 18px 10px; line-height: 22px; text-align: inherit;">
+
+  {% set counter = 0 %}
+  {% set din = '' %}
+  {% for flight_row in vars.flights %}
+
+
+    {% if counter == 0 %}
+    {% set din = flight_row.din %}
+
+      <p style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt; text-align: left;font-weight: 600;  font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-family:lucida sans unicode,lucida grande,sans-serif; font-size: 14px; color: rgb(66, 89, 104);font-size: 16px">
+      &nbsp;{{ flight_row.din }}; {{ flight_row.tip_zbor }}
+      </p>
+      <ul>
+    {% endif %}
+
+
+    {% if din == flight_row.din  %}
+      <li style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt; text-align: left; font-weight:normal; font-family:lucida sans unicode,lucida grande,sans-serif;font-size: 12pt; color: rgb(0, 0, 0); background-color: transparent; font-weight: 400; font-style: normal; font-variant: normal;" class="zbor-id-{{ flight_row.zbor_id }}">
+        <u><strong><a href="{{ flight_row.link }}">
+          {{ flight_row.destinatie }}
+        </a></strong></u>
+        -&euro;{{ flight_row.pret }}&nbsp;{{ flight_row.tip_pret }}&nbsp;&euro;{{ flight_row.pret_normal }}&nbsp;{{ flight_row.luna }}&nbsp;{{ flight_row.an }}&nbsp;{{ flight_row.companie }}
+      </li>
+
+      {% set counter = counter + 1 %}
+    {% else %}
+      {% set din = flight_row.din %}
+      </ul>
+      <p style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt; text-align: left;font-weight: 600;  font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-family:lucida sans unicode,lucida grande,sans-serif; font-size: 14px; color: rgb(66, 89, 104);font-size: 16px">
+      &nbsp;{{ flight_row.din }}; {{ flight_row.tip_zbor }}
+      </p>
+      <ul>
+        <li style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt; text-align: left; font-weight:normal; font-family:lucida sans unicode,lucida grande,sans-serif;font-size: 12pt; color: rgb(66, 89, 104); background-color: transparent; font-weight: 400; font-style: normal; font-variant: normal;" class="zbor-id-{{ flight_row.zbor_id }}">
+        <u><strong><a href="{{ flight_row.link }}">
+          {{ flight_row.destinatie }}
+        </a></strong></u>
+        -&euro;{{ flight_row.pret }}&nbsp;{{ flight_row.tip_pret }}&nbsp;&euro;{{ flight_row.pret_normal }}&nbsp;{{ flight_row.luna }}&nbsp;{{ flight_row.an }}&nbsp;{{ flight_row.companie }}
+      </li>
+    {% endif %}
+  {% endfor %}
+
+  <div style="line-height: 1.38; margin-top: 20pt; margin-bottom: 0pt; text-align: center; color: rgb(66, 89, 104); font-size:11px;">*Aceste preturi sunt valabile pentru o perioada limitata: Estimare 2 zile.</div>
+</div>
