@@ -16,11 +16,11 @@
 
 
     {% if din == flight_row.din  %}
-      <li style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt; text-align: left; font-weight:normal; font-family:lucida sans unicode,lucida grande,sans-serif;font-size: 12pt; color: rgb(0, 0, 0); background-color: transparent; font-weight: 400; font-style: normal; font-variant: normal;" class="zbor-id-{{ flight_row.zbor_id }}">
+      <li style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt; text-align: left; font-weight:normal; font-family:lucida sans unicode,lucida grande,sans-serif;font-size: 12pt; color: rgb(66, 89, 104); background-color: transparent; font-weight: 400; font-style: normal; font-variant: normal;" class="zbor-id-{{ flight_row.zbor_id }}">
         <u><strong><a href="{{ flight_row.link }}">
           {{ flight_row.destinatie }}
         </a></strong></u>
-        -&euro;{{ flight_row.pret }}&nbsp;{{ flight_row.tip_pret }}&nbsp;&euro;{{ flight_row.pret_normal }}&nbsp;{{ flight_row.luna }}&nbsp;{{ flight_row.an }}&nbsp;{{ flight_row.companie }}
+        -&nbsp;&euro;{{ flight_row.pret }}&nbsp;{{ flight_row.tip_pret }}&nbsp;&euro;{{ flight_row.pret_normal }}&nbsp;{{ flight_row.luna }}&nbsp;{{ flight_row.an }}&nbsp;{{ flight_row.companie }}
       </li>
 
       {% set counter = counter + 1 %}
@@ -35,7 +35,7 @@
         <u><strong><a href="{{ flight_row.link }}">
           {{ flight_row.destinatie }}
         </a></strong></u>
-        -&euro;{{ flight_row.pret }}&nbsp;{{ flight_row.tip_pret }}&nbsp;&euro;{{ flight_row.pret_normal }}&nbsp;{{ flight_row.luna }}&nbsp;{{ flight_row.an }}&nbsp;{{ flight_row.companie }}
+        -&nbsp;&euro;{{ flight_row.pret }}&nbsp;{{ flight_row.tip_pret }}&nbsp;&euro;{{ flight_row.pret_normal }}&nbsp;{{ flight_row.luna }}&nbsp;{{ flight_row.an }}&nbsp;{{ flight_row.companie }}
       </li>
     {% endif %}
   {% endfor %}
