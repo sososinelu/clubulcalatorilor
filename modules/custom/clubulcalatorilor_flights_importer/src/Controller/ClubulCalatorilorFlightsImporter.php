@@ -63,7 +63,7 @@ class ClubulCalatorilorFlightsImporter {
       'luna' => ($row[7] == 'NULL' ? NULL : $row[7]),
       'an' => ($row[8] == 'NULL' ? NULL : $row[8]),
       'companie' => ($row[9] == 'NULL' ? NULL : $row[9]),
-      'link' => ($row[9] == 'NULL' ? NULL : $row[9]),
+      'link' => ($row[10] == 'NULL' ? NULL : $row[10])
     );
   }
 
