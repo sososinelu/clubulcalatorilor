@@ -76,7 +76,9 @@ class ClubulCalatorilorSendgridController extends ControllerBase
 
   public static function sendConfirmationEmail($sendgrid, $token, $email_address)
   {
+
     $email = new \SendGrid\Mail\Mail();
+
     $email->setFrom("info@clubulcalatorilor.ro", "Clubul Călătorilor");
     $email->setSubject("Confirmă abonarea la Clubul Călătorilor!");
     $email->addTo($email_address, "");
@@ -89,8 +91,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     );
 
     $body =  \Drupal::service('renderer')->render($body_data);
-
-    $email->addContent("text/html", $body);
+    $email->addContent("text/html", $body->__toString());
 
     try {
       $response = $sendgrid->send($email);
