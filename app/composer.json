@@ -49,7 +49,8 @@
         "drush/drush": "^9.0.0",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
-        "wikimedia/composer-merge-plugin": "^1.4"
+        "wikimedia/composer-merge-plugin": "^1.4",
+        "sendgrid/sendgrid": "~7"
     },
     "require-dev": {
         "webflo/drupal-core-require-dev": "~8.6"
