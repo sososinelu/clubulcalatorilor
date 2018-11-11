@@ -1,0 +1,20 @@
+uuid: b82c1849-cac8-4e5c-a589-59ca000aeb6e
+langcode: en
+status: true
+dependencies:
+  module:
+    - clubulcalatorilor
+  theme:
+    - clubulcalatorilor_theme
+id: footersignupblock
+theme: clubulcalatorilor_theme
+region: footer_top
+weight: -8
+provider: null
+plugin: footer_sign_up_block
+settings:
+  id: footer_sign_up_block
+  label: 'Footer sign up block'
+  provider: clubulcalatorilor
+  label_display: '0'
+visibility: {  }

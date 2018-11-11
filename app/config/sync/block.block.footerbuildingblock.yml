@@ -1,0 +1,20 @@
+uuid: 85a83a35-70d5-467d-bdce-3284ff49c434
+langcode: en
+status: true
+dependencies:
+  module:
+    - clubulcalatorilor
+  theme:
+    - clubulcalatorilor_theme
+id: footerbuildingblock
+theme: clubulcalatorilor_theme
+region: footer_top
+weight: -7
+provider: null
+plugin: footer_building_block
+settings:
+  id: footer_building_block
+  label: 'Footer building block'
+  provider: clubulcalatorilor
+  label_display: '0'
+visibility: {  }

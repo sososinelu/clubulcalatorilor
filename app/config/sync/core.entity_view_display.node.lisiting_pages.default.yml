@@ -1,0 +1,30 @@
+uuid: cbd50d1d-7ab7-4047-bec7-38d8988ecebf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.lisiting_pages.field_intro_text
+    - field.field.node.lisiting_pages.field_meta_tag
+    - node.type.lisiting_pages
+  module:
+    - metatag
+    - user
+id: node.lisiting_pages.default
+targetEntityType: node
+bundle: lisiting_pages
+mode: default
+content:
+  field_meta_tag:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: metatag_empty_formatter
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_intro_text: true

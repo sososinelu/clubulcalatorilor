@@ -1,0 +1,19 @@
+uuid: 765bd5bd-6b76-49e5-a1a3-18ec94a136f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_how_it_works_title
+    - node.type.front_page
+id: node.front_page.field_how_it_works_title
+field_name: field_how_it_works_title
+entity_type: node
+bundle: front_page
+label: 'How it works section title'
+description: 'Title displayed in the How it works section on the homepage.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

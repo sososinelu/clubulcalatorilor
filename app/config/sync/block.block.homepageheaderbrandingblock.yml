@@ -1,0 +1,26 @@
+uuid: d7b0378b-8dff-462a-bb72-91e72c2cf012
+langcode: en
+status: true
+dependencies:
+  module:
+    - clubulcalatorilor
+    - system
+  theme:
+    - clubulcalatorilor_theme
+id: homepageheaderbrandingblock
+theme: clubulcalatorilor_theme
+region: header
+weight: -8
+provider: null
+plugin: homepage_header_branding_block
+settings:
+  id: homepage_header_branding_block
+  label: 'Homepage header branding block'
+  provider: clubulcalatorilor
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: "<front>\r\n/email-confirmation"
+    negate: false
+    context_mapping: {  }

@@ -1,0 +1,28 @@
+uuid: d32854e8-587c-4853-b442-b57cf9994557
+langcode: en
+status: true
+dependencies:
+  module:
+    - clubulcalatorilor
+    - ctools
+  theme:
+    - clubulcalatorilor_theme
+id: homepageaboutusblock
+theme: clubulcalatorilor_theme
+region: content
+weight: -4
+provider: null
+plugin: homepage_about_us_block
+settings:
+  id: homepage_about_us_block
+  label: 'Homepage about us block'
+  provider: clubulcalatorilor
+  label_display: '0'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      front_page: front_page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

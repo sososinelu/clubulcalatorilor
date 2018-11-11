@@ -1,0 +1,28 @@
+uuid: fd998e0c-0191-4cef-9839-94a5010a7a89
+langcode: en
+status: true
+dependencies:
+  module:
+    - clubulcalatorilor
+    - ctools
+  theme:
+    - clubulcalatorilor_theme
+id: overlaynotification
+theme: clubulcalatorilor_theme
+region: content
+weight: 0
+provider: null
+plugin: overlay_block
+settings:
+  id: overlay_block
+  label: 'Overlay notification'
+  provider: clubulcalatorilor
+  label_display: '0'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      front_page: front_page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

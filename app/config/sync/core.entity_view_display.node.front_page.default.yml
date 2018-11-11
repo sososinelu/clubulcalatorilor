@@ -1,0 +1,60 @@
+uuid: 01451c96-4983-4636-b62d-52b31ec82107
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.front_page.field_deal_image
+    - field.field.node.front_page.field_deal_text
+    - field.field.node.front_page.field_hiw_section_1_img
+    - field.field.node.front_page.field_hiw_section_1_text
+    - field.field.node.front_page.field_hiw_section_1_title
+    - field.field.node.front_page.field_hiw_section_2_img
+    - field.field.node.front_page.field_hiw_section_2_text
+    - field.field.node.front_page.field_hiw_section_2_title
+    - field.field.node.front_page.field_hiw_section_3_img
+    - field.field.node.front_page.field_hiw_section_3_text
+    - field.field.node.front_page.field_hiw_section_3_title
+    - field.field.node.front_page.field_hiw_section_4_img
+    - field.field.node.front_page.field_hiw_section_4_text
+    - field.field.node.front_page.field_hiw_section_4_title
+    - field.field.node.front_page.field_how_it_works_title
+    - field.field.node.front_page.field_meta_tag
+    - field.field.node.front_page.field_premium_text
+    - field.field.node.front_page.field_premium_title
+    - field.field.node.front_page.field_text_image
+    - node.type.front_page
+  module:
+    - metatag
+    - user
+id: node.front_page.default
+targetEntityType: node
+bundle: front_page
+mode: default
+content:
+  field_meta_tag:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: metatag_empty_formatter
+    region: content
+hidden:
+  field_deal_image: true
+  field_deal_text: true
+  field_hiw_section_1_img: true
+  field_hiw_section_1_text: true
+  field_hiw_section_1_title: true
+  field_hiw_section_2_img: true
+  field_hiw_section_2_text: true
+  field_hiw_section_2_title: true
+  field_hiw_section_3_img: true
+  field_hiw_section_3_text: true
+  field_hiw_section_3_title: true
+  field_hiw_section_4_img: true
+  field_hiw_section_4_text: true
+  field_hiw_section_4_title: true
+  field_how_it_works_title: true
+  field_premium_text: true
+  field_premium_title: true
+  field_text_image: true
+  links: true

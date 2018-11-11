@@ -1,0 +1,16 @@
+uuid: c6f94ec5-a743-4af6-8e46-da644937ef90
+langcode: en
+status: true
+dependencies:
+  module:
+    - image_effects
+name: how_it_works
+label: 'How it works'
+effects:
+  582605f1-1819-46f0-9e15-e4cc993bdffe:
+    uuid: 582605f1-1819-46f0-9e15-e4cc993bdffe
+    id: image_effects_resize_percentage
+    weight: 1
+    data:
+      width: 100%
+      height: '100'

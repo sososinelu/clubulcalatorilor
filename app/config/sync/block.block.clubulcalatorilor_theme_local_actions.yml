@@ -1,0 +1,20 @@
+uuid: a96f2cfb-c431-486b-a0d1-8be2050c2a13
+langcode: en
+status: true
+dependencies:
+  theme:
+    - clubulcalatorilor_theme
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: clubulcalatorilor_theme_local_actions
+theme: clubulcalatorilor_theme
+region: content
+weight: -8
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

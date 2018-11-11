@@ -1,0 +1,24 @@
+uuid: 4343b7a9-4538-41fb-bcfd-60d75585ed27
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.footer
+  module:
+    - system
+  theme:
+    - clubulcalatorilor_theme
+id: footer
+theme: clubulcalatorilor_theme
+region: footer_bottom
+weight: 0
+provider: null
+plugin: 'system_menu_block:footer'
+settings:
+  id: 'system_menu_block:footer'
+  label: Footer
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+visibility: {  }

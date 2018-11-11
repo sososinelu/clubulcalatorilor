@@ -1,0 +1,9 @@
+uuid: 1386c747-542a-4011-b29d-1fb3e1e67823
+langcode: en
+status: true
+dependencies: {  }
+id: node__blog_post
+label: 'Content: Blog post'
+tags:
+  title: '[current-page:title] | [site:name]'
+  description: '[node:summary]'

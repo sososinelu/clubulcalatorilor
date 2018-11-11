@@ -1,0 +1,21 @@
+uuid: 7551c353-352b-4aeb-b723-d8d5cbd3f34e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hiw_section_1_text
+    - node.type.front_page
+  module:
+    - text
+id: node.front_page.field_hiw_section_1_text
+field_name: field_hiw_section_1_text
+entity_type: node
+bundle: front_page
+label: 'Section 1 text'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

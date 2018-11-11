@@ -1,0 +1,21 @@
+uuid: 0cb2f27f-c0ee-4632-9208-9cf1be6209f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_intro_text
+    - node.type.lisiting_pages
+  module:
+    - text
+id: node.lisiting_pages.field_intro_text
+field_name: field_intro_text
+entity_type: node
+bundle: lisiting_pages
+label: 'Intro text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

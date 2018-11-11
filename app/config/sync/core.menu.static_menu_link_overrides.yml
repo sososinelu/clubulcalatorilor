@@ -1,0 +1,207 @@
+definitions:
+  contact__site_page:
+    weight: -50
+    menu_name: footer
+    parent: ''
+    enabled: false
+    expanded: false
+  system__admin_content:
+    weight: -99
+    menu_name: admin
+    parent: system.admin
+    enabled: true
+    expanded: false
+  system__admin_structure:
+    weight: -98
+    menu_name: admin
+    parent: system.admin
+    expanded: false
+    enabled: true
+  system__themes_page:
+    weight: -97
+    menu_name: admin
+    parent: system.admin
+    expanded: false
+    enabled: true
+  system__modules_list:
+    weight: -96
+    menu_name: admin
+    parent: system.admin
+    expanded: false
+    enabled: true
+  system__admin_config:
+    weight: -95
+    menu_name: admin
+    parent: system.admin
+    expanded: false
+    enabled: true
+  entity__user__collection:
+    weight: -91
+    menu_name: admin
+    parent: system.admin
+    enabled: true
+    expanded: false
+  entity__user_role__edit_permissions_form__anonymous:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.edit_form.anonymous
+    weight: 0
+    expanded: false
+  entity__user_role__edit_form__authenticated:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.collection
+    weight: 0
+    expanded: false
+  entity__user_role__delete_form__authenticated:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.edit_form.authenticated
+    weight: 0
+    expanded: false
+  entity__user_role__devel_load__authenticated:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.edit_form.authenticated
+    weight: 0
+    expanded: false
+  entity__user_role__edit_permissions_form__authenticated:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.edit_form.authenticated
+    weight: 0
+    expanded: false
+  entity__field_storage_config__collection:
+    enabled: true
+    menu_name: admin
+    parent: system.admin_reports
+    expanded: false
+    weight: 0
+  admin_toolbar_tools__views_ui__field_list:
+    enabled: true
+    menu_name: admin
+    parent: entity.field_storage_config.collection
+    weight: 0
+    expanded: false
+  system__status:
+    enabled: true
+    menu_name: admin
+    parent: system.admin_reports
+    weight: 0
+    expanded: false
+  dblog__access_denied:
+    enabled: true
+    menu_name: admin
+    parent: system.admin_reports
+    weight: 0
+    expanded: false
+  dblog__page_not_found:
+    enabled: true
+    menu_name: admin
+    parent: system.admin_reports
+    expanded: false
+    weight: 0
+  dblog__search:
+    enabled: true
+    menu_name: admin
+    parent: system.admin_reports
+    weight: 0
+    expanded: false
+  views_ui__reports_plugins:
+    enabled: true
+    menu_name: admin
+    parent: system.admin_reports
+    weight: 0
+    expanded: false
+  webform__reports_plugins:
+    enabled: true
+    menu_name: admin
+    parent: system.admin_reports
+    weight: 0
+    expanded: false
+  metatag__settings:
+    enabled: false
+    menu_name: admin
+    parent: entity.metatag_defaults.collection
+    expanded: false
+    weight: 0
+  system__admin_reports:
+    weight: -94
+    menu_name: admin
+    parent: system.admin
+    expanded: true
+    enabled: true
+  entity__user_role__collection:
+    enabled: false
+    menu_name: admin
+    parent: entity.user.collection
+    weight: 0
+    expanded: false
+  user__role_add:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.collection
+    weight: -5
+    expanded: false
+  entity__user_role__edit_form__administrator:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.collection
+    weight: 0
+    expanded: false
+  entity__user_role__delete_form__administrator:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.edit_form.administrator
+    weight: 0
+    expanded: false
+  entity__user_role__devel_load__administrator:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.edit_form.administrator
+    weight: 0
+    expanded: false
+  entity__user_role__edit_permissions_form__administrator:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.edit_form.administrator
+    weight: 0
+    expanded: false
+  entity__user_role__edit_form__anonymous:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.collection
+    weight: 0
+    expanded: false
+  entity__user_role__delete_form__anonymous:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.edit_form.anonymous
+    weight: 0
+    expanded: false
+  entity__user_role__devel_load__anonymous:
+    enabled: false
+    menu_name: admin
+    parent: entity.user_role.edit_form.anonymous
+    weight: 0
+    expanded: false
+  help__main:
+    enabled: false
+    menu_name: admin
+    parent: system.admin
+    weight: 9
+    expanded: false
+  user__admin_permissions:
+    enabled: false
+    menu_name: admin
+    parent: entity.user.collection
+    weight: 0
+    expanded: false
+  user__admin_create:
+    enabled: false
+    menu_name: admin
+    parent: entity.user.collection
+    weight: 0
+    expanded: false
+_core:
+  default_config_hash: jdY7AU0tU-QsjmiOw3W8vwpYMb-By--_MSFgbqKUTYM

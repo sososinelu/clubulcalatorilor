@@ -1,0 +1,24 @@
+uuid: 3d6a8dbb-b1d5-4f4a-9c1d-936ff06dfde5
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.lisiting_pages.field_intro_text
+    - field.field.node.lisiting_pages.field_meta_tag
+    - node.type.lisiting_pages
+  module:
+    - user
+id: node.lisiting_pages.teaser
+targetEntityType: node
+bundle: lisiting_pages
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_intro_text: true
+  field_meta_tag: true

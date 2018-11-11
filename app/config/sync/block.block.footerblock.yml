@@ -1,0 +1,20 @@
+uuid: 117a30d1-e350-41ef-a349-08045dcb65db
+langcode: en
+status: true
+dependencies:
+  module:
+    - clubulcalatorilor
+  theme:
+    - clubulcalatorilor_theme
+id: footerblock
+theme: clubulcalatorilor_theme
+region: footer_bottom
+weight: 0
+provider: null
+plugin: footer_block
+settings:
+  id: footer_block
+  label: 'Footer block'
+  provider: clubulcalatorilor
+  label_display: '0'
+visibility: {  }

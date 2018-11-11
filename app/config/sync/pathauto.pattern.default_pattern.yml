@@ -1,0 +1,26 @@
+uuid: 43510cf7-561e-41e3-b7bf-156c4bbf1ff7
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: default_pattern
+label: 'Default pattern'
+type: 'canonical_entities:node'
+pattern: '[node:title]'
+selection_criteria:
+  74496e71-0fea-4549-8119-63f0e280c48d:
+    id: node_type
+    bundles:
+      blog_post: blog_post
+      faq: faq
+      front_page: front_page
+      general_page: general_page
+      lisiting_pages: lisiting_pages
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 74496e71-0fea-4549-8119-63f0e280c48d
+selection_logic: and
+weight: -5
+relationships: {  }

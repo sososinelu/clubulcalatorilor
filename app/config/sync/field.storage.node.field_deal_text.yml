@@ -1,0 +1,19 @@
+uuid: 8b29d309-60c9-4bb3-a2da-a001d4d8be62
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_deal_text
+field_name: field_deal_text
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

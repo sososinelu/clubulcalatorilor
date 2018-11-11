@@ -1,0 +1,313 @@
+uuid: b63df35a-d6d7-4e64-bfd2-72b1cf571823
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.front_page.field_deal_image
+    - field.field.node.front_page.field_deal_text
+    - field.field.node.front_page.field_hiw_section_1_img
+    - field.field.node.front_page.field_hiw_section_1_text
+    - field.field.node.front_page.field_hiw_section_1_title
+    - field.field.node.front_page.field_hiw_section_2_img
+    - field.field.node.front_page.field_hiw_section_2_text
+    - field.field.node.front_page.field_hiw_section_2_title
+    - field.field.node.front_page.field_hiw_section_3_img
+    - field.field.node.front_page.field_hiw_section_3_text
+    - field.field.node.front_page.field_hiw_section_3_title
+    - field.field.node.front_page.field_hiw_section_4_img
+    - field.field.node.front_page.field_hiw_section_4_text
+    - field.field.node.front_page.field_hiw_section_4_title
+    - field.field.node.front_page.field_how_it_works_title
+    - field.field.node.front_page.field_meta_tag
+    - field.field.node.front_page.field_premium_text
+    - field.field.node.front_page.field_premium_title
+    - field.field.node.front_page.field_text_image
+    - image.style.thumbnail
+    - node.type.front_page
+  module:
+    - field_group
+    - image
+    - metatag
+    - paragraphs
+    - path
+    - text
+third_party_settings:
+  field_group:
+    group_how_it_works:
+      children:
+        - field_how_it_works_title
+        - field_hiw_section_1_title
+        - field_hiw_section_1_img
+        - field_hiw_section_1_text
+        - field_hiw_section_2_title
+        - field_hiw_section_2_img
+        - field_hiw_section_2_text
+        - field_hiw_section_3_title
+        - field_hiw_section_3_img
+        - field_hiw_section_3_text
+        - field_hiw_section_4_title
+        - field_hiw_section_4_img
+        - field_hiw_section_4_text
+      parent_name: ''
+      weight: 7
+      format_type: fieldset
+      format_settings:
+        label: 'How it works'
+        formatter: closed
+        required_fields: true
+        id: ''
+        classes: ''
+        description: ''
+      label: 'How it works'
+      region: content
+    group_about_us:
+      children:
+        - field_text_image
+      parent_name: ''
+      weight: 10
+      format_type: fieldset
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        required_fields: true
+      label: 'About us'
+      region: content
+    group_deal:
+      children:
+        - field_deal_text
+        - field_deal_image
+      parent_name: ''
+      weight: 8
+      format_type: fieldset
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        required_fields: true
+      label: Deal
+      region: content
+    group_premium:
+      children:
+        - field_premium_title
+        - field_premium_text
+      parent_name: ''
+      weight: 9
+      format_type: fieldset
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        required_fields: true
+      label: Premium
+      region: content
+id: node.front_page.default
+targetEntityType: node
+bundle: front_page
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_deal_image:
+    weight: 30
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_deal_text:
+    weight: 29
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_hiw_section_1_img:
+    weight: 11
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_hiw_section_1_text:
+    weight: 12
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_hiw_section_1_title:
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_hiw_section_2_img:
+    weight: 14
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_hiw_section_2_text:
+    weight: 15
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_hiw_section_2_title:
+    weight: 13
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_hiw_section_3_img:
+    weight: 17
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_hiw_section_3_text:
+    weight: 18
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_hiw_section_3_title:
+    weight: 16
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_hiw_section_4_img:
+    weight: 20
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_hiw_section_4_text:
+    weight: 21
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_hiw_section_4_title:
+    weight: 19
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_how_it_works_title:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_meta_tag:
+    weight: 33
+    settings: {  }
+    third_party_settings: {  }
+    type: metatag_firehose
+    region: content
+  field_premium_text:
+    weight: 32
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_premium_title:
+    weight: 31
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_text_image:
+    type: entity_reference_paragraphs
+    weight: 28
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: image_text
+    third_party_settings: {  }
+    region: content
+  path:
+    type: path
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 3
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 6
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 4
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+hidden: {  }

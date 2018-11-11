@@ -1,0 +1,21 @@
+uuid: 310ed29a-b5f5-4e0d-9044-9f0691d25334
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hiw_section_3_text
+    - node.type.front_page
+  module:
+    - text
+id: node.front_page.field_hiw_section_3_text
+field_name: field_hiw_section_3_text
+entity_type: node
+bundle: front_page
+label: 'Section 3 text'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

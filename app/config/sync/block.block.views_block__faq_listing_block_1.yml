@@ -1,0 +1,32 @@
+uuid: fce8c663-d604-4603-9709-7ffccf9a9ffd
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.faq_listing
+  module:
+    - node
+    - views
+  theme:
+    - clubulcalatorilor_theme
+id: views_block__faq_listing_block_1
+theme: clubulcalatorilor_theme
+region: content
+weight: -3
+provider: null
+plugin: 'views_block:faq_listing-block_1'
+settings:
+  id: 'views_block:faq_listing-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  node_type:
+    id: node_type
+    bundles:
+      front_page: front_page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

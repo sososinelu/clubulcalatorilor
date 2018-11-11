@@ -1,0 +1,26 @@
+uuid: b6e96b4d-650a-4099-ac03-5106face8930
+langcode: en
+status: true
+dependencies:
+  module:
+    - clubulcalatorilor
+    - system
+  theme:
+    - clubulcalatorilor_theme
+id: homepagesignupblock
+theme: clubulcalatorilor_theme
+region: header
+weight: -7
+provider: null
+plugin: homepage_sign_up_block
+settings:
+  id: homepage_sign_up_block
+  label: 'Homepage sign up block'
+  provider: clubulcalatorilor
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: "<front>\r\nintrebari-frecvente"
+    negate: false
+    context_mapping: {  }

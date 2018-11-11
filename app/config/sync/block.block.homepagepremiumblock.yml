@@ -1,0 +1,28 @@
+uuid: 2d5c4620-3780-4b91-ab13-47f836052364
+langcode: en
+status: true
+dependencies:
+  module:
+    - clubulcalatorilor
+    - node
+  theme:
+    - clubulcalatorilor_theme
+id: homepagepremiumblock
+theme: clubulcalatorilor_theme
+region: content
+weight: -5
+provider: null
+plugin: homepage_premium_block
+settings:
+  id: homepage_premium_block
+  label: 'Homepage premium block'
+  provider: clubulcalatorilor
+  label_display: '0'
+visibility:
+  node_type:
+    id: node_type
+    bundles:
+      front_page: front_page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

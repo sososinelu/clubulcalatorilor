@@ -1,0 +1,28 @@
+uuid: d220b873-7304-43fe-8e0d-f23252f588d0
+langcode: en
+status: true
+dependencies:
+  module:
+    - clubulcalatorilor
+    - ctools
+  theme:
+    - clubulcalatorilor_theme
+id: homepagehowitworksblock
+theme: clubulcalatorilor_theme
+region: content
+weight: -7
+provider: null
+plugin: homepage_how_it_works_block
+settings:
+  id: homepage_how_it_works_block
+  label: 'Homepage how it works block'
+  provider: clubulcalatorilor
+  label_display: '0'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      front_page: front_page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

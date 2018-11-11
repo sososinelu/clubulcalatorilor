@@ -1,0 +1,21 @@
+uuid: ca02fc22-8f85-4e1d-b9e8-4f2d14106e7a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_alternative_text
+    - paragraphs.paragraphs_type.image_text
+  module:
+    - text
+id: paragraph.image_text.field_alternative_text
+field_name: field_alternative_text
+entity_type: paragraph
+bundle: image_text
+label: 'Alternative text'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

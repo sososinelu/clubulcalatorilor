@@ -1,0 +1,28 @@
+uuid: 65ce2845-ba03-4f02-b0c2-509c94454b62
+langcode: en
+status: true
+dependencies:
+  module:
+    - clubulcalatorilor
+    - ctools
+  theme:
+    - clubulcalatorilor_theme
+id: homepagedealsblock
+theme: clubulcalatorilor_theme
+region: content
+weight: -6
+provider: null
+plugin: homepage_deals_block
+settings:
+  id: homepage_deals_block
+  label: 'Homepage deals block'
+  provider: clubulcalatorilor
+  label_display: '0'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      front_page: front_page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

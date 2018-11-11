@@ -1,0 +1,30 @@
+uuid: 24a42b7e-a71c-46b9-87f4-86a120e4b7a9
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.faq_listing
+  module:
+    - system
+    - views
+  theme:
+    - clubulcalatorilor_theme
+id: views_block__faq_listing_block_2
+theme: clubulcalatorilor_theme
+region: content
+weight: -2
+provider: null
+plugin: 'views_block:faq_listing-block_2'
+settings:
+  id: 'views_block:faq_listing-block_2'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: /intrebari-frecvente
+    negate: false
+    context_mapping: {  }

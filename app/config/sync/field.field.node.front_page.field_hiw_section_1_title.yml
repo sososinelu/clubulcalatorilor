@@ -1,0 +1,19 @@
+uuid: 1cdd83f5-5ee0-4df9-bd3c-c0c81667f68b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hiw_section_1_title
+    - node.type.front_page
+id: node.front_page.field_hiw_section_1_title
+field_name: field_hiw_section_1_title
+entity_type: node
+bundle: front_page
+label: 'Section 1 title'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

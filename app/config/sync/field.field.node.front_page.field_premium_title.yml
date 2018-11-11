@@ -1,0 +1,19 @@
+uuid: 16ee0e8b-e652-4f4f-abea-f3e1a291fa1d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_premium_title
+    - node.type.front_page
+id: node.front_page.field_premium_title
+field_name: field_premium_title
+entity_type: node
+bundle: front_page
+label: 'Premium title'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

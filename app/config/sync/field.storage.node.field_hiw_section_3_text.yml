@@ -1,0 +1,19 @@
+uuid: 47acf0a5-a89f-48ea-9926-f07e18f85382
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_hiw_section_3_text
+field_name: field_hiw_section_3_text
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
