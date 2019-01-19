@@ -1,0 +1,6 @@
+clubulcalatorilor_stripe.test:
+  path: '/test-stripe'
+  defaults:
+    _controller: '\Drupal\clubulcalatorilor_stripe\Controller\ClubulCalatorilorStripeController::testStripe'
+  requirements:
+    _permission: 'access content'

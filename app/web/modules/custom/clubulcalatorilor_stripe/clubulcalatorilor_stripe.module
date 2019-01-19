@@ -17,5 +17,10 @@ use Drupal\user\Entity\User;
  */
 function clubulcalatorilor_stripe_theme($existing, $type, $theme, $path)
 {
-  return [];
+  return [
+    'stripe_test_form' => array(
+      'variables' => array('vars' => NULL),
+      'template' => 'stripe-test-form'
+    ),
+  ];
 }

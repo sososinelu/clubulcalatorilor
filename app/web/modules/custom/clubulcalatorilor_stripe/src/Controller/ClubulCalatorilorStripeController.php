@@ -15,4 +15,10 @@ class ClubulCalatorilorStripeController extends ControllerBase
   {
 
   }
+
+  public function testStripe()
+  {
+
+    return true;
+  }
 }
