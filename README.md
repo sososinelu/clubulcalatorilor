@@ -1,29 +1,15 @@
 # Roche FPHI website
 
-Developer information for the Roche FPHI website.
+Developer information for the Clubul Calatorilor website.
 
 - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installing](#installing)
 - [Git](#git)
-    - [Respository](#repository)
     - [Workflow](#workflow)
-    - [Versioning](#versioning)
 - [Technologies](#technologies)
-- [Environments](#environments)
-    - [Staging](#staging)
-    - [Production](#production)
-    - [Deployment](#deployment)
-- [Compatibility](#compatibility)
-    - [Standards compliance](#standards-compliance)
-    - [Browser support](#browser-support)
-- [Dependencies](#dependencies)
-- [Testing](#testing)
-- [Structure and Naming](#structure-and-naming)
-- [Code style](#code-style)
 - [Service integration](#service-integration)
 - [Cheatsheet](#cheatsheet)
-- [Resources](#resources)
 
 <a name="getting-started"></a>
 ## 1. Getting Started
@@ -59,7 +45,7 @@ Any required public files should be copied to web/sites/default/files.
 
 
 <a name="workflow"></a>
-### 2.2 Workflow
+### 2.1 Workflow
 
 At any given time the repo should contain the following branches:
 
@@ -83,51 +69,16 @@ The Configuration synchronization module is used to manage site config. Any chan
 
 The custom theme uses npm for package management and Webpack for compiling assets. Run ```npm run build``` in the root of the custom theme to compile assets (or ```npm run dev``` to watch for file changes).
 
-<a name="environments"></a>
-## 4 Environments
-![Environment](https://png.icons8.com/color/96/000000/environment.png)
-
-<a name="staging"></a>
-### 4.1 Staging
-
-<a name="production"></a>
-### 4.2 Production
-
-<a name="deployment"></a>
-### 4.3 Deployment
-
-<a name="compatability"></a>
-## 5. Compatability
-![Checked checkbox](https://png.icons8.com/color/96/000000/checked-checkbox.png)
-
-<a name="standards-compliance"></a>
-### 5.1 Standards compliance
-
-<a name="browser-support"></a>
-### 5.2 Browser support
-
-<a name="dependencies"></a>
-## 6. Dependencies
-![Library](https://png.icons8.com/color/96/000000/library.png)
-
-<a name="testing"></a>
-## 7. Testing
-![Test tube](https://png.icons8.com/color/96/000000/test-tube.png)
-
-<a name="structure-and-naming"></a>
-## 8. Structure and Naming
-![Parallel tasks](https://png.icons8.com/color/96/000000/parallel-tasks.png)
-
-<a name="code-style"></a>
-## 9. Code style
-![Code](https://png.icons8.com/color/96/000000/code.png)
-
 <a name="service-integration"></a>
-## 10. Service integration
+## 4. Service integration
 ![Services](https://png.icons8.com/color/96/000000/services.png)
 
+Sendgrid
+
+Stripe
+
 <a name="cheatsheet"></a>
-## 11. Cheatsheet
+## 5. Cheatsheet
 ![Copybook](https://png.icons8.com/color/96/000000/copybook.png)
 
 Install contrib module:
@@ -154,10 +105,3 @@ Compile assets in ```web/themes/custom/clubulcalatorilor_theme```
 ```
 gulp
 ```
-
-<a name="resources"></a>
-## 12. Resources
-![Book](https://png.icons8.com/color/96/000000/book.png)
-
----
-Icons by [icons8](https://icons8.com/)
