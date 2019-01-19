@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Module file for the Clubul calatorilor stripe module, contains all the main hooks and logic functions.
+ */
+
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_theme().
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ * @return array
+ */
+function clubulcalatorilor_stripe_theme($existing, $type, $theme, $path)
+{
+  return [];
+}

@@ -1,0 +1,8 @@
+name: Clubul calatorilor Stripe module
+description: Clubul calatorilor Stripe custom interactions and blocks
+package: Custom
+
+type: module
+core: 8.x
+
+configure: clubulcalatorilor_stripe.configure
