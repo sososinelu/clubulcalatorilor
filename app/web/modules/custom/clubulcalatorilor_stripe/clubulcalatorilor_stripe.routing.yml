@@ -1,6 +1,24 @@
-clubulcalatorilor_stripe.test:
-  path: '/test-stripe'
+clubulcalatorilor_stripe.monthlyPlan:
+  path: '/monthly-plan'
   defaults:
-    _controller: '\Drupal\clubulcalatorilor_stripe\Controller\ClubulCalatorilorStripeController::testStripe'
+    _controller: '\Drupal\clubulcalatorilor_stripe\Controller\ClubulCalatorilorStripeController::monthlyPlan'
+  requirements:
+    _permission: 'access content'
+clubulcalatorilor_stripe.trimesterPlan:
+  path: '/trimester-plan'
+  defaults:
+    _controller: '\Drupal\clubulcalatorilor_stripe\Controller\ClubulCalatorilorStripeController::trimesterPlan'
+  requirements:
+    _permission: 'access content'
+clubulcalatorilor_stripe.byannualPlan:
+  path: '/biannual-plan'
+  defaults:
+    _controller: '\Drupal\clubulcalatorilor_stripe\Controller\ClubulCalatorilorStripeController::byannualPlan'
+  requirements:
+    _permission: 'access content'
+clubulcalatorilor_stripe.annualPlan:
+  path: '/annual-plan'
+  defaults:
+    _controller: '\Drupal\clubulcalatorilor_stripe\Controller\ClubulCalatorilorStripeController::annualPlan'
   requirements:
     _permission: 'access content'
