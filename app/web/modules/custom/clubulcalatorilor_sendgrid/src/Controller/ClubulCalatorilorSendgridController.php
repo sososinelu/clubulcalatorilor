@@ -9,14 +9,6 @@ use Drupal\clubulcalatorilor_sendgrid\Entity\ClubulCalatorilorUserConfirmation;
 
 class ClubulCalatorilorSendgridController extends ControllerBase
 {
-  /**
-   * ClubulCalatorilorSendgridController constructor.
-   */
-  public function __construct()
-  {
-
-  }
-
   public function emailConfirmationProcessing()
   {
     $token = \Drupal::request()->query->get('token');
@@ -45,8 +37,8 @@ class ClubulCalatorilorSendgridController extends ControllerBase
                 '#cache' => array('max-age' => 0),
               );
 
-            }catch (Exception $exception) {
-              \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Delete local user error: $email >>> '.$exception);
+            }catch (Exception $e) {
+              \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Delete local user error: ' . $email . ' >>> ' . $e->getMessage());
             }
           }
         }
@@ -76,7 +68,6 @@ class ClubulCalatorilorSendgridController extends ControllerBase
 
   public static function sendConfirmationEmail($sendgrid, $token, $email_address)
   {
-
     $email = new \SendGrid\Mail\Mail();
 
     $email->setFrom("info@clubulcalatorilor.ro", "Clubul Călătorilor");
@@ -96,10 +87,6 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     try {
       $response = $sendgrid->send($email);
 
-      // print $response->statusCode() . "\n";
-      // print_r($response->headers());
-      // print $response->body() . "\n";
-
       if (strpos($response->statusCode(), '20') !== false) {
         return true;
       }else {
@@ -107,7 +94,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
       }
 
     } catch (Exception $e) {
-      echo 'Caught exception: ',  $e->getMessage(), "\n";
+      \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Caught exception: >>> ' . $e->getMessage());
     }
   }
 
@@ -117,9 +104,6 @@ class ClubulCalatorilorSendgridController extends ControllerBase
 
     try {
       $response = $sendgrid->client->contactdb()->recipients()->search()->get(null, $query_params);
-      // print $response->statusCode() . "\n";
-      // print_r($response->headers());
-      // print $response->body() . "\n";
 
       $recipient_count = json_decode($response->body())->{'recipient_count'};
 
@@ -127,7 +111,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
         return true;
       }
     } catch (Exception $e) {
-      echo 'Caught exception: ',  $e->getMessage(), "\n";
+      \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Caught exception: >>> ' . $e->getMessage());
     }
 
     return false;
@@ -139,11 +123,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
 
     if($user_id && $list_id) {
       try {
-
         $response = $sendgrid->client->contactdb()->lists()->_($list_id)->recipients()->_($user_id)->post();
-        // print $response->statusCode() . "\n";
-        // print_r($response->headers());
-        // print $response->body() . "\n";
 
         if (strpos($response->statusCode(), '20') !== false) {
           return true;
@@ -151,7 +131,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
           return false;
         }
       } catch (Exception $e) {
-        echo 'Caught exception: ',  $e->getMessage(), "\n";
+        \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Caught exception: >>> ' . $e->getMessage());
       }
     }
   }
@@ -168,11 +148,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     ]');
 
     try {
-
       $response = $sendgrid->client->contactdb()->recipients()->post($new_contact);
-      //print $response->statusCode() . "\n";
-      //print_r($response->headers());
-      //print $response->body() . "\n";
 
       $response_data = json_decode($response->body());
 
@@ -182,7 +158,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
         return false;
       }
     } catch (Exception $e) {
-      echo 'Caught exception: ',  $e->getMessage(), "\n";
+      \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Caught exception: >>> ' . $e->getMessage());
     }
   }
 }
