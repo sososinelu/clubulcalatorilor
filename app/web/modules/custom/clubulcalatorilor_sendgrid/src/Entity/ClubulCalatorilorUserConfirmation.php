@@ -42,6 +42,10 @@ class ClubulCalatorilorUserConfirmation extends ContentEntityBase implements Con
     ->setLabel(t('Date'))
     ->setSetting('max_length', 128);
 
+    $fields['remainder'] = BaseFieldDefinition::create('integer')
+    ->setLabel(t('Date'))
+    ->setSetting('max_length', 11);
+
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'));
 
