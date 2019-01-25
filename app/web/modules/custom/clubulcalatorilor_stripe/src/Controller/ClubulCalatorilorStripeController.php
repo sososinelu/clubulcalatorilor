@@ -8,85 +8,94 @@ use Drupal\Core\Controller\ControllerBase;
 
 class ClubulCalatorilorStripeController extends ControllerBase
 {
-  /**
-   * ClubulCalatorilorStripeController constructor.
-   */
-  public function __construct()
-  {
-
-  }
-
   public function monthlyPlan()
   {
     // @todo get product key from settings form
-    $productKey = '';
+    $productKey = 'plan_EOHrFKCZKjQhGa';
     // @todo get price from settings form
-    $price = '';
+    $price = 20.00;
     $stripeToken = \Drupal::request()->request->get('stripeToken');
     $email = \Drupal::request()->request->get('stripeEmail');
 
-    var_dump($_POST);
-
-    exit;
-
-    return [];
+    $this->processStripePayment($productKey, $price, $stripeToken, $email);
   }
 
   public function trimesterPlan()
   {
     // @todo get product key from settings form
-    $productKey = '';
+    $productKey = 'plan_EOHpJ0s66rXhS8';
     // @todo get price from settings form
-    $price = '';
+    $price = 48.00;
     $stripeToken = \Drupal::request()->request->get('stripeToken');
     $email = \Drupal::request()->request->get('stripeEmail');
 
-    var_dump($_POST);
-
-    exit;
-
-    return [];
+    $this->processStripePayment($productKey, $price, $stripeToken, $email);
   }
 
   public function byannualPlan()
   {
     // @todo get product key from settings form
-    $productKey = '';
+    $productKey = 'plan_EOHtnYGXajHNZb';
     // @todo get price from settings form
-    $price = '';
+    $price = 84.00;
     $stripeToken = \Drupal::request()->request->get('stripeToken');
     $email = \Drupal::request()->request->get('stripeEmail');
 
-    var_dump($_POST);
-
-    exit;
-
-    return [];
+    $this->processStripePayment($productKey, $price, $stripeToken, $email);
   }
 
   public function annualPlan()
   {
     // @todo get product key from settings form
-    $productKey = '';
+    $productKey = 'plan_EOHt8m1dIa7UX9';
     // @todo get price from settings form
-    $price = '';
+    $price = 144.00;
     $stripeToken = \Drupal::request()->request->get('stripeToken');
     $email = \Drupal::request()->request->get('stripeEmail');
 
-    var_dump($_POST);
-
-    exit;
-
-    return [];
+    $this->processStripePayment($productKey, $price, $stripeToken, $email);
   }
 
-  public function processStripePayment()
+  public function processStripePayment($productKey, $price, $stripeToken, $email)
   {
+    // 4242 4242 4242 4242
 
-    var_dump($_POST);
+    // Stripe secret API key
+    // @todo get secret API key from settings form
+    \Stripe\Stripe::setApiKey("sk_test_pRgltPtYdkjnr3skB3NkQMxo");
 
-    exit;
+    try
+    {
+      //var_dump($email, $stripeToken);
+      //exit;
 
-    return 'HELLLO';
+      // Check if the customer exists
+
+      $customer = \Stripe\Customer::create([
+        'email' => $email,
+        'source'  => $stripeToken
+      ]);
+
+      var_dump($customer);
+      exit;
+
+      $subscription = \Stripe\Subscription::create([
+        'customer' => $customer->id,
+        'items' => [['plan' => $productKey]],
+      ]);
+
+      // Redirect to success page / Ajax return
+      exit('Stripe success');
+
+      // Add user to Sendgrid and send confirmation email if new
+      // OR
+      // move user to premium list
+    }
+    catch(Exception $exception)
+    {
+      // Redirect to fail page / Ajax return
+      \Drupal::logger('clubulcalatorilor_stripe')->notice('Unable to sign up customer ' . $email . ' >>> '.$exception);
+      exit('Stripe fail');
+    }
   }
 }
