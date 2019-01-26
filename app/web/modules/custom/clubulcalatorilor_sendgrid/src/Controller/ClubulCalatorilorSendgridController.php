@@ -4,7 +4,7 @@ namespace Drupal\clubulcalatorilor_sendgrid\Controller;
 
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\clubulcalatorilor_sendgrid\Entity\ClubulCalatorilorUserConfirmation;
+use Drupal\clubulcalatorilor_sendgrid\Entity\ClubulCalatorilorUserConfirmation as CCUCEntity;
 
 
 class ClubulCalatorilorSendgridController extends ControllerBase
@@ -24,7 +24,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     $markup = '<div class="email-confirmation outer-wrapper">';
 
     if($token) {
-      if($local_user_record = ClubulCalatorilorUserConfirmation::getUserByToken($token)) {
+      if($local_user_record = CCUCEntity::getUserByToken($token)) {
 
         $email = $local_user_record->get('email')->value;
 
@@ -184,5 +184,42 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     } catch (Exception $e) {
       echo 'Caught exception: ',  $e->getMessage(), "\n";
     }
+  }
+
+  public static function processEmailRemainders($days = 1)
+  {
+    // Get all users who don't have a reminder sent
+    // and created their account 1 days ago (created + 3days < today)
+
+    $users = CCUCEntity::getRemainderUsers($uId);
+
+    // Get email address
+
+    // Ger activation URL
+
+    foreach ($users as $uId) {
+      $user = CCUCEntity::getUserById($uId);
+
+      if($user) {
+        $email = $user->get('email')->value;
+        $token = $user->get('token')->value;
+
+
+        echo '<pre>';var_dump();echo '</pre>';
+        exit;
+      }
+
+    }
+
+    // Get email template
+
+    // Send email using Sendgrid
+
+    // Process 50 at a time in que
+  }
+
+  public static function processConfirmationRemoval()
+  {
+    // Delete all users that are still in the list after 15 days
   }
 }

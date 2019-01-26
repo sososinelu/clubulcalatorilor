@@ -4,6 +4,8 @@
  * Module file for the Clubul Calatorilor sendgrid module, contains all the main hooks and logic functions.
  */
 
+use Drupal\clubulcalatorilor_sendgrid\Controller\ClubulCalatorilorSendgridController;
+
 /**
  * Implements hook_theme().
  */
@@ -14,5 +16,16 @@ function clubulcalatorilor_sendgrid_theme($existing, $type, $theme, $path)
       'variables' => array('vars' => NULL),
       'template' => 'email-confirmation-template'
     ),
+    'email_reminder_template' => array(
+      'variables' => array('vars' => NULL),
+      'template' => 'email-reminder-template'
+    ),
   );
+}
+
+/**
+ * Implements hook_cron().
+ */
+function clubulcalatorilor_sendgrid_cron() {
+  //\ClubulCalatorilorSendgridController::processEmailRemainders(1);
 }
