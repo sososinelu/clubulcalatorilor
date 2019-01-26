@@ -9,14 +9,6 @@ use Drupal\clubulcalatorilor_sendgrid\Entity\ClubulCalatorilorUserConfirmation a
 
 class ClubulCalatorilorSendgridController extends ControllerBase
 {
-  /**
-   * ClubulCalatorilorSendgridController constructor.
-   */
-  public function __construct()
-  {
-
-  }
-
   public function emailConfirmationProcessing()
   {
     $token = \Drupal::request()->query->get('token');
@@ -32,8 +24,6 @@ class ClubulCalatorilorSendgridController extends ControllerBase
           if(self::moveUserToList($sendgrid, $sendgrid_id[0])) {
             try {
               $local_user_record->delete();
-
-              // Send Bine ai venit in club email
 
               $markup .= '<h4>Adresa ta de email a fost confirmată. <br> Bine ai venit în club! </h4>';
               $markup .= '<p class="back-link"><a href="/">Înapoi la pagina principală.</a></p>';
@@ -74,17 +64,16 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     return true;
   }
 
-  public static function sendConfirmationEmail($sendgrid, $token, $email_address)
+  public static function sendEmail($sendgrid, $token, $email_address, $emailTemplate, $subject)
   {
-
     $email = new \SendGrid\Mail\Mail();
 
     $email->setFrom("info@clubulcalatorilor.ro", "Clubul Călătorilor");
-    $email->setSubject("Confirmă abonarea la Clubul Călătorilor!");
+    $email->setSubject($subject);
     $email->addTo($email_address, "");
 
     $body_data = array (
-      '#theme' => 'email_confirmation_template',
+      '#theme' => $emailTemplate,
       '#vars' => array(
         "unique_url" => \Drupal::request()->getSchemeAndHttpHost().'/email-confirmation?token='.$token
       )
@@ -191,30 +180,38 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     // Get all users who don't have a reminder sent
     // and created their account 1 days ago (created + 3days < today)
 
-    $users = CCUCEntity::getRemainderUsers($uId);
+    $users = CCUCEntity::getRemainderUsers($days);
+    $sendgrid = new \SendGrid(\Drupal::state()->get('sendgrid_api_key') ? \Drupal::state()->get('sendgrid_api_key') : '');
 
     // Get email address
 
     // Ger activation URL
 
+    $success = 0;
+
     foreach ($users as $uId) {
       $user = CCUCEntity::getUserById($uId);
 
       if($user) {
+        // Get email template
+        // Send email using Sendgrid
         $email = $user->get('email')->value;
         $token = $user->get('token')->value;
+        $emailTemplate = 'email_reminder_template';
+        $subject = 'Confirmă abonarea la Clubul Călătorilor!';
 
-
-        echo '<pre>';var_dump();echo '</pre>';
-        exit;
+        if (CCSController::sendEmail($sendgrid, $token, $email, $emailTemplate, $subject)) {
+          $success += 1;
+        } else {
+          \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Remainder email failed = '.$email);
+        }
       }
-
     }
 
-    // Get email template
+    \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Remainder emails sent = '.$success);
 
-    // Send email using Sendgrid
-
+    // echo '<pre>';var_dump();echo '</pre>';
+    // exit;
     // Process 50 at a time in que
   }
 

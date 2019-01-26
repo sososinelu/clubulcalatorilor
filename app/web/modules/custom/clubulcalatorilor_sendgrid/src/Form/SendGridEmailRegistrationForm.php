@@ -12,8 +12,8 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Component\Utility\Crypt;
-use Drupal\clubulcalatorilor_sendgrid\Controller\ClubulCalatorilorSendgridController;
-use Drupal\clubulcalatorilor_sendgrid\Entity\ClubulCalatorilorUserConfirmation;
+use Drupal\clubulcalatorilor_sendgrid\Controller\ClubulCalatorilorSendgridController as CCSController;
+use Drupal\clubulcalatorilor_sendgrid\Entity\ClubulCalatorilorUserConfirmation as CCUConfirmation;
 
 /**
  * SendGrid email registration form.
@@ -105,7 +105,7 @@ class SendGridEmailRegistrationForm extends FormBase {
 
     // Check if the user is already subscribed
     $sendgrid = new \SendGrid(\Drupal::state()->get('sendgrid_api_key') ? \Drupal::state()->get('sendgrid_api_key') : '');
-    if(ClubulCalatorilorSendgridController::checkIfUserIsSubscribed($sendgrid, $email)) {
+    if(CCSController::checkIfUserIsSubscribed($sendgrid, $email)) {
 
       $response->addCommand(
         new HtmlCommand(
@@ -117,12 +117,12 @@ class SendGridEmailRegistrationForm extends FormBase {
       return $response;
     }
 
-    $local_user_record = ClubulCalatorilorUserConfirmation::getUserByEmail($email);
+    $local_user_record = CCUConfirmation::getUserByEmail($email);
 
     // Check if the user already tried to register
     if(!$local_user_record) {
       $token = Crypt::hashBase64($email);
-      $details = ClubulCalatorilorUserConfirmation::create([
+      $details = CCUConfirmation::create([
         'email' => $email,
         'token' => $token,
         'date' => date("Y-m-d h:i:sa")
@@ -132,7 +132,10 @@ class SendGridEmailRegistrationForm extends FormBase {
       $token = $local_user_record->get('token')->value;
     }
 
-    if(ClubulCalatorilorSendgridController::sendConfirmationEmail($sendgrid, $token, $email)) {
+    $emailTemplate = 'email_confirmation_template';
+    $subject = 'Confirmă abonarea la Clubul Călătorilor!';
+
+    if(CCSController::sendEmail($sendgrid, $token, $email, $emailTemplate, $subject)) {
       $response->addCommand(
         new HtmlCommand(
           '.result_message',
