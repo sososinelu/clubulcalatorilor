@@ -223,14 +223,22 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     // Delete all users that are still in the list after 15 days
     $users = CCUCEntity::getRemainderUsers(15);
 
+    $deletedUsers = '';
+    $count = 0;
     foreach ($users as $uId) {
       $user = CCUCEntity::getUserById($uId);
 
       if($user) {
         // Delete user
-
-        // Log the email address for the removed users
+        try {
+          $deletedUsers += ', '+$user->get('email')->value;
+          $vacancy_node->delete();
+          $count++;
+        } catch (EntityStorageException $e) {
+          \Drupal::logger('clubulcalatorilor_sendgrid')->error($e);
+        }
       }
     }
+    \Drupal::logger('clubulcalatorilor_sendgrid')->notice($count+' users removed >>> '.$deletedUsers);
   }
 }
