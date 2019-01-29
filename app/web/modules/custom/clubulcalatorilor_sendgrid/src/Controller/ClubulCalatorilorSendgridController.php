@@ -29,11 +29,11 @@ class ClubulCalatorilorSendgridController extends ControllerBase
               $markup .= '<p class="back-link"><a href="/">Înapoi la pagina principală.</a></p>';
               $markup .= '</div>';
 
-              return array(
+              return [
                 '#type' => 'markup',
                 '#markup' => $markup,
-                '#cache' => array('max-age' => 0),
-              );
+                '#cache' => ['max-age' => 0],
+              ];
 
             }catch (Exception $exception) {
               \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Delete local user error: $email >>> '.$exception);
@@ -47,11 +47,11 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     $markup .= '<p class="back-link"><a href="/">Înapoi la pagina principală.</a></p>';
     $markup .= '</div>';
 
-    return array(
+    return [
       '#type' => 'markup',
       '#markup' => $markup,
-      '#cache' => array('max-age' => 0),
-    );
+      '#cache' => ['max-age' => 0],
+    ];
   }
 
   public function testSendgrid()
@@ -72,12 +72,15 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     $email->setSubject($subject);
     $email->addTo($email_address, "");
 
-    $body_data = array (
-      '#theme' => $emailTemplate,
-      '#vars' => array(
+    $body_data = [
+      '#theme' => $emailTemplate
+    ];
+
+    if ($token) {
+      $body_data['#vars'] = [
         "unique_url" => \Drupal::request()->getSchemeAndHttpHost().'/email-confirmation?token='.$token
-      )
-    );
+      ];
+    }
 
     $body =  \Drupal::service('renderer')->render($body_data);
     $email->addContent("text/html", $body->__toString());
@@ -218,5 +221,16 @@ class ClubulCalatorilorSendgridController extends ControllerBase
   public static function processConfirmationRemoval()
   {
     // Delete all users that are still in the list after 15 days
+    $users = CCUCEntity::getRemainderUsers(15);
+
+    foreach ($users as $uId) {
+      $user = CCUCEntity::getUserById($uId);
+
+      if($user) {
+        // Delete user
+
+        // Log the email address for the removed users
+      }
+    }
   }
 }
