@@ -13,7 +13,7 @@ use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Component\Utility\Crypt;
 use Drupal\clubulcalatorilor_sendgrid\Controller\ClubulCalatorilorSendgridController as CCSController;
-use Drupal\clubulcalatorilor_sendgrid\Entity\ClubulCalatorilorUserConfirmation as CCUConfirmation;
+use Drupal\clubulcalatorilor_sendgrid\Entity\ClubulCalatorilorUserConfirmation as CCUCEntity;
 
 /**
  * SendGrid email registration form.
@@ -36,14 +36,14 @@ class SendGridEmailRegistrationForm extends FormBase {
       '#markup' => '<div class="result_message"></div>'
     ];
 
-    $form['email'] = array(
+    $form['email'] = [
       '#type' => 'email',
       '#title' => t('Adresa ta de email'),
-      '#attributes' => array(
+      '#attributes' => [
         'placeholder' => t('Adresa ta de email'),
-      ),
+      ],
       '#required' => FALSE
-    );
+    ];
 
     $form['markup'] = [
       '#type' => 'markup',
@@ -51,13 +51,13 @@ class SendGridEmailRegistrationForm extends FormBase {
     ];
 
     // Submit button
-    $form['actions']['submit'] = array(
+    $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => t('Înscrie-te'),
       '#ajax' => [
         'callback' => '::processSubmit',
       ],
-    );
+    ];
 
     $form['markup1'] = [
       '#type' => 'markup',
@@ -66,9 +66,9 @@ class SendGridEmailRegistrationForm extends FormBase {
 
     \Drupal::service('page_cache_kill_switch')->trigger();
 
-    $form['#cache'] = array(
+    $form['#cache'] = [
       'max-age' => 0
-    );
+    ];
 
     return $form;
   }
@@ -117,15 +117,16 @@ class SendGridEmailRegistrationForm extends FormBase {
       return $response;
     }
 
-    $local_user_record = CCUConfirmation::getUserByEmail($email);
+    $local_user_record = CCUCEntity::getUserByEmail($email);
 
     // Check if the user already tried to register
     if(!$local_user_record) {
       $token = Crypt::hashBase64($email);
-      $details = CCUConfirmation::create([
+      $details = CCUCEntity::create([
         'email' => $email,
         'token' => $token,
-        'date' => date("Y-m-d h:i:sa")
+        'date' => date("Y-m-d h:i:sa"),
+        'remainder' => 0
       ]);
       $details->save();
     }else{

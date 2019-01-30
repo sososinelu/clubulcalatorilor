@@ -13,12 +13,3 @@ clubulcalatorilor_sendgrid.email_confirmation:
     _description: 'Confirmă adresa de email'
   requirements:
     _permission: 'access content'
-
-clubulcalatorilor_sendgrid.test_remainders:
-  path: '/test'
-  defaults:
-    _controller: '\Drupal\clubulcalatorilor_sendgrid\Controller\ClubulCalatorilorSendgridController::processEmailRemainders'
-    _title: 'Confirmă adresa de email'
-    _description: 'Confirmă adresa de email'
-  requirements:
-    _permission: 'access content'

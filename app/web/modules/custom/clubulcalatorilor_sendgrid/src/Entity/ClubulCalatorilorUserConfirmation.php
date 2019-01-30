@@ -99,7 +99,6 @@ class ClubulCalatorilorUserConfirmation extends ContentEntityBase implements Con
     try {
       $users = \Drupal::entityQuery('cc_user_conf_entity')
         ->condition('created', strtotime('-'.$days.' days',  time()), '<')
-        ->range(0, 1)
         ->execute();
 
     } catch (InvalidPluginDefinitionException $e) {

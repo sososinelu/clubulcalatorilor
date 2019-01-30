@@ -178,18 +178,12 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     }
   }
 
-  public static function processEmailRemainders($days = 1)
+  public static function processEmailRemainders($days)
   {
     // Get all users who don't have a reminder sent
     // and created their account 1 days ago (created + 3days < today)
-
     $users = CCUCEntity::getRemainderUsers($days);
     $sendgrid = new \SendGrid(\Drupal::state()->get('sendgrid_api_key') ? \Drupal::state()->get('sendgrid_api_key') : '');
-
-    // Get email address
-
-    // Ger activation URL
-
     $success = 0;
 
     foreach ($users as $uId) {
@@ -203,8 +197,14 @@ class ClubulCalatorilorSendgridController extends ControllerBase
         $emailTemplate = 'email_reminder_template';
         $subject = 'Confirmă abonarea la Clubul Călătorilor!';
 
-        if (CCSController::sendEmail($sendgrid, $token, $email, $emailTemplate, $subject)) {
-          $success += 1;
+        if (self::sendEmail($sendgrid, $token, $email, $emailTemplate, $subject)) {
+          if ($days == 1) {
+            $user->set('remainder', 1);
+          } elseif ($days == 3) {
+            $user->set('remainder', 2);
+          }
+          $user->save();
+          $success++;
         } else {
           \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Remainder email failed = '.$email);
         }
@@ -212,33 +212,30 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     }
 
     \Drupal::logger('clubulcalatorilor_sendgrid')->notice('Remainder emails sent = '.$success);
-
-    // echo '<pre>';var_dump();echo '</pre>';
-    // exit;
-    // Process 50 at a time in que
+    return '';
   }
 
-  public static function processConfirmationRemoval()
+  public static function processConfirmationRemoval($days)
   {
     // Delete all users that are still in the list after 15 days
-    $users = CCUCEntity::getRemainderUsers(15);
+    $users = CCUCEntity::getRemainderUsers($days);
 
     $deletedUsers = '';
     $count = 0;
     foreach ($users as $uId) {
       $user = CCUCEntity::getUserById($uId);
-
-      if($user) {
+      if($user && $user->get('remainder')->value == 2) {
         // Delete user
         try {
-          $deletedUsers += ', '+$user->get('email')->value;
-          $vacancy_node->delete();
+          $deletedUsers .= ', '.$user->get('email')->value;
+          $user->delete();
           $count++;
         } catch (EntityStorageException $e) {
           \Drupal::logger('clubulcalatorilor_sendgrid')->error($e);
         }
       }
     }
-    \Drupal::logger('clubulcalatorilor_sendgrid')->notice($count+' users removed >>> '.$deletedUsers);
+    \Drupal::logger('clubulcalatorilor_sendgrid')->notice($count.' users removed'.$deletedUsers);
+    return true;
   }
 }

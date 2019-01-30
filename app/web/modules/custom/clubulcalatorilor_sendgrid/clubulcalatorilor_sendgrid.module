@@ -4,7 +4,7 @@
  * Module file for the Clubul Calatorilor sendgrid module, contains all the main hooks and logic functions.
  */
 
-use Drupal\clubulcalatorilor_sendgrid\Controller\ClubulCalatorilorSendgridController;
+use Drupal\clubulcalatorilor_sendgrid\Controller\ClubulCalatorilorSendgridController as CCSController;
 
 /**
  * Implements hook_theme().
@@ -27,5 +27,7 @@ function clubulcalatorilor_sendgrid_theme($existing, $type, $theme, $path)
  * Implements hook_cron().
  */
 function clubulcalatorilor_sendgrid_cron() {
-  //\ClubulCalatorilorSendgridController::processEmailRemainders(1);
+  //CCSController::processEmailRemainders(1);
+  //CCSController::processEmailRemainders(3);
+  //CCSController::processConfirmationRemoval(15);
 }
