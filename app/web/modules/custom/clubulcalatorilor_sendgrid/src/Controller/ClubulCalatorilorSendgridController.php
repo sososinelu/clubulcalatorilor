@@ -78,7 +78,8 @@ class ClubulCalatorilorSendgridController extends ControllerBase
 
     if ($token) {
       $body_data['#vars'] = [
-        "unique_url" => \Drupal::request()->getSchemeAndHttpHost().'/email-confirmation?token='.$token
+        //"unique_url" => \Drupal::request()->getSchemeAndHttpHost().'/email-confirmation?token='.$token
+        "unique_url" => 'https://www.clubulcalatorilor.ro/email-confirmation?token='.$token
       ];
     }
 
@@ -189,7 +190,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     foreach ($users as $uId) {
       $user = CCUCEntity::getUserById($uId);
 
-      if($user) {
+      if($user && $user->get('remainder')->value !== $days) {
         // Get email template
         // Send email using Sendgrid
         $email = $user->get('email')->value;
@@ -201,7 +202,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
           if ($days == 1) {
             $user->set('remainder', 1);
           } elseif ($days == 3) {
-            $user->set('remainder', 2);
+            $user->set('remainder', 3);
           }
           $user->save();
           $success++;
@@ -224,7 +225,7 @@ class ClubulCalatorilorSendgridController extends ControllerBase
     $count = 0;
     foreach ($users as $uId) {
       $user = CCUCEntity::getUserById($uId);
-      if($user && $user->get('remainder')->value == 2) {
+      if($user && $user->get('remainder')->value == 3) {
         // Delete user
         try {
           $deletedUsers .= ', '.$user->get('email')->value;
