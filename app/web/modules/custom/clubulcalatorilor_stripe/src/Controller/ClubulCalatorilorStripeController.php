@@ -66,34 +66,38 @@ class ClubulCalatorilorStripeController extends ControllerBase
 
     try
     {
-      //var_dump($email, $stripeToken);
-      //exit;
-
-      // Check if the customer exists
+      // @todo  Check if the customer exists and use existing customer id to create the payment
+      // https://stackoverflow.com/questions/27588258/stripe-check-if-a-customer-exists
 
       $customer = \Stripe\Customer::create([
         'email' => $email,
         'source'  => $stripeToken
       ]);
 
-      var_dump($customer);
-      exit;
+      //\Drupal::logger('clubulcalatorilor_stripe')->notice($customer);
 
       $subscription = \Stripe\Subscription::create([
         'customer' => $customer->id,
         'items' => [['plan' => $productKey]],
       ]);
 
-      // Redirect to success page / Ajax return
-      exit('Stripe success');
 
-      // Add user to Sendgrid and send confirmation email if new
+
+      // @todo
+      // Add user to Sendgrid premium list
       // OR
-      // move user to premium list
+      // move user from standard to premium list
+
+      // @todo
+      // create user and send password email
+      // set email, price paid, product ID, product name, stripe customer id
+
+      // @todo Redirect to success page / Ajax return
+      exit('Stripe success');
     }
     catch(Exception $exception)
     {
-      // Redirect to fail page / Ajax return
+      // @todo Redirect to fail page / Ajax return
       \Drupal::logger('clubulcalatorilor_stripe')->notice('Unable to sign up customer ' . $email . ' >>> '.$exception);
       exit('Stripe fail');
     }
