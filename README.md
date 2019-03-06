@@ -1,4 +1,4 @@
-# Roche FPHI website
+# Clubul Calatorilor Website
 
 Developer information for the Clubul Calatorilor website.
 
